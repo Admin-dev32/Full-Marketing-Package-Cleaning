@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-translation-key="pageTitle">Términos y Políticas – Bako Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #08090d;
+      --card: rgba(20, 22, 29, 0.72);
+      --accent: #d4af37;
+      --text: #f5f5f7;
+      --muted: #b7b7c2;
+      --border: #20232d;
+      --gradient: linear-gradient(135deg, rgba(241, 210, 122, 0.28), rgba(212, 175, 55, 0.18), rgba(184, 138, 31, 0.14));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05), transparent 26%),
+        radial-gradient(circle at 80% 0%, rgba(184, 138, 31, 0.06), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background:
+        linear-gradient(120deg, rgba(120, 78, 38, 0.6), rgba(58, 38, 18, 0.92)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2));
+      border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+    }
+
+    .logo-mark {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--accent);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .lang-button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      padding: 6px 10px;
+      transition: color 0.2s ease, background 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .lang-button.active,
+    .lang-button:hover {
+      color: var(--text);
+      background: rgba(212, 175, 55, 0.14);
+    }
+
+    .divider {
+      opacity: 0.5;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      align-items: center;
+      padding: 18px 0 48px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(30px, 5vw, 44px);
+      line-height: 1.1;
+      margin: 8px 0 14px;
+    }
+
+    .hero .subtitle {
+      max-width: 600px;
+      color: var(--muted);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .badge {
+      position: relative;
+      display: inline-block;
+      padding: 10px 16px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(20, 22, 29, 0.88));
+      border-radius: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+    }
+
+    .section {
+      padding: 44px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(22px, 4vw, 32px);
+      margin: 6px 0 8px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 780px;
+      margin: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(16px);
+      margin-top: 14px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      display: grid;
+      gap: 6px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer {
+      border-top: 1px solid rgba(212, 175, 55, 0.14);
+      padding: 24px 20px 34px;
+      text-align: center;
+      color: var(--muted);
+      background:
+        linear-gradient(120deg, rgba(120, 78, 38, 0.45), rgba(58, 38, 18, 0.88)),
+        rgba(8, 9, 13, 0.8);
+      backdrop-filter: blur(12px);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 96px 18px 60px;
+      }
+
+      .hero {
+        padding-top: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 88px 16px 56px;
+      }
+
+      .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .hero .subtitle {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar reveal" style="--reveal-delay: 0.02s;">
+    <div class="logo-mark" data-translation-key="brand">Bako Systems</div>
+    <div class="language-switch">
+      <button class="lang-button active" data-lang="es">ES</button>
+      <span class="divider">/</span>
+      <button class="lang-button" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero reveal" id="hero" style="--reveal-delay: 0.05s;">
+      <div class="hero-content">
+        <div class="eyebrow" data-translation-key="hero.eyebrow">Documentación del servicio</div>
+        <h1 data-translation-key="hero.title">Términos y Políticas</h1>
+        <p class="subtitle" data-translation-key="hero.subtitle">Al contratar un paquete de Bako Systems aceptas estos términos para proyectos de sistemas y marketing para negocios de limpieza.</p>
+        <div class="badge" data-translation-key="hero.badge">Vigente</div>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.12s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="api.tag">Uso de APIs e infraestructura</span>
+        <h2 data-translation-key="api.title">Cuándo podría ajustarse la capa técnica</h2>
+        <p class="section-subtitle" data-translation-key="api.subtitle">El sistema usa APIs para calendarios, automatizaciones y reservas. El uso normal está incluido.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="api.item1">Si el tráfico o las automatizaciones crecen de forma inusual, puede requerirse infraestructura extra o una suscripción adicional.</li>
+          <li data-translation-key="api.item2">Cualquier ajuste se comunicará por adelantado y aplicará solo a periodos futuros.</li>
+          <li data-translation-key="api.item3">El objetivo es sostener la estabilidad del sistema cuando la demanda aumenta.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.14s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="price.tag">Cambios de precios</span>
+        <h2 data-translation-key="price.title">Ajustes por plataformas o alcance</h2>
+        <p class="section-subtitle" data-translation-key="price.subtitle">Las tarifas pueden actualizarse por costos de plataformas, inflación o evolución del servicio.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="price.item1">Cualquier cambio se avisará con anticipación y no aplica a periodos ya facturados.</li>
+          <li data-translation-key="price.item2">Buscamos mantener la relación costo-beneficio alineada con el valor entregado.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.07s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="scope.tag">Alcance del servicio</span>
+        <h2 data-translation-key="scope.title">Sistema operativo y marketing por fases</h2>
+        <p class="section-subtitle" data-translation-key="scope.subtitle">Cada paquete incluye un setup inicial y, según el nivel, componentes de marketing. Todo se documenta en una propuesta o SOW.</p>
+      </div>
+      <div class="card">
+        <h3 data-translation-key="scope.heading">Entregables principales</h3>
+        <ul>
+          <li data-translation-key="scope.item1">Setup del sistema según paquete (web, reservas, pagos, Google Business, automatizaciones).</li>
+          <li data-translation-key="scope.item2">Campañas y contenidos según el nivel contratado y los add-ons seleccionados.</li>
+          <li data-translation-key="scope.item3">Acceso y capacitación básica para usar el sistema sin depender de código.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.09s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="billing.tag">Pagos y suscripciones</span>
+        <h2 data-translation-key="billing.title">Setup, mensualidades y add-ons</h2>
+        <p class="section-subtitle" data-translation-key="billing.subtitle">Los montos se muestran antes de pagar. El checkout seguro se procesa en Stripe.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="billing.item1">El pago inicial incluye setup + primer mes de mensualidad y cualquier add-on seleccionado.</li>
+          <li data-translation-key="billing.item2">Las mensualidades siguientes incluyen la parte mensual de add-ons y el presupuesto de Meta Ads indicado.</li>
+          <li data-translation-key="billing.item3">El presupuesto de Google Ads se paga directo a Google con tu tarjeta; no se cobra en nuestro checkout.</li>
+          <li data-translation-key="billing.item4">Las suscripciones se renuevan mensualmente; puedes solicitar ajustes antes del siguiente ciclo.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.11s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="ads.tag">Publicidad y contenidos</span>
+        <h2 data-translation-key="ads.title">Meta Ads, Google Ads y producción</h2>
+        <p class="section-subtitle" data-translation-key="ads.subtitle">Las campañas requieren aprobaciones de texto/creativos y acceso a las cuentas publicitarias.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="ads.item1">Necesitamos acceso a tu Business Manager/Ad Accounts y facturación activa para publicar anuncios.</li>
+          <li data-translation-key="ads.item2">El presupuesto de Meta Ads se factura a través de nuestra suscripción; Google Ads se paga directo a Google.</li>
+          <li data-translation-key="ads.item3">Los creativos producidos para tu campaña pueden usarse en tus canales mientras la cuenta esté activa.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.13s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="changes.tag">Cambios y cancelaciones</span>
+        <h2 data-translation-key="changes.title">Ajustes razonables y fin de servicio</h2>
+        <p class="section-subtitle" data-translation-key="changes.subtitle">Buscamos flexibilidad, pero ciertos límites aplican para mantener el ritmo del proyecto.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="changes.item1">Incluimos iteraciones razonables dentro del alcance; cambios mayores pueden cotizarse como add-on.</li>
+          <li data-translation-key="changes.item2">Las cancelaciones de mensualidad aplican al siguiente ciclo; no hay reembolsos de periodos ya trabajados.</li>
+          <li data-translation-key="changes.item3">Si se pausa el proyecto, “Keep System On Only” mantiene el sistema en línea (sitio, reservas básicas e integraciones) sin campañas ni gestión activa.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.15s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="data.tag">Datos y accesos</span>
+        <h2 data-translation-key="data.title">Confidencialidad y resguardos</h2>
+        <p class="section-subtitle" data-translation-key="data.subtitle">Usamos los accesos que nos compartas solo para operar tu sistema y campañas.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="data.item1">No compartimos tus accesos con terceros ajenos al proyecto.</li>
+          <li data-translation-key="data.item2">Puedes revocar accesos cuando termine el servicio; recomendamos mantener respaldos.</li>
+          <li data-translation-key="data.item3">Las métricas y reportes son confidenciales y se usan solo para optimizar tu operación y marketing.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.17s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="contact.tag">Contacto</span>
+        <h2 data-translation-key="contact.title">Cómo comunicar cambios o soporte</h2>
+        <p class="section-subtitle" data-translation-key="contact.subtitle">Usamos canales definidos para mantener trazabilidad de solicitudes y entregables.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="contact.item1">El canal principal se acuerda al inicio (email o chat de proyecto) para solicitudes y actualizaciones.</li>
+          <li data-translation-key="contact.item2">Las solicitudes urgentes se atienden dentro de horarios hábiles acordados.</li>
+          <li data-translation-key="contact.item3">Para los primeros meses puedes activar Plan Protection: si no se cumplen mínimos acordados, pagas solo una cuota reducida; si se cumplen, aplica la mensualidad completa más la protección.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section reveal" style="--reveal-delay: 0.19s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="glossary.tag">Glosario / Índice de términos</span>
+        <h2 data-translation-key="glossary.title">Significados clave en este sistema</h2>
+        <p class="section-subtitle" data-translation-key="glossary.subtitle">Definiciones simples para entender cómo funciona la capa técnica y de marketing.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li data-translation-key="glossary.api">API: interfaz para que el sistema se conecte con otros servicios (calendarios, pagos, automatizaciones).</li>
+          <li data-translation-key="glossary.endpoint">Endpoint: URL específica que recibe o envía datos entre el sistema y otros servicios.</li>
+          <li data-translation-key="glossary.automation">Automatización: flujo que ejecuta acciones (recordatorios, confirmaciones) sin intervención manual.</li>
+          <li data-translation-key="glossary.stripe">Stripe: plataforma usada para procesar pagos de forma segura.</li>
+          <li data-translation-key="glossary.checkout">Checkout: pantalla de pago donde el cliente confirma sus datos y autoriza cargos.</li>
+          <li data-translation-key="glossary.subscription">Suscripción: cobro recurrente que se ejecuta mes a mes según el servicio contratado.</li>
+          <li data-translation-key="glossary.meta">Meta Ads: publicidad en Facebook e Instagram para atraer clientes al sistema.</li>
+          <li data-translation-key="glossary.google">Google Ads: anuncios en Google para personas que buscan servicios de limpieza.</li>
+          <li data-translation-key="glossary.hosting">Hosting: servicio que mantiene el sitio y el sistema disponibles en línea.</li>
+          <li data-translation-key="glossary.domain">Dominio: la dirección web (URL) donde los clientes acceden al sistema.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer reveal">
+    <p data-translation-key="footer">Presentación interna – Bako Business Branding</p>
+  </footer>
+
+  <script>
+    const translations = {
+      es: {
+        pageTitle: 'Términos y Políticas – Bako Systems',
+        brand: 'Bako Systems',
+        'hero.eyebrow': 'Documentación del servicio',
+        'hero.title': 'Términos y Políticas',
+        'hero.subtitle': 'Al contratar un paquete de Bako Systems aceptas estos términos para proyectos de sistemas y marketing para negocios de limpieza.',
+        'hero.badge': 'Vigente',
+        'scope.tag': 'Alcance del servicio',
+        'scope.title': 'Sistema operativo y marketing por fases',
+        'scope.subtitle': 'Cada paquete incluye un setup inicial y, según el nivel, componentes de marketing. Todo se documenta en una propuesta o SOW.',
+        'scope.heading': 'Entregables principales',
+        'scope.item1': 'Setup del sistema según paquete (web, reservas, pagos, Google Business, automatizaciones).',
+        'scope.item2': 'Campañas y contenidos según el nivel contratado y los add-ons seleccionados.',
+        'scope.item3': 'Acceso y capacitación básica para usar el sistema sin depender de código.',
+        'billing.tag': 'Pagos y suscripciones',
+        'billing.title': 'Setup, mensualidades y add-ons',
+        'billing.subtitle': 'Los montos se muestran antes de pagar. El checkout seguro se procesa en Stripe.',
+        'billing.item1': 'El pago inicial incluye setup + primer mes de mensualidad y cualquier add-on seleccionado.',
+        'billing.item2': 'Las mensualidades siguientes incluyen la parte mensual de add-ons y el presupuesto de Meta Ads indicado.',
+        'billing.item3': 'El presupuesto de Google Ads se paga directo a Google con tu tarjeta; no se cobra en nuestro checkout.',
+        'billing.item4': 'Las suscripciones se renuevan mensualmente; puedes solicitar ajustes antes del siguiente ciclo.',
+        'ads.tag': 'Publicidad y contenidos',
+        'ads.title': 'Meta Ads, Google Ads y producción',
+        'ads.subtitle': 'Las campañas requieren aprobaciones de texto/creativos y acceso a las cuentas publicitarias.',
+        'ads.item1': 'Necesitamos acceso a tu Business Manager/Ad Accounts y facturación activa para publicar anuncios.',
+        'ads.item2': 'El presupuesto de Meta Ads se factura a través de nuestra suscripción; Google Ads se paga directo a Google.',
+        'ads.item3': 'Los creativos producidos para tu campaña pueden usarse en tus canales mientras la cuenta esté activa.',
+        'changes.tag': 'Cambios y cancelaciones',
+        'changes.title': 'Ajustes razonables y fin de servicio',
+        'changes.subtitle': 'Buscamos flexibilidad, pero ciertos límites aplican para mantener el ritmo del proyecto.',
+        'changes.item1': 'Incluimos iteraciones razonables dentro del alcance; cambios mayores pueden cotizarse como add-on.',
+        'changes.item2': 'Las cancelaciones de mensualidad aplican al siguiente ciclo; no hay reembolsos de periodos ya trabajados.',
+        'changes.item3':
+          'Si se pausa el proyecto, “Keep System On Only” mantiene el sistema en línea (sitio, reservas básicas e integraciones) sin campañas ni gestión activa.',
+        'data.tag': 'Datos y accesos',
+        'data.title': 'Confidencialidad y resguardos',
+        'data.subtitle': 'Usamos los accesos que nos compartas solo para operar tu sistema y campañas.',
+        'data.item1': 'No compartimos tus accesos con terceros ajenos al proyecto.',
+        'data.item2': 'Puedes revocar accesos cuando termine el servicio; recomendamos mantener respaldos.',
+        'data.item3': 'Las métricas y reportes son confidenciales y se usan solo para optimizar tu operación y marketing.',
+        'contact.tag': 'Contacto',
+        'contact.title': 'Cómo comunicar cambios o soporte',
+        'contact.subtitle': 'Usamos canales definidos para mantener trazabilidad de solicitudes y entregables.',
+        'contact.item1': 'El canal principal se acuerda al inicio (email o chat de proyecto) para solicitudes y actualizaciones.',
+        'contact.item2': 'Las solicitudes urgentes se atienden dentro de horarios hábiles acordados.',
+        'contact.item3':
+          'Para los primeros meses puedes activar Plan Protection: si no se cumplen mínimos acordados, pagas solo una cuota reducida; si se cumplen, aplica la mensualidad completa más la protección.',
+        'api.tag': 'Uso de APIs e infraestructura',
+        'api.title': 'Cuándo podría ajustarse la capa técnica',
+        'api.subtitle': 'El sistema usa APIs para calendarios, automatizaciones y reservas. El uso normal está incluido.',
+        'api.item1': 'Si el tráfico o las automatizaciones crecen de forma inusual, puede requerirse infraestructura extra o una suscripción adicional.',
+        'api.item2': 'Cualquier ajuste se comunicará por adelantado y aplicará solo a periodos futuros.',
+        'api.item3': 'El objetivo es sostener la estabilidad del sistema cuando la demanda aumenta.',
+        'price.tag': 'Cambios de precios',
+        'price.title': 'Ajustes por plataformas o alcance',
+        'price.subtitle': 'Las tarifas pueden actualizarse por costos de plataformas, inflación o evolución del servicio.',
+        'price.item1': 'Cualquier cambio se avisará con anticipación y no aplica a periodos ya facturados.',
+        'price.item2': 'Buscamos mantener la relación costo-beneficio alineada con el valor entregado.',
+        'glossary.tag': 'Glosario / Índice de términos',
+        'glossary.title': 'Significados clave en este sistema',
+        'glossary.subtitle': 'Definiciones simples para entender cómo funciona la capa técnica y de marketing.',
+        'glossary.api': 'API: interfaz para que el sistema se conecte con otros servicios (calendarios, pagos, automatizaciones).',
+        'glossary.endpoint': 'Endpoint: URL específica que recibe o envía datos entre el sistema y otros servicios.',
+        'glossary.automation': 'Automatización: flujo que ejecuta acciones (recordatorios, confirmaciones) sin intervención manual.',
+        'glossary.stripe': 'Stripe: plataforma usada para procesar pagos de forma segura.',
+        'glossary.checkout': 'Checkout: pantalla de pago donde el cliente confirma sus datos y autoriza cargos.',
+        'glossary.subscription': 'Suscripción: cobro recurrente que se ejecuta mes a mes según el servicio contratado.',
+        'glossary.meta': 'Meta Ads: publicidad en Facebook e Instagram para atraer clientes al sistema.',
+        'glossary.google': 'Google Ads: anuncios en Google para personas que buscan servicios de limpieza.',
+        'glossary.hosting': 'Hosting: servicio que mantiene el sitio y el sistema disponibles en línea.',
+        'glossary.domain': 'Dominio: la dirección web (URL) donde los clientes acceden al sistema.',
+        footer: 'Presentación interna – Bako Business Branding'
+      },
+      en: {
+        pageTitle: 'Terms & Policies – Bako Systems',
+        brand: 'Bako Systems',
+        'hero.eyebrow': 'Service documentation',
+        'hero.title': 'Terms & Policies',
+        'hero.subtitle': 'By purchasing a Bako Systems package you accept these terms for system and marketing projects for cleaning businesses.',
+        'hero.badge': 'Current',
+        'scope.tag': 'Service scope',
+        'scope.title': 'Operational system and marketing in phases',
+        'scope.subtitle': 'Each package includes initial setup and, depending on level, marketing components. Everything is documented in a proposal or SOW.',
+        'scope.heading': 'Key deliverables',
+        'scope.item1': 'System setup per package (website, booking, payments, Google Business, automations).',
+        'scope.item2': 'Campaigns and content based on the chosen level and selected add-ons.',
+        'scope.item3': 'Access and basic training so you can use the system without code.',
+        'billing.tag': 'Payments & subscriptions',
+        'billing.title': 'Setup, monthly fees, and add-ons',
+        'billing.subtitle': 'Amounts are shown before paying. Secure checkout is processed via Stripe.',
+        'billing.item1': 'Initial payment covers setup + first month of service and any selected add-ons.',
+        'billing.item2': 'Following months include the monthly part of add-ons and your stated Meta Ads budget.',
+        'billing.item3': 'Google Ads budget is paid directly to Google with your card; it is not billed in our checkout.',
+        'billing.item4': 'Subscriptions renew monthly; you can request adjustments before the next cycle.',
+        'ads.tag': 'Advertising & content',
+        'ads.title': 'Meta Ads, Google Ads, and production',
+        'ads.subtitle': 'Campaigns require text/creative approvals and access to ad accounts.',
+        'ads.item1': 'We need access to your Business Manager/Ad Accounts and active billing to run ads.',
+        'ads.item2': 'Meta Ads budget is billed through our subscription; Google Ads is paid directly to Google.',
+        'ads.item3': 'Creatives produced for your campaign can be used on your channels while the account is active.',
+        'changes.tag': 'Changes & cancellations',
+        'changes.title': 'Reasonable adjustments and end of service',
+        'changes.subtitle': 'We aim for flexibility but set limits to keep the project on pace.',
+        'changes.item1': 'Reasonable iterations are included; major changes may be quoted as add-ons.',
+        'changes.item2': 'Monthly cancellations apply to the next cycle; past periods are not refundable.',
+        'changes.item3':
+          'If the project pauses, “Keep System On Only” keeps the system online (site, basic booking, integrations) without campaigns or active management.',
+        'data.tag': 'Data & access',
+        'data.title': 'Confidentiality and safeguards',
+        'data.subtitle': 'We use the access you share only to operate your system and campaigns.',
+        'data.item1': 'We do not share your access with third parties unrelated to the project.',
+        'data.item2': 'You can revoke access when service ends; we recommend keeping backups.',
+        'data.item3': 'Metrics and reports are confidential and used only to optimize your ops and marketing.',
+        'contact.tag': 'Contact',
+        'contact.title': 'How to request changes or support',
+        'contact.subtitle': 'We use defined channels to keep requests and deliverables traceable.',
+        'contact.item1': 'Main channel is agreed upfront (email or project chat) for requests and updates.',
+        'contact.item2': 'Urgent requests are handled within agreed business hours.',
+        'contact.item3':
+          'During the first months you can activate Plan Protection: if agreed minimums are not met, you pay only a reduced minimum; if targets are met, the full monthly applies plus the protection fee.',
+        'api.tag': 'API and infrastructure use',
+        'api.title': 'When the technical layer might adjust',
+        'api.subtitle': 'The system uses APIs for calendars, automations, and bookings. Normal usage is included.',
+        'api.item1': 'If traffic or automations grow unusually high, extra infrastructure or an additional subscription may be required.',
+        'api.item2': 'Any adjustment will be communicated in advance and applies only to future periods.',
+        'api.item3': 'The goal is to keep the system stable when demand increases.',
+        'price.tag': 'Price changes',
+        'price.title': 'Adjustments for platforms or scope',
+        'price.subtitle': 'Fees may update due to platform costs, inflation, or service evolution.',
+        'price.item1': 'Any change will be notified beforehand and will not apply retroactively.',
+        'price.item2': 'We aim to keep cost-benefit aligned with the value delivered.',
+        'glossary.tag': 'Glossary / Terms index',
+        'glossary.title': 'Key meanings in this system',
+        'glossary.subtitle': 'Simple definitions to understand how the technical and marketing layers work.',
+        'glossary.api': 'API: interface that lets the system connect with other services (calendars, payments, automations).',
+        'glossary.endpoint': 'Endpoint: specific URL that receives or sends data between the system and other services.',
+        'glossary.automation': 'Automation: a flow that runs actions (reminders, confirmations) without manual effort.',
+        'glossary.stripe': 'Stripe: platform used to process payments securely.',
+        'glossary.checkout': 'Checkout: payment screen where the client confirms details and authorizes charges.',
+        'glossary.subscription': 'Subscription: recurring charge that runs month to month according to the contracted service.',
+        'glossary.meta': 'Meta Ads: advertising on Facebook and Instagram to attract clients into the system.',
+        'glossary.google': 'Google Ads: ads on Google for people searching for cleaning services.',
+        'glossary.hosting': 'Hosting: service that keeps the site and system available online.',
+        'glossary.domain': 'Domain: the web address (URL) where clients access the system.',
+        footer: 'Internal presentation – Bako Business Branding'
+      }
+    };
+
+    const langButtons = document.querySelectorAll('.lang-button');
+    const translatableElements = document.querySelectorAll('[data-translation-key]');
+
+    function updateLanguage(lang) {
+      const translation = translations[lang];
+      if (!translation) return;
+
+      translatableElements.forEach((el) => {
+        const key = el.getAttribute('data-translation-key');
+        if (translation[key]) {
+          el.textContent = translation[key];
+        }
+      });
+
+      document.documentElement.lang = lang;
+      document.title = translation.pageTitle || document.title;
+
+      langButtons.forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+    }
+
+    langButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const lang = button.getAttribute('data-lang');
+        updateLanguage(lang);
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal--visible');
+          }
+        });
+      },
+      {
+        threshold: 0.16,
+        rootMargin: '0px 0px -10% 0px'
+      }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    updateLanguage('es');
+  </script>
+</body>
+</html>
