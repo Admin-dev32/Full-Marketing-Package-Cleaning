@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translation-key="cancelConfirmation.pageTitle">Cancelación confirmada – Bako Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.06), transparent 28%),
+          radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.05), transparent 26%),
+          var(--bg);
+      }
+
+      .card {
+        background: linear-gradient(135deg, rgba(20, 20, 27, 0.9), rgba(14, 14, 20, 0.9));
+        border: 1px solid rgba(212, 175, 55, 0.18);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="logo-mark">Bako Systems</div>
+      <div class="language-switch">
+        <button class="lang-button active" data-lang="es">ES</button>
+        <span class="divider">/</span>
+        <button class="lang-button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow" data-translation-key="cancel.eyebrow">Cancelación</div>
+          <h1 id="confirmation-title" data-translation-key="cancelConfirmation.titleImmediate">Tu sistema ha sido cancelado</h1>
+          <p class="subtitle" id="confirmation-subtitle" data-translation-key="cancelConfirmation.subtitleImmediate">
+            El acceso al sistema se detuvo de inmediato.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <p class="muted" data-translation-key="cancelConfirmation.effectiveLabel">Fecha efectiva de fin</p>
+          <h3 id="effective-date">—</h3>
+
+          <div class="actions">
+            <a class="cta" href="/" data-translation-key="cancelConfirmation.backButton">Regresar al sitio principal</a>
+            <a class="cta secondary" href="/system-cancel-thank-you.html" data-translation-key="cancelConfirmation.thankYouLink"
+              >Ver nota de agradecimiento</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const status = params.get('status') || 'scheduled';
+      const effectiveDate = params.get('effectiveDate');
+
+      const confirmationTitle = document.getElementById('confirmation-title');
+      const confirmationSubtitle = document.getElementById('confirmation-subtitle');
+      const effectiveDateEl = document.getElementById('effective-date');
+
+      function formatDate(ts) {
+        if (!ts) return '—';
+        const date = new Date(Number(ts) * 1000);
+        const locale = document.documentElement.lang === 'es' ? 'es-ES' : 'en-US';
+        return date.toLocaleDateString(locale, { dateStyle: 'medium' });
+      }
+
+      function applyStatusCopy() {
+        if (status === 'cancelled') {
+          confirmationTitle.dataset.translationKey = 'cancelConfirmation.titleImmediate';
+          confirmationSubtitle.dataset.translationKey = 'cancelConfirmation.subtitleImmediate';
+        } else {
+          confirmationTitle.dataset.translationKey = 'cancelConfirmation.titleScheduled';
+          confirmationSubtitle.dataset.translationKey = 'cancelConfirmation.subtitleScheduled';
+        }
+        updateLanguage(document.documentElement.lang || 'es');
+      }
+
+      effectiveDateEl.textContent = formatDate(effectiveDate);
+      applyStatusCopy();
+    </script>
+  </body>
+</html>
