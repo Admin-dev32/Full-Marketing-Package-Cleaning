@@ -31,11 +31,13 @@ module.exports = async function handler(req, res) {
     metaBudgetMonthly = 0,
     planProtection = {},
     keepSystemOn = {},
-    yearlyInfra = {}
+    yearlyInfra = {},
+    discount = {}
   } = req.body || {};
 
   try {
     const firstMonthBase = Number(totals.firstMonthBase || 0);
+    const originalFirstMonthBase = Number(totals.originalFirstMonthBase ?? firstMonthBase);
     const firstMonthWithFinancing = Number(totals.firstMonthWithFinancing || firstMonthBase);
     const recurringFromMonth2 = Number(totals.monthlyFromMonth2 || 0);
 
@@ -45,6 +47,24 @@ module.exports = async function handler(req, res) {
     const yearlyInfraFee = Number(yearlyInfra.yearlyInfraFee || yearlyInfra.fee || 0);
     const yearlyInfraEnabled = yearlyInfra.enabled !== false && yearlyInfraFee > 0;
     const yearlyInfraCurrency = yearlyInfra.currency || currency;
+
+    const discountType = discount && discount.type ? discount.type : 'none';
+    const discountValue = Number(discount && discount.value ? discount.value : 0);
+    const discountedUpfrontTotal = Number(
+      discount && discount.discountedUpfrontTotal != null ? discount.discountedUpfrontTotal : firstMonthBase
+    );
+    const originalUpfrontTotal = Number(
+      discount && discount.originalUpfrontTotal != null ? discount.originalUpfrontTotal : originalFirstMonthBase
+    );
+    const discountAmountApplied = Math.max(originalUpfrontTotal - discountedUpfrontTotal, 0);
+
+    const discountMetadata = {
+      discountType,
+      discountValue: discountValue.toString(),
+      originalUpfrontTotal: originalUpfrontTotal.toString(),
+      discountedUpfrontTotal: discountedUpfrontTotal.toString(),
+      discountAmount: discountAmountApplied.toString()
+    };
 
     const planProtectionMetadata = {};
     if (planProtection && planProtection.selected) {
@@ -154,7 +174,8 @@ module.exports = async function handler(req, res) {
           yearlyInfraFee: yearlyInfraFee.toString(),
           yearlyTrialDays: '365',
           ...planProtectionMetadata,
-          ...keepSystemMetadata
+          ...keepSystemMetadata,
+          ...discountMetadata
         }
       },
       metadata: {
@@ -169,7 +190,8 @@ module.exports = async function handler(req, res) {
         yearlyInfraEnabled: yearlyInfraEnabled ? 'true' : 'false',
         yearlyInfraFee: yearlyInfraFee.toString(),
         ...planProtectionMetadata,
-        ...keepSystemMetadata
+        ...keepSystemMetadata,
+        ...discountMetadata
       },
       success_url: `${SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${CANCEL_URL}?canceled=true`
