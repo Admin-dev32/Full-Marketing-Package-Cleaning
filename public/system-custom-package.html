@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-translation-key="pageTitle">Paquete a la medida – Bako Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #08090d;
+      --card: rgba(20, 22, 29, 0.72);
+      --accent: #d4af37;
+      --text: #f5f5f7;
+      --muted: #b7b7c2;
+      --border: #20232d;
+      --gradient: linear-gradient(135deg, rgba(241, 210, 122, 0.28), rgba(212, 175, 55, 0.18), rgba(184, 138, 31, 0.14));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05), transparent 26%),
+        radial-gradient(circle at 80% 0%, rgba(184, 138, 31, 0.06), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background:
+        linear-gradient(120deg, rgba(120, 78, 38, 0.6), rgba(58, 38, 18, 0.92)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2));
+      border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+    }
+
+    .logo-mark {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--accent);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .lang-button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      padding: 6px 10px;
+      transition: color 0.2s ease, background 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .lang-button.active,
+    .lang-button:hover {
+      color: var(--text);
+      background: rgba(212, 175, 55, 0.14);
+    }
+
+    .divider {
+      opacity: 0.5;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      align-items: center;
+      padding: 24px 0 64px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.1;
+      margin: 8px 0 16px;
+    }
+
+    .hero .subtitle {
+      max-width: 520px;
+      color: var(--muted);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      position: relative;
+      z-index: 1;
+      padding: 18px 24px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(20, 22, 29, 0.88));
+      border-radius: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+    }
+
+    .glow {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.22), transparent 60%);
+      filter: blur(18px);
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #f1d27a, #d4af37, #b88a1f);
+      color: #0b0b0f;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease, border-color 0.24s ease;
+      margin-top: 18px;
+      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.2);
+      transform: translateY(0) scale(1);
+    }
+
+    .cta:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(212, 175, 55, 0.28);
+      filter: brightness(1.03);
+    }
+
+    .cta:active {
+      transform: translateY(0) scale(0.98);
+      filter: brightness(0.98);
+      transition-duration: 0.12s;
+    }
+
+    .section {
+      padding: 56px 0;
+      border-top: 1px solid rgba(212, 175, 55, 0.14);
+    }
+
+    .section-header h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(26px, 4vw, 36px);
+      margin: 6px 0 10px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 780px;
+      margin: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .problem-list {
+      list-style: none;
+      padding: 0;
+      margin: 28px 0 0;
+      display: grid;
+      gap: 16px;
+    }
+
+    .problem-list li {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: var(--text);
+      position: relative;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .problem-list li::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 18px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .block-grid,
+    .services-grid,
+    .options-grid,
+    .totals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .block-card,
+    .service-card,
+    .totals-card,
+    .option-card,
+    .summary-card {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.26);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, filter 0.24s ease;
+      backdrop-filter: blur(18px);
+    }
+
+    .block-card::after,
+    .service-card::after,
+    .option-card::after,
+    .summary-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.28s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    .block-card:hover::after,
+    .service-card:hover::after,
+    .option-card:hover::after,
+    .summary-card:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .block-card:hover,
+    .service-card:hover,
+    .option-card:hover,
+    .summary-card:hover {
+      transform: translateY(-3px) scale(1.01);
+      border-color: rgba(212, 175, 55, 0.35);
+      box-shadow: 0 16px 42px rgba(212, 175, 55, 0.18);
+      filter: brightness(1.01);
+    }
+
+    .block-card h3,
+    .service-card h3,
+    .totals-card h3,
+    .summary-card h3 {
+      margin: 0 0 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .block-card p,
+    .service-card p,
+    .summary-card p,
+    .option-card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    .block-card ul,
+    .service-card ul {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--muted);
+      display: grid;
+      gap: 6px;
+    }
+
+    .totals-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+      color: var(--muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .totals-row strong {
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .totals-highlight {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .financing-line {
+      margin-top: 10px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .financing-line input {
+      margin-top: 4px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .service-option,
+    .option-card label,
+    .service-select {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--text);
+    }
+
+    .service-option input,
+    .option-card input,
+    .service-select input {
+      margin-top: 4px;
+    }
+
+    .price,
+    .service-price {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .terms {
+      display: grid;
+      gap: 10px;
+      margin: 10px 0 16px;
+      color: var(--muted);
+    }
+
+    .terms a {
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .cta-panel {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      padding: 24px;
+      border-radius: 16px;
+      display: grid;
+      gap: 16px;
+      align-items: center;
+      grid-template-columns: 1fr auto;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
+    }
+
+    .footer {
+      border-top: 1px solid rgba(212, 175, 55, 0.14);
+      padding: 28px 24px 40px;
+      text-align: center;
+      color: var(--muted);
+      background:
+        linear-gradient(120deg, rgba(120, 78, 38, 0.45), rgba(58, 38, 18, 0.88)),
+        rgba(8, 9, 13, 0.8);
+      backdrop-filter: blur(12px);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+      transition-delay: var(--reveal-delay, 0s);
+      will-change: opacity, transform;
+    }
+
+    .reveal--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .included {
+      opacity: 0.55;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .included-badge {
+      background: linear-gradient(135deg, #f2c94c, #b8860b);
+      color: #000;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: 8px;
+      font-size: 0.75rem;
+    }
+
+    .meta-budget {
+      display: grid;
+      gap: 8px;
+      max-width: 480px;
+    }
+
+    .totals-callout {
+      display: grid;
+      gap: 10px;
+    }
+
+    .note-small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .yearly-line {
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 96px 18px 60px;
+      }
+
+      .top-bar {
+        padding: 14px 18px;
+      }
+
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 88px 16px 56px;
+      }
+
+      .hero {
+        padding: 12px 0 40px;
+      }
+
+      .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .hero .subtitle {
+        font-size: 14px;
+      }
+
+      .cta {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .cta + .cta {
+        margin-top: 10px;
+      }
+
+      .block-card,
+      .service-card {
+        padding: 16px;
+      }
+
+      .problem-list li {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar reveal">
+    <div class="logo-mark" data-translation-key="brand">Bako Systems</div>
+    <div class="language-switch">
+      <button class="lang-button active" data-lang="es">ES</button>
+      <span class="divider">/</span>
+      <button class="lang-button" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero reveal">
+      <div class="hero-content">
+        <div class="eyebrow" data-translation-key="hero.tag">Paquete a la medida</div>
+        <h1 data-translation-key="hero.title">Paquete a la medida</h1>
+        <p class="subtitle" data-translation-key="hero.subtitle">
+          Selecciona servicios individuales a precio regular y arma el sistema que mejor encaje con tu operación.
+        </p>
+        <ul class="problem-list">
+          <li data-translation-key="hero.bullet1">Empresas que quieren probar solo ciertas partes del sistema.</li>
+          <li data-translation-key="hero.bullet2">Negocios que ya tienen web y buscan módulos específicos.</li>
+          <li data-translation-key="hero.bullet3">Casos que necesitan una combinación muy personalizada.</li>
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <div class="glow" aria-hidden="true"></div>
+        <div class="badge" data-translation-key="hero.badge">Custom</div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="pricing" style="--reveal-delay: 0.05s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="pricing.tag">Resumen de inversión</span>
+        <h2 data-translation-key="pricing.title">Inversión personalizada</h2>
+        <p class="section-subtitle" data-translation-key="pricing.subtitle">
+          Suma los servicios que necesites. El setup incluye el primer mes; la mensualidad inicia en el mes 2.
+        </p>
+      </div>
+      <div class="totals-grid">
+        <div class="totals-card">
+          <div class="totals-row">
+            <span data-translation-key="pricing.setupLabel">Setup hoy:</span>
+            <strong id="setup-today">$0</strong>
+          </div>
+          <div class="totals-row">
+            <span data-translation-key="pricing.metaLabel">Meta Ads (primer mes):</span>
+            <span id="meta-first-month" class="totals-highlight">$0</span>
+          </div>
+          <div class="totals-row">
+            <span data-translation-key="pricing.addonsSetup">Add-ons (setup):</span>
+            <span id="addons-setup" class="totals-highlight">$0</span>
+          </div>
+          <div class="totals-row">
+            <span data-translation-key="pricing.financingFee">Financiamiento (3% hoy):</span>
+            <span id="financing-fee">$0</span>
+          </div>
+          <div class="totals-row">
+            <span class="totals-highlight" data-translation-key="pricing.todayLabel">Total a pagar hoy:</span>
+            <span class="totals-highlight" id="today-total">$0</span>
+          </div>
+          <p class="note" data-translation-key="pricing.todayFinancingNote">
+            El setup incluye el primer mes. Si eliges financiamiento, se suma 3% solo al pago de hoy.
+          </p>
+        </div>
+        <div class="totals-card">
+          <div class="totals-row">
+            <span data-translation-key="pricing.monthlyLabel">Mensualidad base (se cobra desde el mes 2):</span>
+            <span id="monthly-base" class="totals-highlight">$0</span>
+          </div>
+          <div class="totals-row" id="keep-on-row" style="display: none;">
+            <span id="keep-on-label" class="summary-label" data-translation-key="summary.keepSystemOnLine">Keep System On Only: {amount}/mes (solo mantenimiento del sistema y API)</span>
+            <span id="keep-on-amount" class="totals-highlight">$0</span>
+          </div>
+          <div class="totals-row">
+            <span data-translation-key="pricing.addonsMonthly">Add-ons (mensual):</span>
+            <span id="addons-monthly" class="totals-highlight">$0</span>
+          </div>
+          <div class="totals-row">
+            <span class="totals-highlight" data-translation-key="pricing.month2Label">Pago mensual estimado a partir del mes 2:</span>
+            <span class="totals-highlight" id="monthly-from-month2">$0</span>
+          </div>
+          <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
+          <p class="yearly-line" id="yearly-line" data-translation-key="yearly.line">Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.</p>
+        </div>
+      </div>
+      <div class="totals-grid">
+        <div class="totals-card">
+          <label class="financing-line">
+            <input type="checkbox" id="financing" />
+            <span data-translation-key="pricing.financingLabel">Quiero financiamiento (3% solo aplica al pago de hoy)</span>
+          </label>
+          <label class="financing-line">
+            <input type="checkbox" id="plan-protection" />
+            <span data-translation-key="addons.planProtection.desc">Plan Protection: suma $50 al mes. Si el sistema funciona bien y recuperas tu inversión, se paga la mensualidad normal + $50. Si un mes los resultados son muy bajos y la campaña no fue efectiva, podemos ajustar ese mes al mínimo de este paquete (esto lo hace la agencia manualmente).</span>
+          </label>
+          <label class="financing-line">
+            <input type="checkbox" id="keep-system-on" />
+            <span data-translation-key="addons.keepOn.desc">Modo en el que pausamos tu trabajo de marketing y solo mantenemos el sistema y el API funcionando.</span>
+          </label>
+        </div>
+        <div class="totals-card">
+          <div class="meta-budget">
+            <label for="meta-budget-input" data-translation-key="budget.label">Ingresa tu presupuesto mensual de Meta (ej. 300)</label>
+            <input id="meta-budget-input" type="number" min="0" step="50" placeholder="300" />
+            <small data-translation-key="budget.note">Se suma al pago de hoy como primer mes y al estimado mensual desde el mes 2.</small>
+          </div>
+          <div class="meta-budget" style="margin-top: 14px;">
+            <label for="google-budget-input" data-translation-key="budget.googleLabel">Presupuesto mensual de Google Ads (se paga directo a Google)</label>
+            <input id="google-budget-input" type="number" min="0" step="50" placeholder="300" />
+            <small data-translation-key="budget.googleNote">Solo se documenta en la propuesta; Google lo cobra directo a tu tarjeta.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="services" style="--reveal-delay: 0.1s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="services.tag">Servicios a-la-carte</span>
+        <h2 data-translation-key="services.title">Componentes individuales con precio</h2>
+        <p class="section-subtitle" data-translation-key="services.subtitle">Activa solo lo que necesites con precios regulares fuera de paquete.</p>
+      </div>
+      <div class="services-grid" id="addon-list">
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="architecture" data-addon-setup="484" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.architecture.title">Arquitectura y estrategia del sistema</h3>
+              <p data-translation-key="services.architecture.desc">Mapa de servicios, flujos y automatizaciones base.</p>
+              <div class="price" data-translation-key="services.architecture.price">$484 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="website" data-addon-setup="968" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.website.title">Sitio web profesional (1–3 secciones + Book Now)</h3>
+              <p data-translation-key="services.website.desc">Página premium con mensaje claro y botón de reserva.</p>
+              <div class="price" data-translation-key="services.website.price">$968 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="stripe" data-addon-setup="484" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.stripe.title">Configuración de Stripe (servicios + planes)</h3>
+              <p data-translation-key="services.stripe.desc">Cobros por servicio y planes listos para crecer.</p>
+              <div class="price" data-translation-key="services.stripe.price">$484 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="gbp" data-addon-setup="363" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.gbp.title">Google Business Profile – Setup completo</h3>
+              <p data-translation-key="services.gbp.desc">Ficha optimizada con categorías y servicios listos.</p>
+              <div class="price" data-translation-key="services.gbp.price">$363 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="booking" data-addon-setup="605" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.booking.title">Sistema de reservas + Google Calendar</h3>
+              <p data-translation-key="services.booking.desc">Agenda central con envíos automáticos al calendario.</p>
+              <div class="price" data-translation-key="services.booking.price">$605 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="automation" data-addon-setup="605" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.automation.title">Automatizaciones de comunicación</h3>
+              <p data-translation-key="services.automation.desc">Confirmaciones, recordatorios y mensajes posteriores.</p>
+              <div class="price" data-translation-key="services.automation.price">$605 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="meta" data-addon-setup="605" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.metaAds.title">Campaña inicial Meta Ads</h3>
+              <p data-translation-key="services.metaAds.desc">Primer empuje en Facebook/Instagram para reservas.</p>
+              <div class="price" data-translation-key="services.metaAds.price">$605 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="google" data-addon-setup="605" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.googleAds.title">Campaña inicial Google Ads</h3>
+              <p data-translation-key="services.googleAds.desc">Búsquedas activas hacia tu página y botón de reserva.</p>
+              <div class="price" data-translation-key="services.googleAds.price">$605 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="dashboard" data-addon-setup="0" data-addon-monthly="198" />
+            <div>
+              <h3 data-translation-key="services.dashboard.title">Dashboard / reporte simple</h3>
+              <p data-translation-key="services.dashboard.desc">Vista recurrente de citas, ingresos y frecuencia.</p>
+              <div class="price" data-translation-key="services.dashboard.price">$198/mes</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="content" data-addon-setup="484" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.content.title">Mini plan de contenido + guía de foto/video</h3>
+              <p data-translation-key="services.content.desc">Ideas y guías visuales para mostrar tu trabajo.</p>
+              <div class="price" data-translation-key="services.content.price">$484 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="reactivation" data-addon-setup="605" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.reactivation.title">Secuencias de reactivación</h3>
+              <p data-translation-key="services.reactivation.desc">Flujos para recuperar clientes inactivos.</p>
+              <div class="price" data-translation-key="services.reactivation.price">$605 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="team" data-addon-setup="605" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.team.title">Estructura de agenda por equipos</h3>
+              <p data-translation-key="services.team.desc">Asignación clara por equipo y zona.</p>
+              <div class="price" data-translation-key="services.team.price">$605 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="training" data-addon-setup="308" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.training.title">Sesión de capacitación</h3>
+              <p data-translation-key="services.training.desc">Guía para dominar el sistema día a día.</p>
+              <div class="price" data-translation-key="services.training.price">$308 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="priority" data-addon-setup="275" data-addon-monthly="0" />
+            <div>
+              <h3 data-translation-key="services.priority.title">Soporte prioritario 30 días</h3>
+              <p data-translation-key="services.priority.desc">Acompañamiento rápido en el arranque.</p>
+              <div class="price" data-translation-key="services.priority.price">$275 USD</div>
+            </div>
+          </label>
+        </article>
+        <article class="service-card">
+          <label class="service-option">
+            <input type="checkbox" data-addon-id="meta-management" data-addon-setup="0" data-addon-monthly="385" />
+            <div>
+              <h3 data-translation-key="services.metaManagement.title">Gestión mensual Meta Ads</h3>
+              <p data-translation-key="services.metaManagement.desc">Optimización continua de campañas para mantener reservas.</p>
+              <div class="price" data-translation-key="services.metaManagement.price">$385/mes</div>
+            </div>
+          </label>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="checkout" style="--reveal-delay: 0.14s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="checkout.tag">Activar sistema</span>
+        <h2 data-translation-key="checkout.title">Listo para pagar y activar</h2>
+        <p class="section-subtitle" data-translation-key="checkout.subtitle">Revisa totales, acepta términos y pasa al checkout seguro.</p>
+      </div>
+      <div class="terms">
+        <label>
+          <input type="checkbox" id="terms-accepted" />
+          <span data-translation-key="checkout.terms">He leído y acepto los Términos y Condiciones del servicio.</span>
+        </label>
+        <a href="https://thebakoagency.com/system-cleaning-terms" target="_blank" id="terms-link" data-translation-key="checkout.termsLink">Ver Términos y Condiciones</a>
+      </div>
+      <div class="cta-panel">
+        <div>
+          <p class="section-subtitle" data-translation-key="checkout.help">Si tienes preguntas antes de pagar, podemos revisarlo en una llamada rápida.</p>
+          <div id="checkout-message" class="error-message" aria-live="polite"></div>
+        </div>
+        <button class="cta" id="checkout-button" data-translation-key="checkout.button" disabled>Proceder al checkout</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer reveal">
+    <p data-translation-key="footer">Presentación interna – Bako Business Branding</p>
+  </footer>
+
+  <script>
+    const BASE_SETUP = 0;
+    const BASE_MONTHLY = 0;
+    const PLAN_PROTECTION_FEE = 50;
+    const KEEP_SYSTEM_ON_FEE = 50;
+    const YEARLY_INFRA_FEE = 220;
+    const PACKAGE_ID = 'custom-package';
+
+    const translations = {
+      es: {
+        pageTitle: 'Paquete a la medida – Bako Systems',
+        brand: 'Bako Systems',
+        'hero.tag': 'Paquete a la medida',
+        'hero.title': 'Paquete a la medida',
+        'hero.subtitle':
+          'Selecciona servicios individuales a precio regular y arma el sistema que mejor encaje con tu operación.',
+        'hero.bullet1': 'Empresas que quieren probar solo ciertas partes del sistema.',
+        'hero.bullet2': 'Negocios que ya tienen web y buscan módulos específicos.',
+        'hero.bullet3': 'Casos que necesitan una combinación muy personalizada.',
+        'hero.badge': 'Custom',
+        'pricing.tag': 'Resumen de inversión',
+        'pricing.title': 'Inversión personalizada',
+        'pricing.subtitle': 'Suma los servicios que necesites. El setup incluye el primer mes; la mensualidad inicia en el mes 2.',
+        'pricing.setupLabel': 'Setup hoy:',
+        'pricing.monthlyLabel': 'Mensualidad base (se cobra desde el mes 2):',
+        'pricing.metaLabel': 'Meta Ads (primer mes):',
+        'pricing.addonsSetup': 'Add-ons (setup):',
+        'pricing.addonsMonthly': 'Add-ons (mensual):',
+        'pricing.financingFee': 'Financiamiento (3% hoy):',
+        'pricing.todayLabel': 'Total a pagar hoy:',
+        'pricing.month2Label': 'Pago mensual estimado a partir del mes 2:',
+        'yearly.title': 'Infraestructura anual (dominio + hosting)',
+        'yearly.description':
+          'El primer año ya está incluido en el setup. A partir del segundo año, se renueva de forma automática para que tu sistema se mantenga en línea.',
+        'yearly.line': 'Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.',
+        'pricing.financingLabel': 'Quiero financiamiento (3% solo aplica al pago de hoy)',
+        'pricing.todayFinancingNote': 'El setup incluye el primer mes. Si eliges financiamiento, se suma 3% solo al pago de hoy.',
+        'pricing.note': 'Estos montos son estimados y se confirmarán en tu checkout seguro.',
+        'summary.keepSystemOnLine': 'Keep System On Only: {amount}/mes (solo mantenimiento del sistema y API)',
+        'summary.marketingPaused': 'Marketing mensual: $0 (pausado)',
+        'addons.planProtection.label': 'Plan Protection',
+        'addons.planProtection.desc':
+          'Plan Protection: suma $50 al mes. Si el sistema funciona bien y recuperas tu inversión, se paga la mensualidad normal + $50. Si un mes los resultados son muy bajos y la campaña no fue efectiva, podemos ajustar ese mes al mínimo de este paquete (esto lo hace la agencia manualmente).',
+        'addons.planProtection.price': '$50/mes',
+        'addons.keepOn.label': 'Keep System On Only',
+        'addons.keepOn.desc': 'Modo en el que pausamos tu trabajo de marketing y solo mantenemos el sistema y el API funcionando.',
+        'addons.keepOn.price': '$50/mes',
+        'services.tag': 'Servicios a-la-carte',
+        'services.title': 'Componentes individuales con precio',
+        'services.subtitle': 'Activa solo lo que necesites con precios regulares fuera de paquete.',
+        'services.architecture.title': 'Arquitectura y estrategia del sistema',
+        'services.architecture.desc': 'Mapa de servicios, flujos y automatizaciones base.',
+        'services.architecture.price': '$484 USD',
+        'services.website.title': 'Sitio web profesional (1–3 secciones + Book Now)',
+        'services.website.desc': 'Página premium con mensaje claro y botón de reserva.',
+        'services.website.price': '$968 USD',
+        'services.stripe.title': 'Configuración de Stripe (servicios + planes)',
+        'services.stripe.desc': 'Cobros por servicio y planes listos para crecer.',
+        'services.stripe.price': '$484 USD',
+        'services.gbp.title': 'Google Business Profile – Setup completo',
+        'services.gbp.desc': 'Ficha optimizada con categorías y servicios listos.',
+        'services.gbp.price': '$363 USD',
+        'services.booking.title': 'Sistema de reservas + Google Calendar',
+        'services.booking.desc': 'Agenda central con envíos automáticos al calendario.',
+        'services.booking.price': '$605 USD',
+        'services.automation.title': 'Automatizaciones de comunicación',
+        'services.automation.desc': 'Confirmaciones, recordatorios y mensajes posteriores.',
+        'services.automation.price': '$605 USD',
+        'services.metaAds.title': 'Campaña inicial Meta Ads',
+        'services.metaAds.desc': 'Primer empuje en Facebook/Instagram para reservas.',
+        'services.metaAds.price': '$605 USD',
+        'services.googleAds.title': 'Campaña inicial Google Ads',
+        'services.googleAds.desc': 'Búsquedas activas hacia tu página y botón de reserva.',
+        'services.googleAds.price': '$605 USD',
+        'services.dashboard.title': 'Dashboard / reporte simple',
+        'services.dashboard.desc': 'Vista recurrente de citas, ingresos y frecuencia.',
+        'services.dashboard.price': '$198/mes',
+        'services.content.title': 'Mini plan de contenido + guía de foto/video',
+        'services.content.desc': 'Ideas y guías visuales para mostrar tu trabajo.',
+        'services.content.price': '$484 USD',
+        'services.reactivation.title': 'Secuencias de reactivación',
+        'services.reactivation.desc': 'Flujos para recuperar clientes inactivos.',
+        'services.reactivation.price': '$605 USD',
+        'services.team.title': 'Estructura de agenda por equipos',
+        'services.team.desc': 'Asignación clara por equipo y zona.',
+        'services.team.price': '$605 USD',
+        'services.training.title': 'Sesión de capacitación',
+        'services.training.desc': 'Guía para dominar el sistema día a día.',
+        'services.training.price': '$308 USD',
+        'services.priority.title': 'Soporte prioritario 30 días',
+        'services.priority.desc': 'Acompañamiento rápido en el arranque.',
+        'services.priority.price': '$275 USD',
+        'services.metaManagement.title': 'Gestión mensual Meta Ads',
+        'services.metaManagement.desc': 'Optimización continua de campañas para mantener reservas.',
+        'services.metaManagement.price': '$385/mes',
+        'budget.label': 'Ingresa tu presupuesto mensual de Meta (ej. 300)',
+        'budget.note': 'Se suma al pago de hoy como primer mes y al estimado mensual desde el mes 2.',
+        'budget.googleLabel': 'Presupuesto mensual de Google Ads (se paga directo a Google)',
+        'budget.googleNote': 'Solo se documenta en la propuesta; Google lo cobra directo a tu tarjeta.',
+        'checkout.tag': 'Activar sistema',
+        'checkout.title': 'Listo para pagar y activar',
+        'checkout.subtitle': 'Revisa totales, acepta términos y pasa al checkout seguro.',
+        'checkout.terms': 'He leído y acepto los Términos y Condiciones del servicio.',
+        'checkout.termsLink': 'Ver Términos y Condiciones',
+        'checkout.help': 'Si tienes preguntas antes de pagar, podemos revisarlo en una llamada rápida.',
+        'checkout.button': 'Proceder al checkout',
+        'checkout.errorTerms': 'Debes aceptar los términos antes de continuar.',
+        'checkout.errorGeneric': 'Hubo un problema al iniciar el checkout. Intenta de nuevo.',
+        footer: 'Presentación interna – Bako Business Branding',
+        included: 'INCLUIDO'
+      },
+      en: {
+        pageTitle: 'Custom Package – Bako Systems',
+        brand: 'Bako Systems',
+        'hero.tag': 'Custom Package',
+        'hero.title': 'Custom Package',
+        'hero.subtitle': 'Select individual services at regular rates and assemble the system that fits your operation best.',
+        'hero.bullet1': 'Cleaning businesses that want to try specific parts of the system.',
+        'hero.bullet2': 'Companies that already have a site and only need targeted modules.',
+        'hero.bullet3': 'Cases needing a highly personalized combination.',
+        'hero.badge': 'Custom',
+        'pricing.tag': 'Investment summary',
+        'pricing.title': 'Custom investment',
+        'pricing.subtitle': 'Add only what you need. Setup includes the first month; monthly billing begins in month 2.',
+        'pricing.setupLabel': 'Setup today:',
+        'pricing.monthlyLabel': 'Base monthly (charged from month 2):',
+        'pricing.metaLabel': 'Meta Ads (month 1):',
+        'pricing.addonsSetup': 'Add-ons (setup):',
+        'pricing.addonsMonthly': 'Add-ons (monthly):',
+        'pricing.financingFee': 'Financing (3% today):',
+        'pricing.todayLabel': 'Total to pay today:',
+        'pricing.month2Label': 'Estimated monthly from month 2:',
+        'yearly.title': 'Yearly infrastructure (domain + hosting)',
+        'yearly.description':
+          'The first year is already included in the setup. Starting in year two, it auto-renews so your system stays online.',
+        'yearly.line': 'Yearly infra: year 1 included, then {amount}/year starting from year 2.',
+        'pricing.financingLabel': "I want financing (3% only applies to today's payment)",
+        'pricing.todayFinancingNote': "Setup includes the first month. If you choose financing, 3% applies only to today's payment.",
+        'pricing.note': 'These amounts are estimates and will be confirmed in secure checkout.',
+        'summary.keepSystemOnLine': 'Keep System On Only: {amount}/month (system and API maintenance only)',
+        'summary.marketingPaused': 'Monthly marketing: $0 (paused)',
+        'addons.planProtection.label': 'Plan Protection',
+        'addons.planProtection.desc':
+          'Plan Protection: adds $50/month. If the system performs well and you recover your investment, you pay the regular monthly fee + $50. If results are very low and the campaign was not effective, we can manually adjust that month down to the minimum monthly for this package.',
+        'addons.planProtection.price': '$50/mo',
+        'addons.keepOn.label': 'Keep System On Only',
+        'addons.keepOn.desc': 'Mode where we pause your marketing work and only keep the system and API online.',
+        'addons.keepOn.price': '$50/mo',
+        'services.tag': 'À-la-carte services',
+        'services.title': 'Individual components with pricing',
+        'services.subtitle': 'Activate only what you need with regular out-of-package rates.',
+        'services.architecture.title': 'System architecture and strategy',
+        'services.architecture.desc': 'Service map, flows, and base automations.',
+        'services.architecture.price': '$484 USD',
+        'services.website.title': 'Professional website (1–3 sections + Book Now)',
+        'services.website.desc': 'Premium page with clear message and booking button.',
+        'services.website.price': '$968 USD',
+        'services.stripe.title': 'Stripe setup (services + plans)',
+        'services.stripe.desc': 'Per-service charges and plans ready to grow.',
+        'services.stripe.price': '$484 USD',
+        'services.gbp.title': 'Google Business Profile – Complete setup',
+        'services.gbp.desc': 'Optimized listing with categories and services.',
+        'services.gbp.price': '$363 USD',
+        'services.booking.title': 'Booking system + Google Calendar',
+        'services.booking.desc': 'Central calendar with automatic calendar sends.',
+        'services.booking.price': '$605 USD',
+        'services.automation.title': 'Communication automations',
+        'services.automation.desc': 'Confirmations, reminders, and post-service messages.',
+        'services.automation.price': '$605 USD',
+        'services.metaAds.title': 'Initial Meta Ads campaign',
+        'services.metaAds.desc': 'First push on Facebook/Instagram for bookings.',
+        'services.metaAds.price': '$605 USD',
+        'services.googleAds.title': 'Initial Google Ads campaign',
+        'services.googleAds.desc': 'Active searches to your page and booking button.',
+        'services.googleAds.price': '$605 USD',
+        'services.dashboard.title': 'Simple dashboard / report',
+        'services.dashboard.desc': 'Recurring view of appointments, revenue, and frequency.',
+        'services.dashboard.price': '$198/mo',
+        'services.content.title': 'Mini content plan + photo/video guide',
+        'services.content.desc': 'Ideas and visual guides to showcase your work.',
+        'services.content.price': '$484 USD',
+        'services.reactivation.title': 'Reactivation sequences',
+        'services.reactivation.desc': 'Flows to recover inactive clients.',
+        'services.reactivation.price': '$605 USD',
+        'services.team.title': 'Team scheduling structure',
+        'services.team.desc': 'Clear assignments by team and zone.',
+        'services.team.price': '$605 USD',
+        'services.training.title': 'Training session',
+        'services.training.desc': 'Guidance to master day-to-day operations.',
+        'services.training.price': '$308 USD',
+        'services.priority.title': 'Priority support (30 days)',
+        'services.priority.desc': 'Fast accompaniment at launch.',
+        'services.priority.price': '$275 USD',
+        'services.metaManagement.title': 'Monthly Meta Ads management',
+        'services.metaManagement.desc': 'Continuous optimization to keep bookings coming.',
+        'services.metaManagement.price': '$385/mo',
+        'budget.label': 'Enter your monthly Meta Ads budget (e.g., 300)',
+        'budget.note': "It is added to today's payment as month one and to the monthly estimate from month two.",
+        'budget.googleLabel': 'Monthly Google Ads budget (paid directly to Google)',
+        'budget.googleNote': 'Documented only in the proposal; Google charges your card directly.',
+        'checkout.tag': 'Activate system',
+        'checkout.title': 'Ready to pay and activate',
+        'checkout.subtitle': 'Review totals, accept terms, and go to secure checkout.',
+        'checkout.terms': 'I have read and accept the Terms and Conditions.',
+        'checkout.termsLink': 'View Terms and Conditions',
+        'checkout.help': 'If you have questions before paying, we can review them quickly on a call.',
+        'checkout.button': 'Proceed to checkout',
+        'checkout.errorTerms': 'You must accept the terms before continuing.',
+        'checkout.errorGeneric': 'There was a problem starting checkout. Please try again.',
+        footer: 'Internal presentation – Bako Business Branding',
+        included: 'INCLUDED'
+      }
+    };
+
+    const langButtons = document.querySelectorAll('.lang-button');
+    const translatableElements = document.querySelectorAll('[data-translation-key]');
+
+    const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+    const addonsList = document.getElementById('addon-list');
+    const planProtectionCheckbox = document.getElementById('plan-protection');
+    const keepSystemOnCheckbox = document.getElementById('keep-system-on');
+    const financingCheckbox = document.getElementById('financing');
+    const metaBudgetInput = document.getElementById('meta-budget-input');
+    const googleBudgetInput = document.getElementById('google-budget-input');
+    const termsCheckbox = document.getElementById('terms-accepted');
+    const termsLink = document.getElementById('terms-link');
+    const checkoutButton = document.getElementById('checkout-button');
+    const messageBox = document.getElementById('checkout-message');
+
+    const yearlyTextEl = document.getElementById('yearly-line');
+
+    let currentLanguage = 'es';
+
+    function formatCurrency(value) {
+      return formatter.format(Number(value) || 0);
+    }
+
+    function updateLanguage(lang) {
+      const translation = translations[lang];
+      if (!translation) return;
+      currentLanguage = lang;
+
+      translatableElements.forEach((el) => {
+        const key = el.getAttribute('data-translation-key');
+        if (translation[key]) {
+          if (el.tagName.toLowerCase() === 'input' && el.hasAttribute('placeholder')) {
+            el.setAttribute('placeholder', translation[key]);
+          } else {
+            el.textContent = translation[key];
+          }
+        }
+      });
+
+      document.documentElement.lang = lang;
+      document.title = translation.pageTitle || document.title;
+
+      langButtons.forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      updateTotals();
+    }
+
+    langButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        updateLanguage(btn.getAttribute('data-lang'));
+      });
+    });
+
+    function openOutside(url) {
+      if (!url) return;
+      try {
+        window.top.location.href = url;
+      } catch (e) {
+        window.open(url, '_blank');
+      }
+    }
+
+    function getSelectedAddons() {
+      const addons = [];
+      addonsList.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+        if (input.checked) {
+          const setup = Number(input.dataset.addonSetup || 0);
+          const monthly = Number(input.dataset.addonMonthly || 0);
+          addons.push({ id: input.dataset.addonId, setup, monthly });
+        }
+      });
+      return addons;
+    }
+
+    function calculateTotals() {
+      const addons = getSelectedAddons();
+      const addonsSetupTotal = addons.reduce((acc, item) => acc + item.setup, 0);
+      const financingSelected = Boolean(financingCheckbox?.checked);
+      const keepSystemOnSelected = Boolean(keepSystemOnCheckbox?.checked);
+      const planProtectionSelected = keepSystemOnSelected ? false : Boolean(planProtectionCheckbox?.checked);
+      const planProtectionFee = planProtectionSelected ? PLAN_PROTECTION_FEE : 0;
+
+      const addonsMonthlyWithoutProtection = addons.reduce((acc, item) => acc + item.monthly, 0);
+
+      const metaBudget = Number(metaBudgetInput.value || 0);
+
+      const monthlyRegular = keepSystemOnSelected ? 0 : BASE_MONTHLY + addonsMonthlyWithoutProtection;
+      const monthlyBaseDisplay = keepSystemOnSelected ? 0 : monthlyRegular + planProtectionFee;
+      const monthlyMinimum = monthlyRegular;
+
+      const setupToday = BASE_SETUP + addonsSetupTotal;
+      const monthlyBaseFromMonth2 = (keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : monthlyBaseDisplay) + metaBudget;
+      const firstMonthBase = setupToday + metaBudget;
+
+      let financingFee = 0;
+      let firstMonthWithFinancing = firstMonthBase;
+      if (financingSelected) {
+        financingFee = Math.round(firstMonthBase * 0.03 * 100) / 100;
+        firstMonthWithFinancing = firstMonthBase + financingFee;
+      }
+
+      return {
+        addons,
+        addonsSetupTotal,
+        addonsMonthlyTotal: keepSystemOnSelected ? 0 : addonsMonthlyWithoutProtection + planProtectionFee,
+        financingSelected,
+        financingFee,
+        setupToday,
+        monthlyBase: monthlyBaseDisplay,
+        monthlyRegular,
+        monthlyMinimum,
+        keepSystemOnSelected,
+        keepSystemOnFee: KEEP_SYSTEM_ON_FEE,
+        planProtectionSelected,
+        planProtectionFee,
+        metaBudget,
+        googleBudget: Number(googleBudgetInput.value || 0),
+        firstMonthBase,
+        firstMonthWithFinancing,
+        monthlyFromMonth2: monthlyBaseFromMonth2,
+        yearlyInfraFee: YEARLY_INFRA_FEE
+      };
+    }
+
+    function updateTotals() {
+      const totals = calculateTotals();
+      const translation = translations[currentLanguage] || {};
+
+      document.getElementById('setup-today').textContent = formatCurrency(totals.setupToday);
+      document.getElementById('meta-first-month').textContent = formatCurrency(totals.metaBudget);
+      document.getElementById('addons-setup').textContent = formatCurrency(totals.addonsSetupTotal);
+      document.getElementById('addons-monthly').textContent = formatCurrency(totals.addonsMonthlyTotal);
+      document.getElementById('financing-fee').textContent = formatCurrency(totals.financingFee);
+      document.getElementById('today-total').textContent = formatCurrency(totals.firstMonthWithFinancing);
+
+      const monthlyLabelEl = document.querySelector('[data-translation-key="pricing.monthlyLabel"]');
+      const monthlyValueEl = document.getElementById('monthly-base');
+      const keepOnRow = document.getElementById('keep-on-row');
+      const keepOnLabel = document.getElementById('keep-on-label');
+      const keepOnAmount = document.getElementById('keep-on-amount');
+
+      if (totals.keepSystemOnSelected) {
+        if (monthlyLabelEl) {
+          monthlyLabelEl.textContent = translation['summary.marketingPaused'] || 'Monthly marketing: $0 (paused)';
+        }
+        if (monthlyValueEl) {
+          monthlyValueEl.textContent = formatCurrency(0);
+        }
+        if (keepOnRow) keepOnRow.style.display = 'flex';
+        if (keepOnLabel) {
+          const template = translation['summary.keepSystemOnLine'] || 'Keep System On Only: {amount}/month (system and API maintenance only)';
+          keepOnLabel.textContent = template.replace('{amount}', formatCurrency(KEEP_SYSTEM_ON_FEE));
+        }
+        if (keepOnAmount) keepOnAmount.textContent = formatCurrency(KEEP_SYSTEM_ON_FEE);
+      } else {
+        if (monthlyLabelEl) {
+          monthlyLabelEl.textContent = translation['pricing.monthlyLabel'] || 'Base monthly (charged from month 2):';
+        }
+        if (monthlyValueEl) {
+          monthlyValueEl.textContent = formatCurrency(totals.monthlyBase);
+        }
+        if (keepOnRow) keepOnRow.style.display = 'none';
+      }
+
+      document.getElementById('monthly-from-month2').textContent = formatCurrency(totals.monthlyFromMonth2);
+
+      if (yearlyTextEl) {
+        const template = translation['yearly.line'] || 'Yearly infra: year 1 included, then {amount}/year starting from year 2.';
+        yearlyTextEl.textContent = template.replace('{amount}', formatCurrency(YEARLY_INFRA_FEE));
+      }
+    }
+
+    function validateTerms() {
+      if (!termsCheckbox.checked) {
+        checkoutButton.setAttribute('disabled', 'disabled');
+      } else {
+        checkoutButton.removeAttribute('disabled');
+      }
+    }
+
+    async function handleCheckout() {
+      if (!termsCheckbox.checked) {
+        messageBox.textContent = translations[currentLanguage]['checkout.errorTerms'];
+        return;
+      }
+      messageBox.textContent = '';
+      checkoutButton.setAttribute('disabled', 'disabled');
+
+      const totals = calculateTotals();
+
+      const payload = {
+        packageId: PACKAGE_ID,
+        setupBase: BASE_SETUP,
+        monthlyBase: BASE_MONTHLY,
+        addons: totals.addons,
+        metaBudgetMonthly: totals.metaBudget,
+        googleBudgetMonthly: totals.googleBudget,
+        planProtection: {
+          selected: totals.planProtectionSelected,
+          protectionFee: PLAN_PROTECTION_FEE,
+          monthlyRegular: totals.monthlyRegular,
+          monthlyMinimum: totals.monthlyMinimum
+        },
+        keepSystemOn: {
+          selected: totals.keepSystemOnSelected,
+          keepSystemOnFee: KEEP_SYSTEM_ON_FEE,
+          monthlyRegular: totals.monthlyRegular,
+          monthlyMinimum: totals.monthlyMinimum,
+          monthlyFeeForMarketing: totals.keepSystemOnSelected ? 0 : totals.monthlyBase,
+          monthlyFeeKeepSystemOn: totals.keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : 0
+        },
+        yearlyInfra: {
+          enabled: true,
+          yearlyInfraFee: YEARLY_INFRA_FEE,
+          currency: 'usd'
+        },
+        totals: {
+          setupToday: totals.setupToday,
+          firstMonthBase: totals.firstMonthBase,
+          firstMonthWithFinancing: totals.firstMonthWithFinancing,
+          monthlyFromMonth2: totals.monthlyFromMonth2
+        },
+        financing: {
+          selected: totals.financingSelected,
+          financingFee: totals.financingFee
+        },
+        currency: 'usd',
+        locale: currentLanguage
+      };
+
+      try {
+        const response = await fetch('https://google-ads-package-checkout-wb4k.vercel.app/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data && data.url) {
+          openOutside(data.url);
+        } else {
+          messageBox.textContent = translations[currentLanguage]['checkout.errorGeneric'];
+          checkoutButton.removeAttribute('disabled');
+        }
+      } catch (error) {
+        console.error('Checkout error', error);
+        messageBox.textContent = translations[currentLanguage]['checkout.errorGeneric'];
+        checkoutButton.removeAttribute('disabled');
+      }
+    }
+
+    addonsList.addEventListener('change', updateTotals);
+    planProtectionCheckbox?.addEventListener('change', () => {
+      if (keepSystemOnCheckbox?.checked) {
+        planProtectionCheckbox.checked = false;
+      }
+      updateTotals();
+    });
+
+    keepSystemOnCheckbox?.addEventListener('change', () => {
+      if (keepSystemOnCheckbox.checked) {
+        planProtectionCheckbox.checked = false;
+      }
+      updateTotals();
+    });
+
+    metaBudgetInput.addEventListener('input', updateTotals);
+    googleBudgetInput.addEventListener('input', updateTotals);
+    financingCheckbox?.addEventListener('change', updateTotals);
+
+    termsCheckbox.addEventListener('change', validateTerms);
+
+    document.getElementById('checkout-button')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleCheckout();
+    });
+
+    if (termsLink) {
+      termsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        openOutside(termsLink.href);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal--visible');
+          }
+        });
+      },
+      {
+        threshold: 0.16,
+        rootMargin: '0px 0px -10% 0px'
+      }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    updateLanguage('es');
+    updateTotals();
+    validateTerms();
+  </script>
+</body>
+</html>
