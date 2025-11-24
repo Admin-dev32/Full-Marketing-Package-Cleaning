@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-translation-key="pageTitle">Sistema Full Scale – Negocio que se Maneja Solo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #08090d;
+      --card: rgba(20, 22, 29, 0.72);
+      --accent: #d4af37;
+      --text: #f5f5f7;
+      --muted: #b7b7c2;
+      --border: #20232d;
+      --gradient: linear-gradient(135deg, rgba(241, 210, 122, 0.28), rgba(212, 175, 55, 0.18), rgba(184, 138, 31, 0.14));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05), transparent 26%),
+        radial-gradient(circle at 80% 0%, rgba(184, 138, 31, 0.06), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background:
+        linear-gradient(120deg, rgba(120, 78, 38, 0.6), rgba(58, 38, 18, 0.92)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2));
+      border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+    }
+
+    .logo-mark {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--accent);
+    }
+
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .lang-button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      padding: 6px 10px;
+      transition: color 0.2s ease, background 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .lang-button.active,
+    .lang-button:hover {
+      color: var(--text);
+      background: rgba(212, 175, 55, 0.14);
+    }
+
+    .divider {
+      opacity: 0.5;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      align-items: center;
+      padding: 24px 0 64px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.1;
+      margin: 8px 0 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .hero .subtitle {
+      max-width: 520px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      position: relative;
+      z-index: 1;
+      padding: 18px 24px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(20, 22, 29, 0.88));
+      border-radius: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+    }
+
+    .glow {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.22), transparent 60%);
+      filter: blur(18px);
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #f1d27a, #d4af37, #b88a1f);
+      color: #0b0b0f;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease, border-color 0.24s ease;
+      margin-top: 18px;
+      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.2);
+      transform: translateY(0) scale(1);
+    }
+
+    .cta:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(212, 175, 55, 0.28);
+      filter: brightness(1.03);
+    }
+
+    .cta:active {
+      transform: translateY(0) scale(0.98);
+      filter: brightness(0.98);
+      transition-duration: 0.12s;
+    }
+
+    .cta.secondary {
+      background: rgba(20, 22, 29, 0.6);
+      color: var(--text);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+    }
+
+    .cta.secondary:hover {
+      border-color: var(--accent);
+      box-shadow: 0 14px 30px rgba(212, 175, 55, 0.16);
+    }
+
+    .section {
+      padding: 56px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(26px, 4vw, 36px);
+      margin: 6px 0 10px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 780px;
+      margin: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .problem-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .problem-list li {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      padding: 16px 18px;
+      border-radius: 12px;
+      color: var(--text);
+      position: relative;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .problem-list li::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .block-grid,
+    .marketing-grid,
+    .packages-grid,
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .block-card,
+    .marketing-card,
+    .package-card {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.26);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, filter 0.24s ease;
+      backdrop-filter: blur(18px);
+    }
+
+    .block-card::after,
+    .marketing-card::after,
+    .package-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.28s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    .block-card:hover::after,
+    .marketing-card:hover::after,
+    .package-card:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .block-card:hover,
+    .marketing-card:hover,
+    .package-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(212, 175, 55, 0.35);
+      box-shadow: 0 16px 42px rgba(212, 175, 55, 0.18);
+      filter: brightness(1.01);
+    }
+
+    .block-card h3,
+    .marketing-card h3,
+    .package-card h3,
+    .package-name {
+      margin: 0 0 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .block-card p,
+    .marketing-card p,
+    .package-card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .block-card ul,
+    .marketing-card ul,
+    .package-card ul,
+    .vision-points {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--muted);
+      display: grid;
+      gap: 6px;
+    }
+
+    .packages-section {
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+
+    .package-card {
+      border-radius: 16px;
+    }
+
+    .package-card:hover::after {
+      opacity: 0.9;
+    }
+
+    .package-card--featured {
+      border-color: rgba(212, 175, 55, 0.6);
+      box-shadow: 0 18px 46px rgba(212, 175, 55, 0.24);
+    }
+
+    .package-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      background: rgba(212, 175, 55, 0.14);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      border-radius: 999px;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .package-investment-line {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .package-note,
+    .marketing-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .package-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .cta-panel {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      padding: 28px;
+      border-radius: 16px;
+      display: grid;
+      gap: 16px;
+      align-items: center;
+      grid-template-columns: 1fr auto;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
+    }
+
+    .footer {
+      border-top: 1px solid rgba(212, 175, 55, 0.14);
+      padding: 28px 24px 40px;
+      text-align: center;
+      color: var(--muted);
+      background:
+        linear-gradient(120deg, rgba(120, 78, 38, 0.45), rgba(58, 38, 18, 0.88)),
+        rgba(8, 9, 13, 0.8);
+      backdrop-filter: blur(12px);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+      transition-delay: var(--reveal-delay, 0s);
+      will-change: opacity, transform;
+    }
+
+    .reveal--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 96px 18px 60px;
+      }
+
+      .top-bar {
+        padding: 14px 18px;
+      }
+
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 12px;
+      }
+
+      .packages-grid,
+      .package-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .block-grid,
+      .marketing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 84px 16px 54px;
+      }
+
+      .top-bar {
+        padding: 12px 16px;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(28px, 8vw, 34px);
+        line-height: 1.15;
+      }
+
+      .section-header h2 {
+        font-size: clamp(22px, 7vw, 30px);
+      }
+
+      .problem-list li,
+      .block-card,
+      .marketing-card,
+      .package-card,
+      .cta-panel {
+        padding: 16px;
+      }
+
+      .cta-panel {
+        gap: 12px;
+      }
+
+      .block-grid,
+      .marketing-grid,
+      .packages-grid,
+      .package-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Ajustes finos para versión móvil */
+    @media (max-width: 480px) {
+      /* Un poco más de respiro y mejor lectura */
+      main {
+        padding: 88px 16px 56px;
+      }
+
+      .hero {
+        padding: 12px 0 40px;
+      }
+
+      .hero-content h1 {
+        font-size: 24px;      /* antes usaba clamp(), ahora más compacto en móvil */
+        line-height: 1.3;     /* más aire entre líneas */
+      }
+
+      .hero .subtitle {
+        font-size: 14px;
+      }
+
+      /* Botones full-width y centrados en phone */
+      .hero .cta {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero .cta + .cta {
+        margin-top: 10px;
+      }
+
+      /* Tarjetas un poco más compactas */
+      .block-card,
+      .marketing-card,
+      .package-card {
+        padding: 16px;
+      }
+
+      .problem-list li {
+        padding: 14px 16px;
+      }
+
+      .glow {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar reveal" style="--reveal-delay: 0.02s;">
+    <div class="logo-mark" data-translation-key="brand">Bako Systems</div>
+    <div class="language-switch">
+      <button class="lang-button active" data-lang="es">ES</button>
+      <span class="divider">/</span>
+      <button class="lang-button" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero reveal" id="hero" style="--reveal-delay: 0.05s;">
+      <div class="hero-content">
+        <div class="eyebrow" data-translation-key="hero.eyebrow">Sistema para empresas de limpieza que quieren crecer</div>
+        <h1 data-translation-key="hero.title">Sistema Full Scale – Para que tu negocio de limpieza se maneje solo</h1>
+        <p class="subtitle" data-translation-key="hero.subtitle">
+          No es solo una página web. Es un sistema completo para que tus clientes reserven, paguen y reciban recordatorios solos, mientras tu equipo ve su agenda clara y tú dejas de depender del trabajo físico.
+        </p>
+        <div class="hero-actions" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button class="cta" data-translation-key="hero.ctaPrimary" data-scroll-target="#blocks">Ver cómo funcionaría en tu negocio</button>
+          <button class="cta secondary" data-translation-key="hero.ctaSecondary" data-scroll-target="#cta">Hablar de tus metas primero</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="glow" aria-hidden="true"></div>
+        <div class="badge" data-translation-key="badge">Operación 24/7</div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="problems" style="--reveal-delay: 0.08s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="problems.tag">DOLORES QUE VEMOS EN NEGOCIOS COMO EL TUYO</span>
+        <h2 data-translation-key="problems.title">Lo que frena a muchos negocios de limpieza cuando quieren crecer</h2>
+        <p class="section-subtitle" data-translation-key="problems.subtitle">
+          Son señales de que el negocio creció más rápido que el sistema. Esto es lo que suele aparecer cuando se quiere dar el siguiente paso.
+        </p>
+      </div>
+      <ul class="problem-list">
+        <li data-translation-key="problems.items.item1">Mucho trabajo manual con cada cliente nuevo y mensajes distintos para explicar servicios.</li>
+        <li data-translation-key="problems.items.item2">Agenda repartida en WhatsApp, llamadas y notas; cuesta ver el día completo de un vistazo.</li>
+        <li data-translation-key="problems.items.item3">La dirección sigue entrando a las casas porque no hay un sistema claro para delegar.</li>
+        <li data-translation-key="problems.items.item4">Cobros dispersos: efectivo, Zelle, transferencias y recordatorios difíciles de seguir.</li>
+      </ul>
+    </section>
+
+    <section class="section reveal" id="vision" style="--reveal-delay: 0.1s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="vision.tag">VISIÓN DEL SISTEMA</span>
+        <h2 data-translation-key="vision.title">De negocio manejado a mano a negocio que se maneja solo</h2>
+        <p class="section-subtitle" data-translation-key="vision.subtitle">
+          El objetivo es que el sistema haga el trabajo pesado: clientes reservan y pagan solos, el equipo ve su agenda clara y tú diriges sin estar dentro de cada casa.
+        </p>
+      </div>
+      <ul class="vision-points">
+        <li data-translation-key="vision.point1">Clientes con ruta simple: ven servicios, eligen frecuencia y pagan sin llamadas.</li>
+        <li data-translation-key="vision.point2">Equipo organizado con calendarios por zona y recordatorios automáticos.</li>
+        <li data-translation-key="vision.point3">Tú te enfocas en liderar, no en apagar incendios operativos ni perseguir cobros.</li>
+      </ul>
+    </section>
+
+    <section class="section reveal" id="blocks" style="--reveal-delay: 0.12s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="blocksTag">Arquitectura del Sistema Operativo</span>
+        <h2 data-translation-key="blocksTitle">Bloques Full Scale</h2>
+        <p class="section-subtitle" data-translation-key="blocksSubtitle">
+          Seis piezas para que operación, venta y cobro fluyan sin fricción.
+        </p>
+      </div>
+      <div class="block-grid">
+        <div class="block-card">
+          <h3 data-translation-key="blocks.block1.title">Organización profesional de servicios</h3>
+          <p data-translation-key="blocks.block1.subtitle">Convierte lo que ya haces en un menú claro, fácil de entender para el cliente y fácil de cobrar para el negocio.</p>
+          <ul>
+            <li data-translation-key="blocks.block1.bullet1">Definimos Limpieza Estándar, Limpieza Profunda, Move-in/Move-out y Oficinas con rangos de tamaño claros.</li>
+            <li data-translation-key="blocks.block1.bullet2">El cliente ve lo que ofreces, se identifica rápido y elige sin tantos mensajes.</li>
+            <li data-translation-key="blocks.block1.bullet3">Planes recurrentes (quincenal, mensual, etc.) como base para clientes fijos e ingresos estables.</li>
+          </ul>
+        </div>
+        <div class="block-card">
+          <h3 data-translation-key="blocks.block2.title">Web profesional para clientes premium</h3>
+          <p data-translation-key="blocks.block2.subtitle">Tu negocio se ve como una empresa seria, ordenada y de confianza desde el primer clic.</p>
+          <ul>
+            <li data-translation-key="blocks.block2.bullet1">Sitio moderno donde se entiende en segundos qué haces, para quién y por qué eres diferente.</li>
+            <li data-translation-key="blocks.block2.bullet2">Sección “Book Now / Reserva ahora” para elegir servicio, frecuencia y fecha sin escribir primero.</li>
+            <li data-translation-key="blocks.block2.bullet3">Área visual para mostrar antes/después y reforzar confianza.</li>
+          </ul>
+        </div>
+        <div class="block-card">
+          <h3 data-translation-key="blocks.block3.title">Sistema de reservas y agenda</h3>
+          <p data-translation-key="blocks.block3.subtitle">Tu calendario deja de estar en tu cabeza y en mil mensajes.</p>
+          <ul>
+            <li data-translation-key="blocks.block3.bullet1">Todas las citas registradas en una agenda digital centralizada.</li>
+            <li data-translation-key="blocks.block3.bullet2">Bloques de horarios por zona para no cruzar la ciudad sin sentido.</li>
+            <li data-translation-key="blocks.block3.bullet3">Reservas confirmadas que se envían a Google Calendar para el equipo operativo.</li>
+          </ul>
+        </div>
+        <div class="block-card">
+          <h3 data-translation-key="blocks.block4.title">Pagos y planes automatizados</h3>
+          <p data-translation-key="blocks.block4.subtitle">Cobras sin perseguir pagos uno por uno y tu ingreso se vuelve más predecible.</p>
+          <ul>
+            <li data-translation-key="blocks.block4.bullet1">Cobro con tarjeta desde la web o depósito al reservar.</li>
+            <li data-translation-key="blocks.block4.bullet2">Planes mensuales o de 6/12 meses con cobro automático.</li>
+            <li data-translation-key="blocks.block4.bullet3">Recibos automáticos para clientes con imagen profesional.</li>
+          </ul>
+        </div>
+        <div class="block-card">
+          <h3 data-translation-key="blocks.block5.title">Comunicación automática con tus clientes</h3>
+          <p data-translation-key="blocks.block5.subtitle">Dejas de depender de recordar citas una por una.</p>
+          <ul>
+            <li data-translation-key="blocks.block5.bullet1">Confirmaciones automáticas cuando reservan.</li>
+            <li data-translation-key="blocks.block5.bullet2">Recordatorios antes de la cita para reducir olvidos.</li>
+            <li data-translation-key="blocks.block5.bullet3">Mensajes post-servicio para reseñas y reputación.</li>
+          </ul>
+        </div>
+        <div class="block-card">
+          <h3 data-translation-key="blocks.block6.title">Claridad y control para la dirección</h3>
+          <p data-translation-key="blocks.block6.subtitle">Tienes una visión clara de lo que pasa, sin volverte técnica.</p>
+          <ul>
+            <li data-translation-key="blocks.block6.bullet1">Vista diaria de clientes, tipo de servicio y zona.</li>
+            <li data-translation-key="blocks.block6.bullet2">Resumen para detectar clientes recurrentes y servicios más pedidos.</li>
+            <li data-translation-key="blocks.block6.bullet3">Sesión de uso para leer tu calendario y organizar mejor al equipo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="marketing" style="--reveal-delay: 0.13s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="marketing.tag">CAPA DE MARKETING &amp; CRECIMIENTO</span>
+        <h2 data-translation-key="marketing.title">No solo ordenamos tu operación, también traemos clientes al sistema</h2>
+        <p class="section-subtitle" data-translation-key="marketing.subtitle">
+          El sistema rinde más cuando hay familias y oficinas que te encuentran, confían y reservan en línea.
+        </p>
+      </div>
+      <div class="marketing-grid">
+        <div class="marketing-card">
+          <h3 data-translation-key="marketing.blocks.presence.title">Google Business bien trabajado</h3>
+          <p data-translation-key="marketing.blocks.presence.subtitle">Primero aseguramos que, cuando te busquen en Google, te vean como empresa seria de limpieza en Bakersfield.</p>
+          <ul>
+            <li data-translation-key="marketing.blocks.presence.bullet1">Configuración y optimización de tu ficha de Google Business.</li>
+            <li data-translation-key="marketing.blocks.presence.bullet2">Estrategia básica para conseguir reseñas reales de clientes.</li>
+            <li data-translation-key="marketing.blocks.presence.bullet3">Conexión entre tu web y Google para llevar a la reserva.</li>
+          </ul>
+        </div>
+        <div class="marketing-card">
+          <h3 data-translation-key="marketing.blocks.meta.title">Meta Ads para familias ocupadas</h3>
+          <p data-translation-key="marketing.blocks.meta.subtitle">Campañas en Facebook e Instagram pensadas para familias y parejas que valoran su tiempo.</p>
+          <ul>
+            <li data-translation-key="marketing.blocks.meta.bullet1">Audiencias por zona de Bakersfield y tipo de cliente.</li>
+            <li data-translation-key="marketing.blocks.meta.bullet2">Anuncios con textos y creativos hechos para tu mercado local.</li>
+            <li data-translation-key="marketing.blocks.meta.bullet3">Medición para saber qué mensajes y servicios generan más reservas.</li>
+          </ul>
+        </div>
+        <div class="marketing-card">
+          <h3 data-translation-key="marketing.blocks.google.title">Google Ads para intención directa</h3>
+          <p data-translation-key="marketing.blocks.google.subtitle">Aparece cuando alguien busca servicios de limpieza en serio.</p>
+          <ul>
+            <li data-translation-key="marketing.blocks.google.bullet1">Campañas de búsqueda con palabras clave como “house cleaning Bakersfield”.</li>
+            <li data-translation-key="marketing.blocks.google.bullet2">Llevamos el tráfico a tu página con servicios claros y reserva.</li>
+            <li data-translation-key="marketing.blocks.google.bullet3">Aprovechamos el sistema de reservas y pagos para convertir clics.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="marketing-note" data-translation-key="marketing.note">
+        La capa de marketing se ajusta al paquete que elijas. Empezamos a tu ritmo y escalamos campañas según tus metas.
+      </p>
+    </section>
+
+    <section class="section packages-section reveal" id="packages" style="--reveal-delay: 0.14s;">
+      <div class="section-header">
+        <span class="tag" data-translation-key="packages.section.tag">Paquetes &amp; Inversión</span>
+        <h2 data-translation-key="packages.section.title">Paquetes &amp; Sistema de Inversión</h2>
+        <p class="section-subtitle" data-translation-key="packages.section.subtitle">
+          Tres niveles del sistema para empresas de limpieza; empiezas donde esté tu operación hoy y puedes escalar después.
+        </p>
+      </div>
+      <div class="packages-grid">
+        <article class="package-card" aria-labelledby="package-base-pro">
+          <span class="package-badge" data-translation-key="packages.basePro.badge">Nivel 1</span>
+          <h3 class="package-name" id="package-base-pro" data-translation-key="packages.basePro.title">Sistema Base Pro</h3>
+          <p class="package-investment-line" data-translation-key="packages.basePro.subtitle">
+            Para ordenar tu negocio por dentro y dejar de depender del WhatsApp y la libreta, sin entrar todavía a campañas grandes.
+          </p>
+          <ul>
+            <li data-translation-key="packages.basePro.bullet1">Web profesional base con botón “Reserva ahora”.</li>
+            <li data-translation-key="packages.basePro.bullet2">Sistema de reservas con agenda digital centralizada.</li>
+            <li data-translation-key="packages.basePro.bullet3">Cobros con Stripe y Google Business configurado.</li>
+          </ul>
+          <p class="package-note" data-translation-key="packages.basePro.note">Montos exactos se definen en tu propuesta personalizada.</p>
+          <div class="package-actions">
+            <a
+              class="cta secondary"
+              href="https://thebakoagency.com/system-base-pro"
+              data-package-id="base-pro"
+              data-package="base-pro"
+              data-translation-key="packages.basePro.cta"
+              >Ver detalles del Sistema Base Pro</a
+            >
+          </div>
+        </article>
+        <article class="package-card package-card--featured" aria-labelledby="package-growth">
+          <span class="package-badge" data-translation-key="packages.premium.badge">Recomendado</span>
+          <h3 class="package-name" id="package-growth" data-translation-key="packages.premium.title">Sistema Crecimiento Premium</h3>
+          <p class="package-investment-line" data-translation-key="packages.premium.subtitle">
+            Para negocios que ya tienen clientes y quieren más recurrentes, con campañas activas y seguimiento básico de resultados.
+          </p>
+          <ul>
+            <li data-translation-key="packages.premium.bullet1">Todo lo del Sistema Base Pro + planes recurrentes y agenda por zonas.</li>
+            <li data-translation-key="packages.premium.bullet2">Campaña activa (Meta o Google Ads) para atraer clientes nuevos.</li>
+            <li data-translation-key="packages.premium.bullet3">Optimización mensual de Google Business y mini-reporte de resultados.</li>
+          </ul>
+          <p class="package-note" data-translation-key="packages.premium.note">Montos exactos se definen en tu propuesta personalizada.</p>
+          <div class="package-actions">
+            <a
+              class="cta"
+              href="https://thebakoagency.com/system-premium-growth"
+              data-package-id="premium-growth"
+              data-package="premium-growth"
+              data-translation-key="packages.premium.cta"
+              >Ver detalles del Sistema Crecimiento Premium</a
+            >
+          </div>
+        </article>
+        <article class="package-card" aria-labelledby="package-full-scale">
+          <span class="package-badge" data-translation-key="packages.fullScale.badge">Nivel 3</span>
+          <h3 class="package-name" id="package-full-scale" data-translation-key="packages.fullScale.title">Sistema Full Scale Directivo</h3>
+          <p class="package-investment-line" data-translation-key="packages.fullScale.subtitle">
+            Para negocios de limpieza que quieren operar como empresa: equipo organizado, campañas constantes y decisiones con datos.
+          </p>
+          <ul>
+            <li data-translation-key="packages.fullScale.bullet1">Todo lo del Crecimiento Premium + agenda por equipos/cuadrillas.</li>
+            <li data-translation-key="packages.fullScale.bullet2">Campañas constantes en Meta Ads y soporte para Google Ads.</li>
+            <li data-translation-key="packages.fullScale.bullet3">Revisión mensual de indicadores y plan de contenidos con foto/video.</li>
+          </ul>
+          <p class="package-note" data-translation-key="packages.fullScale.note">Montos exactos se definen en tu propuesta personalizada.</p>
+          <div class="package-actions">
+            <a
+              class="cta secondary"
+              href="https://thebakoagency.com/system-full-scale"
+              data-package-id="full-scale-executive"
+              data-package="full-scale-executive"
+              data-translation-key="packages.fullScale.cta"
+              >Ver detalles del Sistema Full Scale Directivo</a
+            >
+          </div>
+        </article>
+        <article class="package-card" aria-labelledby="package-custom">
+          <span class="package-badge" data-translation-key="packages.custom.badge">A la medida</span>
+          <h3 class="package-name" id="package-custom" data-translation-key="packages.custom.title">Paquete a la medida</h3>
+          <p class="package-investment-line" data-translation-key="packages.custom.description">
+            Sistema armado pieza por pieza, con servicios individuales a precio regular para casos muy específicos.
+          </p>
+          <p class="package-note" data-translation-key="packages.custom.highlight">
+            Ideal si ya tienes partes del sistema resueltas y solo necesitas módulos sueltos.
+          </p>
+          <div class="package-actions">
+            <a
+              class="cta secondary"
+              href="system-custom-package.html"
+              data-package-id="custom-package"
+              data-package="custom-package"
+              data-translation-key="packages.custom.button"
+              >Explorar paquete a la medida</a
+            >
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="cta" style="--reveal-delay: 0.16s;">
+      <div class="cta-panel">
+        <div>
+          <span class="tag" data-translation-key="ctaFinal.tag">Siguiente paso</span>
+          <h2 data-translation-key="ctaFinal.title">¿Te enseño cómo se vería este sistema aplicado a tu negocio?</h2>
+          <p class="section-subtitle" data-translation-key="ctaFinal.text">
+            En una sola sesión revisamos tus servicios, vemos cómo encajan en el sistema y definimos qué nivel de paquete tiene más sentido para tu operación. Sin compromiso de compra en esa llamada.
+          </p>
+        </div>
+        <button class="cta" data-translation-key="ctaFinal.button" data-scroll-target="#hero">Agendar sesión de revisión</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer reveal" style="--reveal-delay: 0.18s;">
+    <p data-translation-key="footer">Presentación interna – Bako Business Branding</p>
+  </footer>
+
+  <script>
+    const translations = {
+      es: {
+        pageTitle: 'Sistema Full Scale – Para que tu negocio de limpieza se maneje solo',
+        brand: 'Bako Systems',
+        badge: 'Operación 24/7',
+        'hero.eyebrow': 'Sistema para empresas de limpieza que quieren crecer',
+        'hero.title': 'Sistema Full Scale – Para que tu negocio de limpieza se maneje solo',
+        'hero.subtitle':
+          'No es solo una página web. Es un sistema completo para que tus clientes reserven, paguen y reciban recordatorios solos, mientras tu equipo ve su agenda clara y tú dejas de depender del trabajo físico.',
+        'hero.ctaPrimary': 'Ver cómo funcionaría en tu negocio',
+        'hero.ctaSecondary': 'Hablar de tus metas primero',
+        'problems.tag': 'DOLORES QUE VEMOS EN NEGOCIOS COMO EL TUYO',
+        'problems.title': 'Lo que frena a muchos negocios de limpieza cuando quieren crecer',
+        'problems.subtitle': 'Son señales de que el negocio creció más rápido que el sistema. Esto es lo que suele aparecer cuando se quiere dar el siguiente paso.',
+        'problems.items.item1': 'Mucho trabajo manual con cada cliente nuevo y mensajes distintos para explicar servicios.',
+        'problems.items.item2': 'Agenda repartida en WhatsApp, llamadas y notas; cuesta ver el día completo de un vistazo.',
+        'problems.items.item3': 'La dirección sigue entrando a las casas porque no hay un sistema claro para delegar.',
+        'problems.items.item4': 'Cobros dispersos: efectivo, Zelle, transferencias y recordatorios difíciles de seguir.',
+        'vision.tag': 'VISIÓN DEL SISTEMA',
+        'vision.title': 'De negocio manejado a mano a negocio que se maneje solo',
+        'vision.subtitle': 'El objetivo es que el sistema haga el trabajo pesado: clientes reservan y pagan solos, el equipo ve su agenda clara y tú diriges sin estar dentro de cada casa.',
+        'vision.point1': 'Clientes con ruta simple: ven servicios, eligen frecuencia y pagan sin llamadas.',
+        'vision.point2': 'Equipo organizado con calendarios por zona y recordatorios automáticos.',
+        'vision.point3': 'Tú te enfocas en liderar, no en apagar incendios operativos ni perseguir cobros.',
+        blocksTag: 'Arquitectura del Sistema Operativo',
+        blocksTitle: 'Bloques Full Scale',
+        blocksSubtitle: 'Seis piezas para que operación, venta y cobro fluyan sin fricción.',
+        'blocks.block1.title': 'Organización profesional de servicios',
+        'blocks.block1.subtitle': 'Convierte lo que ya haces en un menú claro, fácil de entender para el cliente y fácil de cobrar para el negocio.',
+        'blocks.block1.bullet1': 'Definimos Limpieza Estándar, Limpieza Profunda, Move-in/Move-out y Oficinas con rangos de tamaño claros.',
+        'blocks.block1.bullet2': 'El cliente ve lo que ofreces, se identifica rápido y elige sin tantos mensajes.',
+        'blocks.block1.bullet3': 'Planes recurrentes (quincenal, mensual, etc.) como base para clientes fijos e ingresos estables.',
+        'blocks.block2.title': 'Web profesional para clientes premium',
+        'blocks.block2.subtitle': 'Tu negocio se ve como una empresa seria, ordenada y de confianza desde el primer clic.',
+        'blocks.block2.bullet1': 'Sitio moderno donde se entiende en segundos qué haces, para quién y por qué eres diferente.',
+        'blocks.block2.bullet2': 'Sección “Book Now / Reserva ahora” para elegir servicio, frecuencia y fecha sin escribir primero.',
+        'blocks.block2.bullet3': 'Área visual para mostrar antes/después y reforzar confianza.',
+        'blocks.block3.title': 'Sistema de reservas y agenda',
+        'blocks.block3.subtitle': 'Tu calendario deja de estar en tu cabeza y en mil mensajes.',
+        'blocks.block3.bullet1': 'Todas las citas registradas en una agenda digital centralizada.',
+        'blocks.block3.bullet2': 'Bloques de horarios por zona para no cruzar la ciudad sin sentido.',
+        'blocks.block3.bullet3': 'Reservas confirmadas que se envían a Google Calendar para el equipo operativo.',
+        'blocks.block4.title': 'Pagos y planes automatizados',
+        'blocks.block4.subtitle': 'Cobras sin perseguir pagos uno por uno y tu ingreso se vuelve más predecible.',
+        'blocks.block4.bullet1': 'Cobro con tarjeta desde la web o depósito al reservar.',
+        'blocks.block4.bullet2': 'Planes mensuales o de 6/12 meses con cobro automático.',
+        'blocks.block4.bullet3': 'Recibos automáticos para clientes con imagen profesional.',
+        'blocks.block5.title': 'Comunicación automática con tus clientes',
+        'blocks.block5.subtitle': 'Dejas de depender de recordar citas una por una.',
+        'blocks.block5.bullet1': 'Confirmaciones automáticas cuando reservan.',
+        'blocks.block5.bullet2': 'Recordatorios antes de la cita para reducir olvidos.',
+        'blocks.block5.bullet3': 'Mensajes post-servicio para reseñas y reputación.',
+        'blocks.block6.title': 'Claridad y control para la dirección',
+        'blocks.block6.subtitle': 'Tienes una visión clara de lo que pasa, sin volverte técnica.',
+        'blocks.block6.bullet1': 'Vista diaria de clientes, tipo de servicio y zona.',
+        'blocks.block6.bullet2': 'Resumen para detectar clientes recurrentes y servicios más pedidos.',
+        'blocks.block6.bullet3': 'Sesión de uso para leer tu calendario y organizar mejor al equipo.',
+        'marketing.tag': 'CAPA DE MARKETING & CRECIMIENTO',
+        'marketing.title': 'No solo ordenamos tu operación, también traemos clientes al sistema',
+        'marketing.subtitle': 'El sistema rinde más cuando hay familias y oficinas que te encuentran, confían y reservan en línea.',
+        'marketing.blocks.presence.title': 'Google Business bien trabajado',
+        'marketing.blocks.presence.subtitle': 'Primero aseguramos que, cuando te busquen en Google, te vean como empresa seria de limpieza en Bakersfield.',
+        'marketing.blocks.presence.bullet1': 'Configuración y optimización de tu ficha de Google Business.',
+        'marketing.blocks.presence.bullet2': 'Estrategia básica para conseguir reseñas reales de clientes.',
+        'marketing.blocks.presence.bullet3': 'Conexión entre tu web y Google para llevar a la reserva.',
+        'marketing.blocks.meta.title': 'Meta Ads para familias ocupadas',
+        'marketing.blocks.meta.subtitle': 'Campañas en Facebook e Instagram pensadas para familias y parejas que valoran su tiempo.',
+        'marketing.blocks.meta.bullet1': 'Audiencias por zona de Bakersfield y tipo de cliente.',
+        'marketing.blocks.meta.bullet2': 'Anuncios con textos y creativos hechos para tu mercado local.',
+        'marketing.blocks.meta.bullet3': 'Medición para saber qué mensajes y servicios generan más reservas.',
+        'marketing.blocks.google.title': 'Google Ads para intención directa',
+        'marketing.blocks.google.subtitle': 'Aparece cuando alguien busca servicios de limpieza en serio.',
+        'marketing.blocks.google.bullet1': 'Campañas de búsqueda con palabras clave como “house cleaning Bakersfield”.',
+        'marketing.blocks.google.bullet2': 'Llevamos el tráfico a tu página con servicios claros y reserva.',
+        'marketing.blocks.google.bullet3': 'Aprovechamos el sistema de reservas y pagos para convertir clics.',
+        'marketing.note': 'La capa de marketing se ajusta al paquete que elijas. Empezamos a tu ritmo y escalamos campañas según tus metas.',
+        'packages.section.tag': 'Paquetes & Inversión',
+        'packages.section.title': 'Paquetes & Sistema de Inversión',
+        'packages.section.subtitle': 'Tres niveles del sistema para empresas de limpieza; empiezas donde esté tu operación hoy y puedes escalar después.',
+        'packages.basePro.badge': 'Nivel 1',
+        'packages.basePro.title': 'Sistema Base Pro',
+        'packages.basePro.subtitle': 'Para ordenar tu negocio por dentro y dejar de depender del WhatsApp y la libreta, sin entrar todavía a campañas grandes.',
+        'packages.basePro.bullet1': 'Web profesional base con botón “Reserva ahora”.',
+        'packages.basePro.bullet2': 'Sistema de reservas con agenda digital centralizada.',
+        'packages.basePro.bullet3': 'Cobros con Stripe y Google Business configurado.',
+        'packages.basePro.note': 'Montos exactos se definen en tu propuesta personalizada.',
+        'packages.basePro.cta': 'Ver detalles del Sistema Base Pro',
+        'packages.premium.badge': 'Recomendado',
+        'packages.premium.title': 'Sistema Crecimiento Premium',
+        'packages.premium.subtitle': 'Para negocios que ya tienen clientes y quieren más recurrentes, con campañas activas y seguimiento básico de resultados.',
+        'packages.premium.bullet1': 'Todo lo del Sistema Base Pro + planes recurrentes y agenda por zonas.',
+        'packages.premium.bullet2': 'Campaña activa (Meta o Google Ads) para atraer clientes nuevos.',
+        'packages.premium.bullet3': 'Optimización mensual de Google Business y mini-reporte de resultados.',
+        'packages.premium.note': 'Montos exactos se definen en tu propuesta personalizada.',
+        'packages.premium.cta': 'Ver detalles del Sistema Crecimiento Premium',
+        'packages.fullScale.badge': 'Nivel 3',
+        'packages.fullScale.title': 'Sistema Full Scale Directivo',
+        'packages.fullScale.subtitle': 'Para negocios de limpieza que quieren operar como empresa: equipo organizado, campañas constantes y decisiones con datos.',
+        'packages.fullScale.bullet1': 'Todo lo del Crecimiento Premium + agenda por equipos/cuadrillas.',
+        'packages.fullScale.bullet2': 'Campañas constantes en Meta Ads y soporte para Google Ads.',
+        'packages.fullScale.bullet3': 'Revisión mensual de indicadores y plan de contenidos con foto/video.',
+        'packages.fullScale.note': 'Montos exactos se definen en tu propuesta personalizada.',
+        'packages.fullScale.cta': 'Ver detalles del Sistema Full Scale Directivo',
+        'packages.custom.badge': 'A la medida',
+        'packages.custom.title': 'Paquete a la medida',
+        'packages.custom.description':
+          'Sistema armado pieza por pieza, con servicios individuales a precio regular para casos muy específicos.',
+        'packages.custom.highlight': 'Ideal si ya tienes partes del sistema resueltas y solo necesitas módulos sueltos.',
+        'packages.custom.button': 'Explorar paquete a la medida',
+        'ctaFinal.tag': 'Siguiente paso',
+        'ctaFinal.title': '¿Te enseño cómo se vería este sistema aplicado a tu negocio?',
+        'ctaFinal.text':
+          'En una sola sesión revisamos tus servicios, vemos cómo encajan en el sistema y definimos qué nivel de paquete tiene más sentido para tu operación. Sin compromiso de compra en esa llamada.',
+        'ctaFinal.button': 'Agendar sesión de revisión',
+        footer: 'Presentación interna – Bako Business Branding'
+      },
+      en: {
+        pageTitle: 'Full Scale System – So your cleaning business runs itself',
+        brand: 'Bako Systems',
+        badge: '24/7 Operation',
+        'hero.eyebrow': 'System for cleaning businesses that want to grow',
+        'hero.title': 'Full Scale System – So your cleaning business runs itself',
+        'hero.subtitle':
+          'It is not just a website. It is a full system so clients can book, pay, and get reminders on their own while your crew sees a clear schedule and you stop relying on physical work.',
+        'hero.ctaPrimary': 'See how it would work for your business',
+        'hero.ctaSecondary': 'Talk about your goals first',
+        'problems.tag': 'PAINS WE SEE IN BUSINESSES LIKE YOURS',
+        'problems.title': 'What slows many cleaning businesses when they want to grow',
+        'problems.subtitle': 'These are signs the business has outgrown the current system. They usually appear when you push to the next level.',
+        'problems.items.item1': 'Too much manual work with every new client and different messages to explain services.',
+        'problems.items.item2': 'Scheduling spread across WhatsApp, calls, and notes; hard to see the full day at a glance.',
+        'problems.items.item3': 'Leadership still steps into houses because there is no clear system to delegate.',
+        'problems.items.item4': 'Payments scattered across cash, Zelle, transfers, and reminders that are hard to track.',
+        'vision.tag': 'SYSTEM VISION',
+        'vision.title': 'From hand-managed business to business that runs itself',
+        'vision.subtitle': 'The goal is for the system to do the heavy lifting: clients book and pay alone, the team sees a clear schedule, and you lead without being inside every job.',
+        'vision.point1': 'Clients follow a simple path: see services, choose frequency, and pay without calls.',
+        'vision.point2': 'Team organized with zone-based calendars and automatic reminders.',
+        'vision.point3': 'You focus on leading, not on putting out operational fires or chasing payments.',
+        blocksTag: 'Operating System Architecture',
+        blocksTitle: 'Full Scale Blocks',
+        blocksSubtitle: 'Six pieces so operations, sales, and billing flow without friction.',
+        'blocks.block1.title': 'Professional service organization',
+        'blocks.block1.subtitle': 'Turn what you do into a clear menu that is easy for clients to understand and easy for the business to charge.',
+        'blocks.block1.bullet1': 'Define Standard, Deep, Move-in/Move-out, and Office cleanings with clear size ranges.',
+        'blocks.block1.bullet2': 'Clients see what you offer, identify quickly, and choose without endless messaging.',
+        'blocks.block1.bullet3': 'Recurring plans (biweekly, monthly, etc.) as the base for loyal clients and steady revenue.',
+        'blocks.block2.title': 'Premium website for high-end clients',
+        'blocks.block2.subtitle': 'Your business looks serious, organized, and trustworthy from the first click.',
+        'blocks.block2.bullet1': 'Modern site where it is clear in seconds what you do, for whom, and why you are different.',
+        'blocks.block2.bullet2': '“Book Now” section to pick service, frequency, and date without messaging first.',
+        'blocks.block2.bullet3': 'Visual area to show before/after work and build trust.',
+        'blocks.block3.title': 'Booking and scheduling system',
+        'blocks.block3.subtitle': 'Your calendar leaves your head and all those messages.',
+        'blocks.block3.bullet1': 'All appointments captured in one centralized digital calendar.',
+        'blocks.block3.bullet2': 'Time blocks by zone so you are not crisscrossing the city.',
+        'blocks.block3.bullet3': 'Confirmed bookings pushed to Google Calendar for the operations team.',
+        'blocks.block4.title': 'Automated payments and plans',
+        'blocks.block4.subtitle': 'Collect without chasing one-by-one payments and make revenue predictable.',
+        'blocks.block4.bullet1': 'Card payments or deposits directly from the site.',
+        'blocks.block4.bullet2': 'Monthly or 6/12-month plans with automatic charging.',
+        'blocks.block4.bullet3': 'Automatic receipts for clients that elevate your professional image.',
+        'blocks.block5.title': 'Automated communication with your clients',
+        'blocks.block5.subtitle': 'Stop relying on manual reminders for each visit.',
+        'blocks.block5.bullet1': 'Automatic confirmations when clients book.',
+        'blocks.block5.bullet2': 'Reminders before the visit to reduce no-shows.',
+        'blocks.block5.bullet3': 'Post-service messages for reviews and reputation.',
+        'blocks.block6.title': 'Clarity and control for leadership',
+        'blocks.block6.subtitle': 'Get a clear view of what is happening without becoming “technical.”',
+        'blocks.block6.bullet1': 'Daily view of which client, which service, and which zone.',
+        'blocks.block6.bullet2': 'Summary to spot recurring clients and top services.',
+        'blocks.block6.bullet3': 'Hands-on session to read your calendar and organize the team better.',
+        'marketing.tag': 'MARKETING & GROWTH LAYER',
+        'marketing.title': 'We not only organize operations, we also bring clients into the system',
+        'marketing.subtitle': 'The system performs best when families and offices find you, trust you, and book online.',
+        'marketing.blocks.presence.title': 'Well-built Google Business',
+        'marketing.blocks.presence.subtitle': 'First we ensure that when people search on Google, they see you as a serious cleaning company in Bakersfield.',
+        'marketing.blocks.presence.bullet1': 'Setup and optimization of your Google Business profile.',
+        'marketing.blocks.presence.bullet2': 'Basic strategy to earn real reviews from clients.',
+        'marketing.blocks.presence.bullet3': 'Connection between your site and Google so people can move from seeing you to booking.',
+        'marketing.blocks.meta.title': 'Meta Ads for busy families',
+        'marketing.blocks.meta.subtitle': 'Facebook and Instagram campaigns aimed at families and couples who value their time.',
+        'marketing.blocks.meta.bullet1': 'Audiences by Bakersfield zones and client type.',
+        'marketing.blocks.meta.bullet2': 'Ads with copy and creatives built for your local market.',
+        'marketing.blocks.meta.bullet3': 'Measurement to learn which messages and services drive more bookings.',
+        'marketing.blocks.google.title': 'Google Ads for direct intent',
+        'marketing.blocks.google.subtitle': 'Show up when someone is seriously searching for cleaning services.',
+        'marketing.blocks.google.bullet1': 'Search campaigns with keywords like “house cleaning Bakersfield.”',
+        'marketing.blocks.google.bullet2': 'Send traffic to your page with clear services and a “Book now” path.',
+        'marketing.blocks.google.bullet3': 'Leverage your booking and payment system to convert clicks into appointments.',
+        'marketing.note': 'The marketing layer scales with the package you choose. We start at your pace and ramp campaigns as you grow.',
+        'packages.section.tag': 'PACKAGES & INVESTMENT',
+        'packages.section.title': 'Packages & Investment System',
+        'packages.section.subtitle': 'Three system levels for cleaning companies; start where your operations are today and scale later.',
+        'packages.basePro.badge': 'Level 1',
+        'packages.basePro.title': 'Base Pro System',
+        'packages.basePro.subtitle': 'To organize your business internally and stop relying on WhatsApp and notebooks without diving into big campaigns yet.',
+        'packages.basePro.bullet1': 'Professional base site with a “Book now” button.',
+        'packages.basePro.bullet2': 'Booking system with a centralized digital calendar.',
+        'packages.basePro.bullet3': 'Payments with Stripe and Google Business configured.',
+        'packages.basePro.note': 'Exact amounts are defined in your tailored proposal.',
+        'packages.basePro.cta': 'View details for Base Pro System',
+        'packages.premium.badge': 'Recommended',
+        'packages.premium.title': 'Premium Growth System',
+        'packages.premium.subtitle': 'For businesses with clients that want more recurring revenue, with active campaigns and basic results tracking.',
+        'packages.premium.bullet1': 'Everything from Base Pro + recurring plans and zoning-based scheduling.',
+        'packages.premium.bullet2': 'Active campaign (Meta or Google Ads) to attract new clients.',
+        'packages.premium.bullet3': 'Monthly Google Business optimization and mini results report.',
+        'packages.premium.note': 'Exact amounts are defined in your tailored proposal.',
+        'packages.premium.cta': 'View details for Premium Growth System',
+        'packages.fullScale.badge': 'Level 3',
+        'packages.fullScale.title': 'Full Scale Executive System',
+        'packages.fullScale.subtitle': 'For cleaning businesses that want to operate like a company: organized teams, ongoing campaigns, and decisions driven by data.',
+        'packages.fullScale.bullet1': 'Everything from Premium Growth + scheduling by crews/teams.',
+        'packages.fullScale.bullet2': 'Ongoing Meta Ads and support for Google Ads.',
+        'packages.fullScale.bullet3': 'Monthly indicators review and content plan with photo/video.',
+        'packages.fullScale.note': 'Exact amounts are defined in your tailored proposal.',
+        'packages.fullScale.cta': 'View details for Full Scale Executive System',
+        'packages.custom.badge': 'Custom',
+        'packages.custom.title': 'Custom Package',
+        'packages.custom.description':
+          'System built piece by piece, using à la carte services at regular rates for very specific cases.',
+        'packages.custom.highlight': 'Ideal if you already have parts of the system in place and only need specific modules.',
+        'packages.custom.button': 'Explore custom package',
+        'ctaFinal.tag': 'Next step',
+        'ctaFinal.title': 'Want me to show how this system would look in your business?',
+        'ctaFinal.text':
+          'In one session we review your services, map them into the system, and decide which package level fits your operation best. No obligation to buy on that call.',
+        'ctaFinal.button': 'Schedule a review session',
+        footer: 'Internal presentation – Bako Business Branding'
+      }
+    };
+
+    let currentLanguage = 'es';
+    const languageButtons = document.querySelectorAll('.lang-button');
+    const translatableElements = document.querySelectorAll('[data-translation-key]');
+    const revealElements = document.querySelectorAll('.reveal');
+    const scrollTriggers = document.querySelectorAll('[data-scroll-target]');
+
+    function openOutside(url) {
+      if (!url) return;
+      try {
+        window.top.location.href = url;
+      } catch (error) {
+        window.open(url, '_blank');
+      }
+    }
+
+    function updateLanguage(lang) {
+      const selectedTranslations = translations[lang];
+      if (!selectedTranslations) return;
+
+      translatableElements.forEach((element) => {
+        const key = element.getAttribute('data-translation-key');
+        if (selectedTranslations[key]) {
+          element.textContent = selectedTranslations[key];
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.lang === lang);
+      });
+
+      document.documentElement.lang = lang;
+      if (selectedTranslations.pageTitle) {
+        document.title = selectedTranslations.pageTitle;
+      }
+      currentLanguage = lang;
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const lang = button.dataset.lang;
+        if (lang && lang !== currentLanguage) {
+          updateLanguage(lang);
+        }
+      });
+    });
+
+    updateLanguage(currentLanguage);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function createRevealObserver() {
+      if (prefersReducedMotion) {
+        revealElements.forEach((element) => element.classList.add('reveal--visible'));
+        return null;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal--visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.16,
+          rootMargin: '0px 0px -10% 0px'
+        }
+      );
+
+      revealElements.forEach((element) => observer.observe(element));
+      return observer;
+    }
+
+    createRevealObserver();
+
+    scrollTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', (event) => {
+        const targetSelector = trigger.getAttribute('data-scroll-target');
+        const targetElement = targetSelector ? document.querySelector(targetSelector) : null;
+
+        if (targetElement) {
+          event.preventDefault();
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    function startCheckout(packageId) {
+      console.log('Selected package for checkout:', packageId);
+      // TODO: aquí se llamará a un endpoint en Vercel (por ejemplo: /api/create-checkout-session)
+      // para crear una sesión de Stripe Checkout con el packageId seleccionado.
+      // Esta lógica se implementará después usando fetch() y variables de entorno en el backend.
+    }
+
+    document.querySelectorAll('[data-package-id]').forEach((btn) => {
+      btn.addEventListener('click', (event) => {
+        const pkg = btn.getAttribute('data-package-id');
+        const url = btn.getAttribute('href');
+        if (url) {
+          event.preventDefault();
+          openOutside(url);
+        }
+        startCheckout(pkg);
+      });
+    });
+  </script>
+</body>
+</html>
