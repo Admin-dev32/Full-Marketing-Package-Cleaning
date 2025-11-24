@@ -94,7 +94,23 @@ const translations = {
     'customPackage.services.service_training_session.title': 'Sesión de capacitación de uso del sistema',
     'customPackage.services.service_training_session.desc': 'Sesión guiada para que tu equipo domine el uso diario.',
     'customPackage.services.service_priority_support.title': 'Soporte prioritario 30 días',
-    'customPackage.services.service_priority_support.desc': 'Acompañamiento rápido durante el arranque de tu sistema.'
+    'customPackage.services.service_priority_support.desc': 'Acompañamiento rápido durante el arranque de tu sistema.',
+    'terms.subscription.title': 'Estructura de cobros',
+    'terms.subscription.setup': 'Setup se paga al inicio e incluye el primer año de infraestructura.',
+    'terms.subscription.monthly': 'La suscripción mensual arranca en el mes 2; el mes 1 aparece en $0 porque ya está cubierto en el setup.',
+    'terms.subscription.yearly': 'La infraestructura anual se renueva desde el año 2 como suscripción aparte.',
+    'terms.planProtection':
+      'Plan Protection agrega $50/mes cuando los resultados cumplen mínimos; si un mes es bajo se puede ajustar manualmente al mínimo y reembolsar la diferencia.',
+    'terms.keepSystem':
+      'Keep System On Only pausa marketing y cobra solo la tarifa de mantenimiento para mantener APIs, automatizaciones y sitio activos.',
+    'terms.refunds':
+      'Reembolsos cubren solo diferencias de Plan Protection; setup y presupuestos de anuncios no son reembolsables.',
+    'terms.financing': 'Financiamiento vía Stripe/Klarna suma 3% únicamente al setup; la mensualidad no cambia.',
+    'terms.adBudget.meta': 'El presupuesto de Meta se cobra con nosotros y aparece en el pago inicial.',
+    'terms.adBudget.google': 'Google Ads se cobra directo por Google con la tarjeta del cliente.',
+    'terms.acceptance': 'Debes aceptar los términos antes de iniciar el checkout; es un acuerdo vinculante.',
+    'terms.api': 'Si la demanda sube de forma inusual, se puede requerir infraestructura adicional previa notificación.',
+    'terms.price': 'Cualquier ajuste de tarifas se comunica con al menos 30 días de anticipación.'
   },
   en: {
     brand: 'Full Scale System',
@@ -190,7 +206,23 @@ const translations = {
     'customPackage.services.service_training_session.title': 'System training session',
     'customPackage.services.service_training_session.desc': 'Guided session so your team can master day-to-day usage.',
     'customPackage.services.service_priority_support.title': 'Priority support for 30 days',
-    'customPackage.services.service_priority_support.desc': 'Fast accompaniment during your system launch.'
+    'customPackage.services.service_priority_support.desc': 'Fast accompaniment during your system launch.',
+    'terms.subscription.title': 'Billing structure',
+    'terms.subscription.setup': 'Setup is paid upfront and includes the first year of infrastructure.',
+    'terms.subscription.monthly': 'The monthly subscription starts in month 2; month 1 shows $0 because setup already covers it.',
+    'terms.subscription.yearly': 'The yearly infrastructure renews from year 2 as a separate subscription.',
+    'terms.planProtection':
+      'Plan Protection adds $50/month when results meet minimums; if a month underperforms it can be manually lowered to the minimum and the difference refunded.',
+    'terms.keepSystem':
+      'Keep System On Only pauses marketing and charges only the maintenance fee to keep APIs, automations, and site running.',
+    'terms.refunds':
+      'Refunds cover only Plan Protection differences; setup and ad budgets are non-refundable.',
+    'terms.financing': 'Financing via Stripe/Klarna adds 3% only to setup; the monthly fee stays the same.',
+    'terms.adBudget.meta': 'Meta budget is billed with us and appears in the initial payment.',
+    'terms.adBudget.google': 'Google Ads is billed directly by Google with the client card.',
+    'terms.acceptance': 'You must accept the terms before starting checkout; it is binding.',
+    'terms.api': 'If demand spikes unusually, extra infrastructure may be required with prior notice.',
+    'terms.price': 'Any fee adjustment is communicated at least 30 days in advance.'
   }
 };
 

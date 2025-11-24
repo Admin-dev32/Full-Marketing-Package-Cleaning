@@ -618,6 +618,14 @@
             <strong id="monthly-base">$700.00</strong>
           </div>
           <div class="totals-row">
+            <span data-translation-key="yearly.line">Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.</span>
+            <strong id="yearly-amount">$0.00</strong>
+          </div>
+          <div class="totals-row" id="keep-on-row" style="display: none;">
+            <span id="keep-on-label" data-translation-key="summary.keepSystemOnLine">Keep System On Only</span>
+            <strong id="keep-on-amount">$50.00</strong>
+          </div>
+          <div class="totals-row">
             <span data-translation-key="pricing.metaLabel">Meta Ads (primer mes):</span>
             <strong id="meta-today">$0.00</strong>
           </div>
@@ -642,6 +650,7 @@
             <strong id="total-month2">$700.00</strong>
           </div>
           <p class="note" data-translation-key="pricing.todayFinancingNote">El setup incluye el primer mes. Si eliges financiamiento, se suma 3% solo al pago de hoy.</p>
+          <p class="note" data-translation-key="yearly.description">El primer año ya está incluido en el setup. A partir del segundo año, se renueva de forma automática para que tu sistema se mantenga en línea.</p>
           <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
         </div>
       </div>
@@ -706,11 +715,11 @@
       </div>
       <div class="options-grid">
         <label class="option-card">
-          <input type="checkbox" data-addon-id="plan-protection" data-addon-setup="0" data-addon-monthly="180" />
+          <input type="checkbox" data-addon-id="plan-protection" data-addon-setup="0" data-addon-monthly="50" />
           <div>
             <h4 data-translation-key="addons.planProtection.label">Plan Protection</h4>
-            <p data-translation-key="addons.planProtection.desc">Add-on opcional para los primeros meses: si el sistema no logra los mínimos acordados, ese mes solo pagas una cuota mínima; si los cumple, aplica la mensualidad completa más la protección.</p>
-            <p class="price" data-translation-key="addons.planProtection.price">$180/mes</p>
+            <p data-translation-key="addons.planProtection.desc">Plan Protection: suma $50 al mes. Si el sistema funciona bien y recuperas tu inversión, se paga la mensualidad normal + $50. Si un mes los resultados son muy bajos y la campaña no fue efectiva, podemos ajustar ese mes al mínimo de este paquete (esto lo hace la agencia manualmente).</p>
+            <p class="price" data-translation-key="addons.planProtection.price">$50/mes</p>
           </div>
         </label>
         <label class="option-card">
@@ -887,6 +896,10 @@
   <script>
     const BASE_SETUP = 3000;
     const BASE_MONTHLY = 700;
+    const PLAN_PROTECTION_FEE = 50;
+    const KEEP_SYSTEM_ON_FEE = 50;
+    const YEARLY_INFRA_FEE = 320;
+    const MONTHLY_MINIMUM = BASE_MONTHLY;
     const PACKAGE_ID = 'full-scale-executive';
     const INCLUDED_COMPONENTS = new Set([
       'architecture',
@@ -923,6 +936,10 @@
         'pricing.financingFee': 'Financiamiento (3% hoy):',
         'pricing.todayLabel': 'Total a pagar hoy:',
         'pricing.month2Label': 'Pago mensual estimado a partir del mes 2:',
+        'yearly.title': 'Infraestructura anual (dominio + hosting)',
+        'yearly.description':
+          'El primer año ya está incluido en el setup. A partir del segundo año, se renueva de forma automática para que tu sistema se mantenga en línea.',
+        'yearly.line': 'Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.',
         'pricing.financingLabel': 'Quiero financiamiento (3% solo aplica al pago de hoy)',
         'pricing.todayFinancingNote': 'El setup incluye el primer mes. Si eliges financiamiento, se suma 3% solo al pago de hoy.',
         'pricing.note': 'Estos montos son estimados y se confirmarán en tu checkout seguro.',
@@ -950,12 +967,17 @@
         'addons.subtitle': 'Activa solo lo que necesitas. Se suman al setup o a la mensualidad según corresponda.',
         'addons.planProtection.label': 'Plan Protection',
         'addons.planProtection.desc':
-          'Add-on opcional para los primeros meses: si el sistema no logra los mínimos acordados, ese mes solo pagas una cuota mínima; si los cumple, aplica la mensualidad completa más la protección.',
-        'addons.planProtection.price': '$180/mes',
+          'Plan Protection: suma $50 al mes. Si el sistema funciona bien y recuperas tu inversión, se paga la mensualidad normal + $50. Si un mes los resultados son muy bajos y la campaña no fue efectiva, podemos ajustar ese mes al mínimo de este paquete (esto lo hace la agencia manualmente).',
+        'addons.planProtection.price': '$50/mes',
         'addons.keepOn.label': 'Keep System On Only',
         'addons.keepOn.desc':
-          'Modo de mantenimiento de baja intensidad: mantiene sitio, reservas e integraciones activas sin campañas ni gestión continua.',
+          'Modo en el que pausamos tu trabajo de marketing y solo mantenemos el sistema y el API funcionando.',
         'addons.keepOn.price': '$50/mes',
+        'keepSystemOn.label': 'Keep System On Only',
+        'keepSystemOn.description':
+          'Modo en el que pausamos tu trabajo de marketing y solo mantenemos el sistema y el API funcionando.',
+        'summary.marketingPaused': 'Marketing mensual: $0 (pausado)',
+        'summary.keepSystemOnLine': 'Keep System On Only: {amount}/mes (solo mantenimiento del sistema y API)',
         'services.tag': 'Servicios a-la-carte',
         'services.title': 'Componentes individuales con precio',
         'services.subtitle': 'Elige piezas extra de operación o marketing y súmalas a tu paquete.',
@@ -1030,6 +1052,10 @@
         'pricing.financingFee': 'Financing (3% today):',
         'pricing.todayLabel': 'Total to pay today:',
         'pricing.month2Label': 'Estimated monthly payment from month 2:',
+        'yearly.title': 'Yearly infrastructure (domain + hosting)',
+        'yearly.description':
+          'The first year is already included in the setup. Starting in year two, it auto-renews so your system stays online.',
+        'yearly.line': 'Yearly infra: year 1 included, then {amount}/year starting from year 2.',
         'pricing.financingLabel': 'I want financing (3% applied only to today’s payment)',
         'pricing.todayFinancingNote': 'Setup includes the first month. If you pick financing, 3% applies only to today’s payment.',
         'pricing.note': 'These amounts are estimates and will be confirmed in secure checkout.',
@@ -1057,12 +1083,16 @@
         'addons.subtitle': 'Activate only what you need. Costs add to setup or monthly as needed.',
         'addons.planProtection.label': 'Plan Protection',
         'addons.planProtection.desc':
-          'Optional add-on for the first months: if the system misses the agreed minimums, you pay only a lower minimum that month; if it meets them, the full regular monthly applies plus the protection fee.',
-        'addons.planProtection.price': '$180/mo',
+          'Plan Protection: adds $50/month. If the system performs well and you recover your investment, you pay the regular monthly fee + $50. If in a given month results are very low and the campaign was not effective, we can manually adjust that month down to the minimum monthly for this package.',
+        'addons.planProtection.price': '$50/mo',
         'addons.keepOn.label': 'Keep System On Only',
         'addons.keepOn.desc':
-          'Low-intensity maintenance mode: keeps the site, booking basics, and integrations online with no campaigns or ongoing management.',
+          'Mode where we pause your marketing work and only keep the system and API online.',
         'addons.keepOn.price': '$50/mo',
+        'keepSystemOn.label': 'Keep System On Only',
+        'keepSystemOn.description': 'Mode where we pause your marketing work and only keep the system and API online.',
+        'summary.marketingPaused': 'Monthly marketing: $0 (paused)',
+        'summary.keepSystemOnLine': 'Keep System On Only: {amount}/month (system and API maintenance only)',
         'services.tag': 'A-la-carte services',
         'services.title': 'Individual components with pricing',
         'services.subtitle': 'Pick extra operational or marketing pieces and add them to your package.',
@@ -1144,9 +1174,11 @@
     function getSelectedAddons() {
       const addons = [];
       document.querySelectorAll('input[type="checkbox"][data-addon-id]').forEach((checkbox) => {
+        const addonId = checkbox.getAttribute('data-addon-id');
+        if (addonId === 'keep-on') return; // handled separately
         if (checkbox.checked) {
           addons.push({
-            id: checkbox.getAttribute('data-addon-id'),
+            id: addonId,
             setup: Number(checkbox.getAttribute('data-addon-setup')) || 0,
             monthly: Number(checkbox.getAttribute('data-addon-monthly')) || 0
           });
@@ -1241,6 +1273,8 @@
       button.addEventListener('click', () => {
         const lang = button.getAttribute('data-lang');
         updateLanguage(lang);
+        applyIncludedComponents();
+        updateTotals();
       });
     });
 
@@ -1256,6 +1290,8 @@
     });
 
     const financingCheckbox = document.getElementById('financing-option');
+    const planProtectionCheckbox = document.querySelector('input[data-addon-id="plan-protection"]');
+    const keepSystemOnCheckbox = document.querySelector('input[data-addon-id="keep-on"]');
     const metaInput = document.getElementById('meta-budget-input');
     const termsCheckbox = document.getElementById('terms-accepted');
     const termsLink = document.querySelector('.terms a');
@@ -1265,11 +1301,21 @@
     function calculateTotals() {
       const addons = getSelectedAddons();
       const addonsSetupTotal = addons.reduce((acc, item) => acc + item.setup, 0);
-      const addonsMonthlyTotal = addons.reduce((acc, item) => acc + item.monthly, 0);
       const financingSelected = Boolean(financingCheckbox?.checked);
+      const keepSystemOnSelected = Boolean(keepSystemOnCheckbox?.checked);
+      const planProtectionSelected = keepSystemOnSelected ? false : Boolean(planProtectionCheckbox?.checked);
+      const planProtectionFee = planProtectionSelected ? PLAN_PROTECTION_FEE : 0;
+
+      const addonsMonthlyWithoutProtection = addons.reduce((acc, item) => {
+        if (item.id === 'plan-protection') return acc;
+        return acc + item.monthly;
+      }, 0);
+
+      const monthlyRegular = keepSystemOnSelected ? 0 : BASE_MONTHLY + addonsMonthlyWithoutProtection;
+      const monthlyBaseDisplay = keepSystemOnSelected ? 0 : monthlyRegular + planProtectionFee;
 
       const setupToday = BASE_SETUP + addonsSetupTotal;
-      const monthlyBaseFromMonth2 = BASE_MONTHLY + addonsMonthlyTotal + metaBudget;
+      const monthlyBaseFromMonth2 = (keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : monthlyBaseDisplay) + metaBudget;
       const firstMonthBase = setupToday + metaBudget;
 
       let financingFee = 0;
@@ -1282,23 +1328,60 @@
       return {
         addons,
         addonsSetupTotal,
-        addonsMonthlyTotal,
+        addonsMonthlyTotal: keepSystemOnSelected ? 0 : addonsMonthlyWithoutProtection + planProtectionFee,
         financingSelected,
         financingFee,
         setupToday,
-        monthlyBase: BASE_MONTHLY + addonsMonthlyTotal,
+        monthlyBase: monthlyBaseDisplay,
+        monthlyRegular,
+        monthlyMinimum: MONTHLY_MINIMUM,
+        keepSystemOnSelected,
+        keepSystemOnFee: KEEP_SYSTEM_ON_FEE,
+        planProtectionSelected,
+        planProtectionFee,
         metaBudget,
         firstMonthBase,
         firstMonthWithFinancing,
-        monthlyFromMonth2: monthlyBaseFromMonth2
+        monthlyFromMonth2: monthlyBaseFromMonth2,
+        yearlyInfraFee: YEARLY_INFRA_FEE
       };
     }
 
     function updateTotals() {
       const totals = calculateTotals();
+      const translation = translations[currentLanguage] || {};
 
       document.getElementById('setup-today').textContent = formatCurrency(totals.setupToday);
-      document.getElementById('monthly-base').textContent = formatCurrency(totals.monthlyBase);
+      const monthlyLabelEl = document.querySelector('[data-translation-key="pricing.monthlyLabel"]');
+      const monthlyValueEl = document.getElementById('monthly-base');
+      const keepOnRow = document.getElementById('keep-on-row');
+      const keepOnLabel = document.getElementById('keep-on-label');
+      const keepOnAmount = document.getElementById('keep-on-amount');
+
+      if (totals.keepSystemOnSelected) {
+        if (monthlyLabelEl) {
+          monthlyLabelEl.textContent = translation['summary.marketingPaused'] || 'Marketing mensual: $0 (pausado)';
+        }
+        if (monthlyValueEl) {
+          monthlyValueEl.textContent = formatCurrency(0);
+        }
+        if (keepOnRow && keepOnLabel && keepOnAmount) {
+          const template = translation['summary.keepSystemOnLine'] ||
+            'Keep System On Only: {amount}/mes (solo mantenimiento del sistema y API)';
+          keepOnLabel.textContent = template.replace('{amount}', formatCurrency(KEEP_SYSTEM_ON_FEE));
+          keepOnAmount.textContent = formatCurrency(KEEP_SYSTEM_ON_FEE);
+          keepOnRow.style.display = 'flex';
+        }
+      } else {
+        if (monthlyLabelEl) {
+          monthlyLabelEl.textContent = translation['pricing.monthlyLabel'] || 'Mensualidad base:';
+        }
+        if (monthlyValueEl) {
+          monthlyValueEl.textContent = formatCurrency(totals.monthlyBase);
+        }
+        if (keepOnRow) keepOnRow.style.display = 'none';
+      }
+
       document.getElementById('meta-today').textContent = formatCurrency(totals.metaBudget);
       document.getElementById('addons-setup').textContent = formatCurrency(totals.addonsSetupTotal);
       document.getElementById('addons-monthly').textContent = formatCurrency(totals.addonsMonthlyTotal);
@@ -1307,6 +1390,17 @@
         totals.financingSelected ? totals.firstMonthWithFinancing : totals.firstMonthBase
       );
       document.getElementById('total-month2').textContent = formatCurrency(totals.monthlyFromMonth2);
+
+      const yearlyLineTemplate = translation['yearly.line'] ||
+        'Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.';
+      const yearlyTextEl = document.querySelector('[data-translation-key="yearly.line"]');
+      const yearlyAmountEl = document.getElementById('yearly-amount');
+      if (yearlyTextEl) {
+        yearlyTextEl.textContent = yearlyLineTemplate.replace('{amount}', formatCurrency(YEARLY_INFRA_FEE));
+      }
+      if (yearlyAmountEl) {
+        yearlyAmountEl.textContent = formatCurrency(YEARLY_INFRA_FEE);
+      }
     }
 
     if (metaInput) {
@@ -1318,7 +1412,19 @@
     }
 
     document.querySelectorAll('input[type="checkbox"][data-addon-id]').forEach((checkbox) => {
+      const addonId = checkbox.getAttribute('data-addon-id');
+      if (addonId === 'keep-on') return;
       checkbox.addEventListener('change', updateTotals);
+    });
+
+    keepSystemOnCheckbox?.addEventListener('change', () => {
+      if (keepSystemOnCheckbox.checked && planProtectionCheckbox) {
+        planProtectionCheckbox.checked = false;
+        planProtectionCheckbox.setAttribute('disabled', 'disabled');
+      } else {
+        planProtectionCheckbox?.removeAttribute('disabled');
+      }
+      updateTotals();
     });
 
     financingCheckbox?.addEventListener('change', updateTotals);
@@ -1349,6 +1455,25 @@
         monthlyBase: BASE_MONTHLY,
         addons: totals.addons,
         metaBudgetMonthly: metaBudget,
+        planProtection: {
+          selected: totals.planProtectionSelected,
+          protectionFee: PLAN_PROTECTION_FEE,
+          monthlyRegular: totals.monthlyRegular,
+          monthlyMinimum: totals.monthlyMinimum
+        },
+        keepSystemOn: {
+          selected: totals.keepSystemOnSelected,
+          keepSystemOnFee: KEEP_SYSTEM_ON_FEE,
+          monthlyRegular: totals.monthlyRegular,
+          monthlyMinimum: totals.monthlyMinimum,
+          monthlyFeeForMarketing: totals.keepSystemOnSelected ? 0 : totals.monthlyBase,
+          monthlyFeeKeepSystemOn: totals.keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : 0
+        },
+        yearlyInfra: {
+          enabled: true,
+          yearlyInfraFee: YEARLY_INFRA_FEE,
+          currency: 'usd'
+        },
         totals: {
           setupToday: totals.setupToday,
           firstMonthBase: totals.firstMonthBase,

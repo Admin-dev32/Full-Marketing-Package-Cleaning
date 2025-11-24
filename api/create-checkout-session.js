@@ -28,7 +28,10 @@ module.exports = async function handler(req, res) {
     financing = {},
     currency = 'usd',
     locale = 'es',
-    metaBudgetMonthly = 0
+    metaBudgetMonthly = 0,
+    planProtection = {},
+    keepSystemOn = {},
+    yearlyInfra = {}
   } = req.body || {};
 
   try {
@@ -38,6 +41,47 @@ module.exports = async function handler(req, res) {
 
     const financingSelected = Boolean(financing && financing.selected);
     const financingFee = Number(financing && financing.financingFee ? financing.financingFee : 0);
+
+    const yearlyInfraFee = Number(yearlyInfra.yearlyInfraFee || yearlyInfra.fee || 0);
+    const yearlyInfraEnabled = yearlyInfra.enabled !== false && yearlyInfraFee > 0;
+    const yearlyInfraCurrency = yearlyInfra.currency || currency;
+
+    const planProtectionMetadata = {};
+    if (planProtection && planProtection.selected) {
+      planProtectionMetadata.hasPlanProtection = 'true';
+      planProtectionMetadata.protectionFee = (planProtection.protectionFee ?? 50).toString();
+      if (planProtection.monthlyRegular != null) {
+        planProtectionMetadata.monthlyRegular = planProtection.monthlyRegular.toString();
+      }
+      if (planProtection.monthlyMinimum != null) {
+        planProtectionMetadata.monthlyMinimum = planProtection.monthlyMinimum.toString();
+      }
+    }
+
+    const keepSystemMetadata = {};
+    if (keepSystemOn && keepSystemOn.selected) {
+      keepSystemMetadata.keepSystemOnOnly = 'true';
+      keepSystemMetadata.keepSystemOnFee = (keepSystemOn.keepSystemOnFee ?? 0).toString();
+      if (keepSystemOn.monthlyRegular != null) {
+        keepSystemMetadata.monthlyRegular = keepSystemOn.monthlyRegular.toString();
+      }
+      if (keepSystemOn.monthlyMinimum != null) {
+        keepSystemMetadata.monthlyMinimum = keepSystemOn.monthlyMinimum.toString();
+      }
+      keepSystemMetadata.monthlyFeeForMarketing = '0';
+      keepSystemMetadata.monthlyFeeKeepSystemOn = (keepSystemOn.monthlyFeeKeepSystemOn ?? 0).toString();
+    } else {
+      keepSystemMetadata.keepSystemOnOnly = 'false';
+      if (keepSystemOn && keepSystemOn.monthlyRegular != null) {
+        keepSystemMetadata.monthlyRegular = keepSystemOn.monthlyRegular.toString();
+      }
+      if (keepSystemOn && keepSystemOn.monthlyMinimum != null) {
+        keepSystemMetadata.monthlyMinimum = keepSystemOn.monthlyMinimum.toString();
+      }
+      if (keepSystemOn && keepSystemOn.monthlyFeeForMarketing != null) {
+        keepSystemMetadata.monthlyFeeForMarketing = keepSystemOn.monthlyFeeForMarketing.toString();
+      }
+    }
 
     // First payment = setup (which already includes month 1) + Meta budget for month 1
     // Financing applies only to this upfront charge.
@@ -73,6 +117,23 @@ module.exports = async function handler(req, res) {
       }
     ];
 
+    if (yearlyInfraEnabled) {
+      // Yearly infrastructure subscription with year-one covered in setup; trial metadata communicates intent to start billing in year two
+      lineItems.push({
+        price_data: {
+          currency: yearlyInfraCurrency,
+          product_data: {
+            name: `Yearly infrastructure (starts year 2) (${packageId})`,
+            metadata: { packageId, locale, infraType: 'domain_hosting_infra' }
+          },
+          recurring: { interval: 'year' },
+          unit_amount: toCents(yearlyInfraFee),
+          tax_behavior: 'exclusive'
+        },
+        quantity: 1
+      });
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       allow_promotion_codes: true, // Enable manual coupon entry in Checkout
@@ -88,7 +149,12 @@ module.exports = async function handler(req, res) {
           financingFee: financingFee.toString(),
           metaBudgetMonthly: metaBudgetMonthly.toString(),
           firstPaymentAmount: firstPaymentAmount.toString(),
-          recurringFromMonth2: recurringFromMonth2.toString()
+          recurringFromMonth2: recurringFromMonth2.toString(),
+          yearlyInfraEnabled: yearlyInfraEnabled ? 'true' : 'false',
+          yearlyInfraFee: yearlyInfraFee.toString(),
+          yearlyTrialDays: '365',
+          ...planProtectionMetadata,
+          ...keepSystemMetadata
         }
       },
       metadata: {
@@ -99,7 +165,11 @@ module.exports = async function handler(req, res) {
         metaBudgetMonthly: metaBudgetMonthly.toString(),
         addons: JSON.stringify(addons || []),
         firstPaymentAmount: firstPaymentAmount.toString(),
-        recurringFromMonth2: recurringFromMonth2.toString()
+        recurringFromMonth2: recurringFromMonth2.toString(),
+        yearlyInfraEnabled: yearlyInfraEnabled ? 'true' : 'false',
+        yearlyInfraFee: yearlyInfraFee.toString(),
+        ...planProtectionMetadata,
+        ...keepSystemMetadata
       },
       success_url: `${SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${CANCEL_URL}?canceled=true`
