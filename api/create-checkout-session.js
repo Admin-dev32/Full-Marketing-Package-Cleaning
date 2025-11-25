@@ -3,6 +3,27 @@ const Stripe = require('stripe');
 const SUCCESS_URL = process.env.SUCCESS_URL || 'https://thebakoagency.com/checkout-success';
 const CANCEL_URL = process.env.CANCEL_URL || 'https://thebakoagency.com/checkout-cancel';
 
+const allowedOrigins = ['https://thebakoagency.com', 'https://www.thebakoagency.com'];
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return true;
+  }
+
+  return false;
+}
+
 function toCents(value) {
   const normalized = Number(value || 0);
   if (!Number.isFinite(normalized) || normalized < 0) return 0;
@@ -10,8 +31,10 @@ function toCents(value) {
 }
 
 module.exports = async function handler(req, res) {
+  if (applyCors(req, res)) return;
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'POST, OPTIONS');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
