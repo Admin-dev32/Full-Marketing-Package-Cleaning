@@ -1379,6 +1379,8 @@
 
       const totals = calculateTotals();
 
+      const returnUrl = window.location.href;
+
       const payload = {
         packageId: PACKAGE_ID,
         setupBase: BASE_SETUP,
@@ -1423,6 +1425,7 @@
           originalUpfrontTotal: totals.firstMonthBaseOriginal,
           discountedUpfrontTotal: totals.firstMonthBaseDiscounted
         },
+        returnUrl,
         currency: 'usd',
         locale: currentLanguage
       };

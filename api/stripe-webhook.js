@@ -99,20 +99,29 @@ function buildCancelLink(subscriptionId, customerEmail) {
 
 async function sendOrderConfirmation(session) {
   const customerEmail = session.customer_details?.email || session.customer_email;
-  if (!customerEmail) return;
+  if (!customerEmail) {
+    console.warn('[stripe-webhook] No customer email on checkout.session.completed for session', session.id);
+    return;
+  }
   const cancelUrl = buildCancelLink(session.subscription, customerEmail);
   const { subject, htmlBody } = buildOrderConfirmationEmail(session, cancelUrl);
   await sendTransactionalEmail({ to: customerEmail, subject, htmlBody });
 }
 
 async function sendRenewalReminder(invoice) {
-  const customerEmail = invoice.customer_email || invoice.customer?.email;
-  let recipient = customerEmail;
+  let recipient = invoice.customer_email;
   if (!recipient && invoice.customer) {
-    const customer = await stripe.customers.retrieve(invoice.customer);
-    recipient = customer?.email;
+    try {
+      const customer = await stripe.customers.retrieve(invoice.customer);
+      recipient = customer?.email;
+    } catch (err) {
+      console.error('[stripe-webhook] Failed to retrieve customer for invoice.upcoming', invoice.id, err);
+    }
   }
-  if (!recipient) return;
+  if (!recipient) {
+    console.warn('[stripe-webhook] No customer email for invoice.upcoming', invoice.id);
+    return;
+  }
 
   const nextPaymentUnix =
     invoice.next_payment_attempt ||
@@ -133,13 +142,19 @@ async function sendRenewalReminder(invoice) {
 }
 
 async function sendRenewalConfirmation(invoice) {
-  const customerEmail = invoice.customer_email || invoice.customer?.email;
-  let recipient = customerEmail;
+  let recipient = invoice.customer_email;
   if (!recipient && invoice.customer) {
-    const customer = await stripe.customers.retrieve(invoice.customer);
-    recipient = customer?.email;
+    try {
+      const customer = await stripe.customers.retrieve(invoice.customer);
+      recipient = customer?.email;
+    } catch (err) {
+      console.error('[stripe-webhook] Failed to retrieve customer for invoice.payment_succeeded', invoice.id, err);
+    }
   }
-  if (!recipient) return;
+  if (!recipient) {
+    console.warn('[stripe-webhook] No customer email for invoice.payment_succeeded', invoice.id);
+    return;
+  }
 
   const cancelUrl = buildCancelLink(invoice.subscription, recipient);
   const { subject, htmlBody } = buildRenewalConfirmationEmail(invoice, cancelUrl);

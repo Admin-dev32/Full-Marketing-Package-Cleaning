@@ -11,36 +11,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <style>
-      body {
-        background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.06), transparent 28%),
-          radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.05), transparent 26%),
-          var(--bg);
-      }
-
-      .card {
-        background: linear-gradient(135deg, rgba(20, 20, 27, 0.9), rgba(14, 14, 20, 0.9));
-        border: 1px solid rgba(212, 175, 55, 0.18);
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
-        max-width: 760px;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      .muted {
-        color: var(--muted);
-      }
-
-      .actions {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 18px;
-      }
-    </style>
   </head>
   <body>
     <header class="top-bar">
@@ -64,7 +34,8 @@
       </section>
 
       <section class="section">
-        <div class="card">
+        <div class="glass-card centered">
+          <div class="icon-circle success">❤</div>
           <p class="muted" data-translation-key="cancelThankYou.subtitle2">
             Si deseas regresar, estaremos listos para ayudarte a reactivar rápido.
           </p>
@@ -72,10 +43,13 @@
             Puedes contactarnos en cualquier momento para explorar una nueva sesión de estrategia.
           </p>
 
-          <div class="actions">
+          <div class="actions center">
             <a class="cta" href="/" data-translation-key="cancelThankYou.backButton">Volver al inicio</a>
             <a class="cta secondary" href="mailto:send@thebakoagency.com" data-translation-key="cancelThankYou.contactSupport"
               >Contactar soporte</a
+            >
+            <a class="cta secondary" href="/system-custom-package.html" data-translation-key="cancelThankYou.viewServices"
+              >Ver otros servicios</a
             >
           </div>
         </div>
