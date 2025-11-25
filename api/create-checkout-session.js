@@ -106,31 +106,13 @@ module.exports = async function handler(req, res) {
     const yearlyInfraEnabled = yearlyInfra.enabled !== false && yearlyInfraFee > 0;
     const yearlyInfraAmountCents = toCents(yearlyInfraFee);
 
-    const discountType = discount && discount.type ? discount.type : 'none';
-    const discountValue = Number(discount && discount.value ? discount.value : 0);
+    const discountType = typeof discount.type === 'string' ? discount.type : 'none';
+    const discountValue = Number(discount.value ?? 0);
     const discountedUpfrontTotal = Number(
-      discount && discount.discountedUpfrontTotal != null ? discount.discountedUpfrontTotal : firstMonthBase
+      discount.discountedUpfrontTotal != null ? discount.discountedUpfrontTotal : firstMonthBase
     );
     const originalUpfrontTotal = Number(
-      discount && discount.originalUpfrontTotal != null ? discount.originalUpfrontTotal : originalFirstMonthBase
-    );
-    const discountAmountApplied = Math.max(originalUpfrontTotal - discountedUpfrontTotal, 0);
-
-    const discountMetadata = {
-      discountType,
-      discountValue: discountValue.toString(),
-      originalUpfrontTotal: originalUpfrontTotal.toString(),
-      discountedUpfrontTotal: discountedUpfrontTotal.toString(),
-      discountAmount: discountAmountApplied.toString()
-    };
-
-    const discountType = discount && discount.type ? discount.type : 'none';
-    const discountValue = Number(discount && discount.value ? discount.value : 0);
-    const discountedUpfrontTotal = Number(
-      discount && discount.discountedUpfrontTotal != null ? discount.discountedUpfrontTotal : firstMonthBase
-    );
-    const originalUpfrontTotal = Number(
-      discount && discount.originalUpfrontTotal != null ? discount.originalUpfrontTotal : originalFirstMonthBase
+      discount.originalUpfrontTotal != null ? discount.originalUpfrontTotal : originalFirstMonthBase
     );
     const discountAmountApplied = Math.max(originalUpfrontTotal - discountedUpfrontTotal, 0);
 
