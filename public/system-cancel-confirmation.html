@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translation-key="cancelConfirmation.pageTitle">Cancelación confirmada – Bako Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="logo-mark">Bako Systems</div>
+      <div class="language-switch">
+        <button class="lang-button active" data-lang="es">ES</button>
+        <span class="divider">/</span>
+        <button class="lang-button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow" data-translation-key="cancel.eyebrow">Cancelación</div>
+          <h1 id="confirmation-title" data-translation-key="cancelConfirmation.titleImmediate">Tu sistema ha sido cancelado</h1>
+          <p class="subtitle" id="confirmation-subtitle" data-translation-key="cancelConfirmation.subtitleImmediate">
+            El acceso al sistema se detuvo de inmediato.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="glass-card">
+          <div class="state-card compact">
+            <div class="icon-circle success">✓</div>
+            <div>
+              <p class="muted" data-translation-key="cancelConfirmation.badge">Acción registrada</p>
+              <h3 data-translation-key="cancelConfirmation.effectiveLabel">Fecha efectiva de fin</h3>
+              <p id="effective-date" class="large-text">—</p>
+            </div>
+          </div>
+
+          <ul class="bullet-list spaced">
+            <li data-translation-key="cancelConfirmation.note1">
+              El servicio se mantiene activo hasta la fecha efectiva.
+            </li>
+            <li data-translation-key="cancelConfirmation.note2">
+              No se generarán cargos adicionales después de esa fecha.
+            </li>
+          </ul>
+
+          <div class="actions">
+            <a class="cta" href="/" data-translation-key="cancelConfirmation.backButton">Regresar al sitio principal</a>
+            <a class="cta secondary" href="mailto:send@thebakoagency.com" data-translation-key="cancelConfirmation.contactSupport"
+              >Contactar soporte</a
+            >
+            <a class="cta secondary" href="/system-cancel-thank-you.html" data-translation-key="cancelConfirmation.thankYouLink"
+              >Ver nota de agradecimiento</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const status = params.get('status') || 'scheduled';
+      const effectiveDate = params.get('effectiveDate');
+
+      const confirmationTitle = document.getElementById('confirmation-title');
+      const confirmationSubtitle = document.getElementById('confirmation-subtitle');
+      const effectiveDateEl = document.getElementById('effective-date');
+
+      function formatDate(ts) {
+        if (!ts) return '—';
+        const date = new Date(Number(ts) * 1000);
+        const locale = document.documentElement.lang === 'es' ? 'es-ES' : 'en-US';
+        return date.toLocaleDateString(locale, { dateStyle: 'medium' });
+      }
+
+      function applyStatusCopy() {
+        if (status === 'cancelled') {
+          confirmationTitle.dataset.translationKey = 'cancelConfirmation.titleImmediate';
+          confirmationSubtitle.dataset.translationKey = 'cancelConfirmation.subtitleImmediate';
+        } else {
+          confirmationTitle.dataset.translationKey = 'cancelConfirmation.titleScheduled';
+          confirmationSubtitle.dataset.translationKey = 'cancelConfirmation.subtitleScheduled';
+        }
+        updateLanguage(document.documentElement.lang || 'es');
+      }
+
+      effectiveDateEl.textContent = formatDate(effectiveDate);
+      applyStatusCopy();
+    </script>
+  </body>
+</html>

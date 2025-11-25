@@ -1445,6 +1445,8 @@
 
       const totals = calculateTotals();
 
+      const returnUrl = window.location.href;
+
       const payload = {
         packageId: PACKAGE_ID,
         setupBase: BASE_SETUP,
@@ -1480,6 +1482,7 @@
           selected: totals.financingSelected,
           financingFee: totals.financingFee
         },
+        returnUrl,
         currency: 'usd',
         locale: currentLanguage
       };
