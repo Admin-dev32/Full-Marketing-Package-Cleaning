@@ -38,27 +38,62 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!process.env.STRIPE_SECRET_KEY) {
-    return res.status(500).json({ error: 'Stripe secret key is not configured.' });
-  }
-
-  const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
-  const {
-    packageId = 'custom',
-    addons = [],
-    totals = {},
-    financing = {},
-    currency = 'usd',
-    locale = 'es',
-    metaBudgetMonthly = 0,
-    planProtection = {},
-    keepSystemOn = {},
-    yearlyInfra = {},
-    discount = {}
-  } = req.body || {};
-
   try {
+    const missingEnv = [];
+    if (!process.env.STRIPE_SECRET_KEY) missingEnv.push('STRIPE_SECRET_KEY');
+    if (!process.env.APP_BASE_URL) missingEnv.push('APP_BASE_URL');
+
+    if (missingEnv.length) {
+      console.error('[checkout-session] Missing env vars:', missingEnv.join(', '));
+      return res.status(500).json({
+        error: 'MISSING_ENV',
+        message: `Missing required environment variable: ${missingEnv.join(', ')}`
+      });
+    }
+
+    const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+    const body = req.body || {};
+    const {
+      packageId = 'custom',
+      addons = [],
+      totals = {},
+      financing = {},
+      currency = 'usd',
+      locale = 'es',
+      metaBudgetMonthly = 0,
+      planProtection = {},
+      keepSystemOn = {},
+      yearlyInfra = {},
+      discount = {}
+    } = body;
+
+    const payloadErrors = [];
+    if (!packageId || typeof packageId !== 'string') payloadErrors.push('packageId');
+    if (!totals || typeof totals !== 'object') {
+      payloadErrors.push('totals');
+    } else {
+      const numericTotals = ['firstMonthBase', 'originalFirstMonthBase', 'firstMonthWithFinancing', 'monthlyFromMonth2'];
+      numericTotals.forEach((key) => {
+        if (totals[key] != null && Number.isNaN(Number(totals[key]))) {
+          payloadErrors.push(`totals.${key}`);
+        }
+      });
+    }
+    if (!Array.isArray(addons)) payloadErrors.push('addons');
+    if (currency && typeof currency !== 'string') payloadErrors.push('currency');
+    if (locale && typeof locale !== 'string') payloadErrors.push('locale');
+    if (metaBudgetMonthly != null && Number.isNaN(Number(metaBudgetMonthly))) {
+      payloadErrors.push('metaBudgetMonthly');
+    }
+
+    if (payloadErrors.length) {
+      return res.status(400).json({
+        error: 'INVALID_PAYLOAD',
+        message: `Missing or invalid fields: ${payloadErrors.join(', ')}`
+      });
+    }
+
     const firstMonthBase = Number(totals.firstMonthBase || 0);
     const originalFirstMonthBase = Number(totals.originalFirstMonthBase ?? firstMonthBase);
     const firstMonthWithFinancing = Number(totals.firstMonthWithFinancing || firstMonthBase);
@@ -222,7 +257,10 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ url: session.url });
   } catch (error) {
-    console.error('Stripe checkout session error', error);
-    return res.status(500).json({ error: error.message });
+    console.error('[checkout-session] Error creating Stripe session:', error);
+    return res.status(500).json({
+      error: 'CHECKOUT_SESSION_FAILED',
+      message: process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message
+    });
   }
 };
