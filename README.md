@@ -1,1 +1,83 @@
-# Full-Marketing-Package-Cleaning
+# Cleaning Systems Mini-Site
+
+## Project Overview
+- Static bilingual (ES/EN) marketing and checkout experience for Cleaning Systems packages hosted on Hostinger.
+- Shared dark/glass/gold design system with translation support across all pages in `public/`.
+- Vercel serverless backend for Stripe Checkout (setup + monthly + optional yearly infra), webhook-driven transactional emails, and secure self-service cancellation.
+- Nodemailer + Hostinger Mail SMTP for order confirmations, renewal reminders, and renewal payment confirmations (all include cancel/manage links).
+
+## Tech Stack
+- Frontend: HTML/CSS/vanilla JS (static assets in `public/`).
+- Styling: `public/styles.css` dark/glass theme with reusable cards, buttons, and layout primitives.
+- Translations: `public/script.js` with ES/EN dictionaries, data-translation-key binding, and language toggles.
+- Backend: Vercel serverless functions in `api/`.
+- Payments: Stripe Checkout (one-time setup, monthly subscription, optional yearly infra subscription).
+- Email: Nodemailer via Hostinger Mail SMTP using `lib/email.js`.
+
+## Folder Structure
+- `public/`
+  - Landing and package pages (e.g., `index.html`, `system-premium-growth.html`, `system-base-pro.html`, `system-full-scale-directivo.html`).
+  - Custom builder (`system-custom-package.html`), terms (`system-cleaning-terms.html`), cancellation (`system-cancel*.html`), and thank-you/confirmation pages.
+  - Shared scripts (`script.js`) and styles (`styles.css`).
+- `api/`
+  - `create-checkout-session.js`: builds Stripe Checkout sessions with one-time + recurring + optional yearly infra line items.
+  - `stripe-webhook.js`: processes checkout completion, renewal reminders, and renewal confirmations; sends transactional emails with cancel links.
+  - `cancel-subscription.js`: validates signed cancel links and schedules cancellation at period end.
+- `lib/`
+  - `email.js`: Nodemailer helper using Hostinger SMTP.
+  - `cancelToken.js`: HMAC SHA256 generator/validator for cancel links.
+  - `cancelLink.js`: builds signed cancel URLs pointing to `system-cancel.html`.
+- `package.json`: dependency list (Stripe SDK, Nodemailer).
+
+## Environment Variables
+| Name | Description | Required | Notes/Where Used |
+| --- | --- | --- | --- |
+| STRIPE_SECRET_KEY | Stripe secret key for API calls. | Required | Used in `api/create-checkout-session.js`, `api/stripe-webhook.js`, `api/cancel-subscription.js`. |
+| STRIPE_WEBHOOK_SECRET | Stripe webhook signing secret. | Required | Validates signatures in `api/stripe-webhook.js`. |
+| SUCCESS_URL | Frontend URL after successful Checkout. | Optional | Defaults to https://thebakoagency.com/checkout-success; used in `api/create-checkout-session.js`. |
+| CANCEL_URL | Frontend URL after Checkout cancel. | Optional | Defaults to https://thebakoagency.com/checkout-cancel; used in `api/create-checkout-session.js`. |
+| APP_BASE_URL | Base URL to build signed cancellation links. | Required | Used in `lib/cancelLink.js` for links to `system-cancel.html`. |
+| CANCEL_TOKEN_SECRET | HMAC secret to sign/verify cancel tokens. | Required | Used in `lib/cancelToken.js` and validated in `api/cancel-subscription.js`. |
+| SMTP_HOST | Hostinger SMTP host. | Required | Used in `lib/email.js` to send mail. |
+| SMTP_PORT | Hostinger SMTP port (465 or 587). | Required | Used in `lib/email.js`. |
+| SMTP_USER | SMTP username (mailbox). | Required | Used in `lib/email.js`. |
+| SMTP_PASS | SMTP password/app password. | Required | Used in `lib/email.js`. |
+| EMAIL_FROM | Optional sender override. | Optional | Defaults to `no-reply@thebakoagency.com`; used in `lib/email.js`. |
+| EMAIL_INTERNAL_COPY | Optional BCC/copy override. | Optional | Defaults to `send@thebakoagency.com`; used in `lib/email.js`. |
+
+## How the System Works
+### Checkout Flow
+1. Frontend builder collects selections (package, add-ons, budgets, discounts, financing, yearly infra) and POSTs to `/api/create-checkout-session`.
+2. API builds Stripe line items: one-time setup (covers month 1 + Meta budget), monthly subscription starting month 2, optional yearly infra starting year 2, plus metadata for discounts/financing/protection.
+3. User is redirected to Stripe Checkout; success/cancel redirects are controlled by `SUCCESS_URL`/`CANCEL_URL`.
+
+### Bilingual System
+- All visible text uses `data-translation-key`; `script.js` dictionaries provide ES/EN strings and `updateLanguage()` applies them to DOM nodes and placeholders.
+
+### Emails + Webhooks
+- `/api/stripe-webhook` handles:
+  - `checkout.session.completed`: order confirmation email with upfront + recurring amounts and cancel link.
+  - `invoice.upcoming`: renewal reminder ~3 days before renewal with cancel link.
+  - `invoice.payment_succeeded` (subscription_cycle): renewal payment confirmation with cancel link.
+- Emails are sent via `lib/email.js` using Hostinger SMTP and always BCC `send@thebakoagency.com` by default.
+
+### Cancellation Flow
+1. Emails include a signed cancel URL generated by `buildCancelUrl` using subscription ID and customer email.
+2. User opens `system-cancel.html` with `subscription` and `token` query params; the page GETs `/api/cancel-subscription` to validate and show current period end.
+3. On confirm, the page POSTs to `/api/cancel-subscription`; backend re-validates token, sets `cancel_at_period_end=true`, and responds with status/effective date.
+4. UI redirects to `system-cancel-confirmation.html`, with optional navigation to `system-cancel-thank-you.html`.
+
+## Local Development / Testing
+- Frontend is static; open `public/` files directly or serve with any static server.
+- Backend: deploy or run Vercel functions locally (e.g., `vercel dev`) with required env vars.
+- Stripe testing: configure `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET`; use Stripe CLI to forward events to `/api/stripe-webhook` and simulate `checkout.session.completed`, `invoice.upcoming`, and `invoice.payment_succeeded`.
+- SMTP: provide Hostinger Mail credentials via env vars to allow email sending in local tests.
+
+## Deployment Notes
+- Static assets hosted on Hostinger; Vercel hosts serverless functions under `/api/*`.
+- Configure all environment variables in Vercel and set Stripe Webhook endpoint to the deployed `/api/stripe-webhook` URL.
+- Ensure Hostinger Mail DNS (SPF/DKIM) is configured for deliverability when using `EMAIL_FROM`.
+
+## Current Status / TODOs
+- Implemented: bilingual static pages, custom builder with discounts/financing, Stripe Checkout session creator, webhook-driven emails, and self-service cancellation with signed links.
+- Pending/Notes: no automated tests; ensure environment variables and Stripe webhook endpoint are set in each environment; copy exists in both ES/EN but content can be refined as needed.

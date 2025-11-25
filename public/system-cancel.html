@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translation-key="cancel.pageTitle">Cancela tu suscripción – Bako Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.06), transparent 28%),
+          radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.05), transparent 26%),
+          var(--bg);
+      }
+
+      .card {
+        background: linear-gradient(135deg, rgba(20, 20, 27, 0.9), rgba(14, 14, 20, 0.9));
+        border: 1px solid rgba(212, 175, 55, 0.18);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+      }
+
+      .flex-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(212, 175, 55, 0.12);
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 12px;
+      }
+
+      .list-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .error {
+        color: #f8d7da;
+        background: rgba(255, 99, 132, 0.1);
+        border: 1px solid rgba(255, 99, 132, 0.3);
+        padding: 12px 14px;
+        border-radius: 12px;
+        margin-top: 12px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .hero .subtitle {
+        max-width: 620px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="logo-mark">Bako Systems</div>
+      <div class="language-switch">
+        <button class="lang-button active" data-lang="es">ES</button>
+        <span class="divider">/</span>
+        <button class="lang-button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow" data-translation-key="cancel.eyebrow">Cancelación</div>
+          <h1 data-translation-key="cancel.title">Confirma tu cancelación</h1>
+          <p class="subtitle" data-translation-key="cancel.subtitle">
+            Revisa qué pasará con tu sistema de limpieza antes de continuar.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="tag" data-translation-key="cancel.detailsTitle">Estás a punto de cancelar</p>
+          <h2 data-translation-key="cancel.title">Confirma tu cancelación</h2>
+          <p class="section-subtitle" data-translation-key="cancel.loading">Cargando detalles de la suscripción...</p>
+        </div>
+
+        <div id="error-card" class="card hidden">
+          <h3 data-translation-key="cancel.invalidTitle">Enlace inválido o expirado</h3>
+          <p class="muted" id="error-message" data-translation-key="cancel.invalidMessage">
+            Este enlace de cancelación no es válido. Solicita uno nuevo o contacta soporte.
+          </p>
+          <div class="actions">
+            <a class="cta secondary" href="/" data-translation-key="cancel.backButton">Volver al sitio principal</a>
+            <a class="cta secondary" href="mailto:send@thebakoagency.com" data-translation-key="cancel.supportLink"
+              >Contactar soporte</a
+            >
+          </div>
+        </div>
+
+        <div id="details-card" class="card hidden">
+          <ul class="list">
+            <li class="list-item">
+              <span class="muted" data-translation-key="cancel.packageLabel">Paquete</span>
+              <strong id="package-name">—</strong>
+            </li>
+            <li class="list-item">
+              <span class="muted" data-translation-key="cancel.statusLabel">Estado actual</span>
+              <span class="status-pill" id="status-pill">—</span>
+            </li>
+            <li class="list-item">
+              <span class="muted" data-translation-key="cancel.periodEndLabel">Servicio activo hasta</span>
+              <strong id="period-end">—</strong>
+            </li>
+          </ul>
+          <div class="actions">
+            <button class="cta" id="confirm-button" data-translation-key="cancel.confirmButton">Confirmar cancelación</button>
+            <a class="cta secondary" href="/" data-translation-key="cancel.backButton">Volver al sitio principal</a>
+            <a class="cta secondary" href="mailto:send@thebakoagency.com" data-translation-key="cancel.supportLink"
+              >Contactar soporte</a
+            >
+          </div>
+          <div id="action-error" class="error hidden" data-translation-key="cancel.confirmError">
+            No pudimos procesar tu cancelación. Intenta nuevamente o contacta soporte.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const subscriptionId = params.get('subscription');
+      const token = params.get('token');
+
+      const errorCard = document.getElementById('error-card');
+      const errorMessage = document.getElementById('error-message');
+      const detailsCard = document.getElementById('details-card');
+      const packageNameEl = document.getElementById('package-name');
+      const statusPill = document.getElementById('status-pill');
+      const periodEndEl = document.getElementById('period-end');
+      const confirmButton = document.getElementById('confirm-button');
+      const actionError = document.getElementById('action-error');
+      const subtitle = document.querySelector('.section-subtitle');
+
+      const packageNameMap = {
+        premium: 'Premium System',
+        standard: 'Standard System',
+        custom: 'Custom System'
+      };
+
+      function formatDate(ts) {
+        if (!ts) return '—';
+        const date = new Date(Number(ts) * 1000);
+        const locale = document.documentElement.lang === 'es' ? 'es-ES' : 'en-US';
+        return date.toLocaleDateString(locale, { dateStyle: 'medium' });
+      }
+
+      function showError(key) {
+        errorCard.classList.remove('hidden');
+        detailsCard.classList.add('hidden');
+        errorMessage.dataset.translationKey = key;
+        updateLanguage(document.documentElement.lang || 'es');
+      }
+
+      async function loadDetails() {
+        if (!subscriptionId || !token) {
+          showError('cancel.tokenMissing');
+          return;
+        }
+
+        subtitle.dataset.translationKey = 'cancel.loading';
+        updateLanguage(document.documentElement.lang || 'es');
+
+        try {
+          const response = await fetch(`/api/cancel-subscription?subscription=${subscriptionId}&token=${encodeURIComponent(token)}`);
+          if (!response.ok) {
+            showError('cancel.invalidMessage');
+            return;
+          }
+          const data = await response.json();
+          const friendlyName = packageNameMap[data.packageId] || data.packageId || '—';
+
+          packageNameEl.textContent = friendlyName;
+          statusPill.textContent = data.status || '—';
+          periodEndEl.textContent = formatDate(data.currentPeriodEnd);
+
+          detailsCard.classList.remove('hidden');
+          subtitle.dataset.translationKey = 'cancel.detailsTitle';
+          errorCard.classList.add('hidden');
+          updateLanguage(document.documentElement.lang || 'es');
+        } catch (err) {
+          console.error('Failed to load cancellation info', err);
+          showError('cancel.fetchError');
+        }
+      }
+
+      async function confirmCancellation() {
+        actionError.classList.add('hidden');
+        confirmButton.disabled = true;
+        confirmButton.textContent = translate('cancel.loading');
+        try {
+          const response = await fetch('/api/cancel-subscription', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ subscriptionId, token })
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed cancellation');
+          }
+
+          const data = await response.json();
+          const query = new URLSearchParams({
+            status: data.status || 'scheduled',
+            effectiveDate: data.effectiveDate ? data.effectiveDate.toString() : ''
+          });
+          window.location.href = `/system-cancel-confirmation.html?${query.toString()}`;
+        } catch (err) {
+          console.error('Cancellation request failed', err);
+          actionError.classList.remove('hidden');
+          updateLanguage(document.documentElement.lang || 'es');
+        } finally {
+          confirmButton.disabled = false;
+          confirmButton.textContent = translate('cancel.confirmButton');
+        }
+      }
+
+      confirmButton.addEventListener('click', confirmCancellation);
+      loadDetails();
+    </script>
+  </body>
+</html>
