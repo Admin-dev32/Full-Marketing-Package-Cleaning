@@ -104,7 +104,25 @@ module.exports = async function handler(req, res) {
 
     const yearlyInfraFee = Number(yearlyInfra.yearlyInfraFee || yearlyInfra.fee || 0);
     const yearlyInfraEnabled = yearlyInfra.enabled !== false && yearlyInfraFee > 0;
-    const yearlyInfraCurrency = yearlyInfra.currency || currency;
+    const yearlyInfraAmountCents = toCents(yearlyInfraFee);
+
+    const discountType = discount && discount.type ? discount.type : 'none';
+    const discountValue = Number(discount && discount.value ? discount.value : 0);
+    const discountedUpfrontTotal = Number(
+      discount && discount.discountedUpfrontTotal != null ? discount.discountedUpfrontTotal : firstMonthBase
+    );
+    const originalUpfrontTotal = Number(
+      discount && discount.originalUpfrontTotal != null ? discount.originalUpfrontTotal : originalFirstMonthBase
+    );
+    const discountAmountApplied = Math.max(originalUpfrontTotal - discountedUpfrontTotal, 0);
+
+    const discountMetadata = {
+      discountType,
+      discountValue: discountValue.toString(),
+      originalUpfrontTotal: originalUpfrontTotal.toString(),
+      discountedUpfrontTotal: discountedUpfrontTotal.toString(),
+      discountAmount: discountAmountApplied.toString()
+    };
 
     const discountType = discount && discount.type ? discount.type : 'none';
     const discountValue = Number(discount && discount.value ? discount.value : 0);
@@ -195,24 +213,9 @@ module.exports = async function handler(req, res) {
       }
     ];
 
-    if (yearlyInfraEnabled) {
-      // Yearly infrastructure subscription with year-one covered in setup; trial metadata communicates intent to start billing in year two
-      lineItems.push({
-        price_data: {
-          currency: yearlyInfraCurrency,
-          product_data: {
-            name: `Yearly infrastructure (starts year 2) (${packageId})`,
-            metadata: { packageId, locale, infraType: 'domain_hosting_infra' }
-          },
-          recurring: { interval: 'year' },
-          unit_amount: toCents(yearlyInfraFee),
-          tax_behavior: 'exclusive'
-        },
-        quantity: 1
-      });
-    }
-
     const session = await stripe.checkout.sessions.create({
+      // IMPORTANT: Stripe Checkout does not allow multiple recurring intervals in one session.
+      // We only create the monthly subscription; yearly infra intent is captured via metadata.
       mode: 'subscription',
       allow_promotion_codes: true, // Enable manual coupon entry in Checkout
       payment_method_types: ['card'],
@@ -230,6 +233,7 @@ module.exports = async function handler(req, res) {
           recurringFromMonth2: recurringFromMonth2.toString(),
           yearlyInfraEnabled: yearlyInfraEnabled ? 'true' : 'false',
           yearlyInfraFee: yearlyInfraFee.toString(),
+          yearlyInfraAmountCents: yearlyInfraAmountCents.toString(),
           yearlyTrialDays: '365',
           ...planProtectionMetadata,
           ...keepSystemMetadata,
@@ -247,6 +251,7 @@ module.exports = async function handler(req, res) {
         recurringFromMonth2: recurringFromMonth2.toString(),
         yearlyInfraEnabled: yearlyInfraEnabled ? 'true' : 'false',
         yearlyInfraFee: yearlyInfraFee.toString(),
+        yearlyInfraAmountCents: yearlyInfraAmountCents.toString(),
         ...planProtectionMetadata,
         ...keepSystemMetadata,
         ...discountMetadata
