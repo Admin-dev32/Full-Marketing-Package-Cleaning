@@ -110,7 +110,40 @@ const translations = {
     'terms.adBudget.google': 'Google Ads se cobra directo por Google con la tarjeta del cliente.',
     'terms.acceptance': 'Debes aceptar los términos antes de iniciar el checkout; es un acuerdo vinculante.',
     'terms.api': 'Si la demanda sube de forma inusual, se puede requerir infraestructura adicional previa notificación.',
-    'terms.price': 'Cualquier ajuste de tarifas se comunica con al menos 30 días de anticipación.'
+    'terms.price': 'Cualquier ajuste de tarifas se comunica con al menos 30 días de anticipación.',
+    'cancel.pageTitle': 'Cancela tu suscripción – Bako Systems',
+    'cancel.eyebrow': 'Cancelación',
+    'cancel.title': 'Confirma tu cancelación',
+    'cancel.subtitle': 'Revisa qué pasará con tu sistema de limpieza antes de continuar.',
+    'cancel.packageLabel': 'Paquete',
+    'cancel.statusLabel': 'Estado actual',
+    'cancel.periodEndLabel': 'Servicio activo hasta',
+    'cancel.invalidTitle': 'Enlace inválido o expirado',
+    'cancel.invalidMessage': 'Este enlace de cancelación no es válido. Solicita uno nuevo o contacta soporte.',
+    'cancel.fetchError': 'No pudimos cargar los detalles de tu suscripción. Intenta de nuevo o contacta soporte.',
+    'cancel.confirmError': 'No pudimos procesar tu cancelación. Intenta nuevamente o contacta soporte.',
+    'cancel.confirmButton': 'Confirmar cancelación',
+    'cancel.backButton': 'Volver al sitio principal',
+    'cancel.supportLink': 'Contactar soporte',
+    'cancel.loading': 'Cargando detalles de la suscripción...',
+    'cancel.detailsTitle': 'Estás a punto de cancelar',
+    'cancel.tokenMissing': 'Falta el número de suscripción o token en el enlace.',
+    'cancelConfirmation.pageTitle': 'Cancelación confirmada – Bako Systems',
+    'cancelConfirmation.titleImmediate': 'Tu sistema ha sido cancelado',
+    'cancelConfirmation.titleScheduled': 'Cancelación programada al final del período',
+    'cancelConfirmation.subtitleImmediate': 'El acceso al sistema se detuvo de inmediato.',
+    'cancelConfirmation.subtitleScheduled':
+      'Tu sistema seguirá activo hasta el final del ciclo actual y luego se cancelará automáticamente.',
+    'cancelConfirmation.effectiveLabel': 'Fecha efectiva de fin',
+    'cancelConfirmation.backButton': 'Regresar al sitio principal',
+    'cancelConfirmation.thankYouLink': 'Ver nota de agradecimiento',
+    'cancelThankYou.pageTitle': 'Gracias – Bako Systems',
+    'cancelThankYou.title': 'Gracias por confiar en nosotros',
+    'cancelThankYou.subtitle1': 'Agradecemos el tiempo que trabajamos juntos en tu sistema de limpieza.',
+    'cancelThankYou.subtitle2': 'Si deseas regresar, estaremos listos para ayudarte a reactivar rápido.',
+    'cancelThankYou.subtitle3': 'Puedes contactarnos en cualquier momento para explorar una nueva sesión de estrategia.',
+    'cancelThankYou.backButton': 'Volver al inicio',
+    'cancelThankYou.contactSupport': 'Contactar soporte'
   },
   en: {
     brand: 'Full Scale System',
@@ -222,7 +255,40 @@ const translations = {
     'terms.adBudget.google': 'Google Ads is billed directly by Google with the client card.',
     'terms.acceptance': 'You must accept the terms before starting checkout; it is binding.',
     'terms.api': 'If demand spikes unusually, extra infrastructure may be required with prior notice.',
-    'terms.price': 'Any fee adjustment is communicated at least 30 days in advance.'
+    'terms.price': 'Any fee adjustment is communicated at least 30 days in advance.',
+    'cancel.pageTitle': 'Cancel your subscription – Bako Systems',
+    'cancel.eyebrow': 'Cancellation',
+    'cancel.title': 'Confirm your cancellation',
+    'cancel.subtitle': 'Review what will happen to your cleaning system before proceeding.',
+    'cancel.packageLabel': 'Package',
+    'cancel.statusLabel': 'Current status',
+    'cancel.periodEndLabel': 'Service active until',
+    'cancel.invalidTitle': 'Invalid or expired link',
+    'cancel.invalidMessage': 'This cancellation link is not valid. Please request a new one or contact support.',
+    'cancel.fetchError': 'We could not load your subscription details. Try again or contact support.',
+    'cancel.confirmError': 'We could not process your cancellation. Please try again or contact support.',
+    'cancel.confirmButton': 'Confirm cancellation',
+    'cancel.backButton': 'Back to main site',
+    'cancel.supportLink': 'Contact support',
+    'cancel.loading': 'Loading subscription details...',
+    'cancel.detailsTitle': 'You are about to cancel',
+    'cancel.tokenMissing': 'Subscription or token is missing from the link.',
+    'cancelConfirmation.pageTitle': 'Cancellation confirmed – Bako Systems',
+    'cancelConfirmation.titleImmediate': 'Your system has been cancelled',
+    'cancelConfirmation.titleScheduled': 'Cancellation scheduled at period end',
+    'cancelConfirmation.subtitleImmediate': 'Access to the system has been stopped immediately.',
+    'cancelConfirmation.subtitleScheduled':
+      'Your system will remain active until the end of the current billing period, then it will be cancelled automatically.',
+    'cancelConfirmation.effectiveLabel': 'Effective end date',
+    'cancelConfirmation.backButton': 'Return to main site',
+    'cancelConfirmation.thankYouLink': 'See our thank you note',
+    'cancelThankYou.pageTitle': 'Thank you – Bako Systems',
+    'cancelThankYou.title': 'Thank you for partnering with us',
+    'cancelThankYou.subtitle1': 'We appreciate the time we worked together on your cleaning system.',
+    'cancelThankYou.subtitle2': 'If you ever want to return, we will be ready to help you activate quickly.',
+    'cancelThankYou.subtitle3': 'You can reach us anytime to explore a new strategy session.',
+    'cancelThankYou.backButton': 'Back to Home',
+    'cancelThankYou.contactSupport': 'Contact support'
   }
 };
 
@@ -250,6 +316,13 @@ function updateLanguage(lang) {
 
   document.documentElement.lang = lang;
   currentLanguage = lang;
+}
+
+function translate(key) {
+  const selectedTranslations = translations[currentLanguage] || {};
+  const fallbackEn = translations.en || {};
+  const fallbackEs = translations.es || {};
+  return selectedTranslations[key] || fallbackEn[key] || fallbackEs[key] || key;
 }
 
 languageButtons.forEach((button) => {

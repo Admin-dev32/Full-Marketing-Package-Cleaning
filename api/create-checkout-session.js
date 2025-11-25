@@ -3,6 +3,27 @@ const Stripe = require('stripe');
 const SUCCESS_URL = process.env.SUCCESS_URL || 'https://thebakoagency.com/checkout-success';
 const CANCEL_URL = process.env.CANCEL_URL || 'https://thebakoagency.com/checkout-cancel';
 
+const allowedOrigins = ['https://thebakoagency.com', 'https://www.thebakoagency.com'];
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return true;
+  }
+
+  return false;
+}
+
 function toCents(value) {
   const normalized = Number(value || 0);
   if (!Number.isFinite(normalized) || normalized < 0) return 0;
@@ -10,8 +31,10 @@ function toCents(value) {
 }
 
 module.exports = async function handler(req, res) {
+  if (applyCors(req, res)) return;
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'POST, OPTIONS');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
@@ -31,11 +54,13 @@ module.exports = async function handler(req, res) {
     metaBudgetMonthly = 0,
     planProtection = {},
     keepSystemOn = {},
-    yearlyInfra = {}
+    yearlyInfra = {},
+    discount = {}
   } = req.body || {};
 
   try {
     const firstMonthBase = Number(totals.firstMonthBase || 0);
+    const originalFirstMonthBase = Number(totals.originalFirstMonthBase ?? firstMonthBase);
     const firstMonthWithFinancing = Number(totals.firstMonthWithFinancing || firstMonthBase);
     const recurringFromMonth2 = Number(totals.monthlyFromMonth2 || 0);
 
@@ -45,6 +70,24 @@ module.exports = async function handler(req, res) {
     const yearlyInfraFee = Number(yearlyInfra.yearlyInfraFee || yearlyInfra.fee || 0);
     const yearlyInfraEnabled = yearlyInfra.enabled !== false && yearlyInfraFee > 0;
     const yearlyInfraCurrency = yearlyInfra.currency || currency;
+
+    const discountType = discount && discount.type ? discount.type : 'none';
+    const discountValue = Number(discount && discount.value ? discount.value : 0);
+    const discountedUpfrontTotal = Number(
+      discount && discount.discountedUpfrontTotal != null ? discount.discountedUpfrontTotal : firstMonthBase
+    );
+    const originalUpfrontTotal = Number(
+      discount && discount.originalUpfrontTotal != null ? discount.originalUpfrontTotal : originalFirstMonthBase
+    );
+    const discountAmountApplied = Math.max(originalUpfrontTotal - discountedUpfrontTotal, 0);
+
+    const discountMetadata = {
+      discountType,
+      discountValue: discountValue.toString(),
+      originalUpfrontTotal: originalUpfrontTotal.toString(),
+      discountedUpfrontTotal: discountedUpfrontTotal.toString(),
+      discountAmount: discountAmountApplied.toString()
+    };
 
     const planProtectionMetadata = {};
     if (planProtection && planProtection.selected) {
@@ -154,7 +197,8 @@ module.exports = async function handler(req, res) {
           yearlyInfraFee: yearlyInfraFee.toString(),
           yearlyTrialDays: '365',
           ...planProtectionMetadata,
-          ...keepSystemMetadata
+          ...keepSystemMetadata,
+          ...discountMetadata
         }
       },
       metadata: {
@@ -169,7 +213,8 @@ module.exports = async function handler(req, res) {
         yearlyInfraEnabled: yearlyInfraEnabled ? 'true' : 'false',
         yearlyInfraFee: yearlyInfraFee.toString(),
         ...planProtectionMetadata,
-        ...keepSystemMetadata
+        ...keepSystemMetadata,
+        ...discountMetadata
       },
       success_url: `${SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${CANCEL_URL}?canceled=true`
