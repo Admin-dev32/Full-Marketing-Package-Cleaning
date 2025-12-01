@@ -21,6 +21,27 @@ function applyCors(req, res) {
   return false;
 }
 
+const allowedOrigins = ['https://thebakoagency.com', 'https://www.thebakoagency.com'];
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return true;
+  }
+
+  return false;
+}
+
 function toCents(value) {
   const normalized = Number(value || 0);
   if (!Number.isFinite(normalized) || normalized < 0) return 0;
