@@ -462,6 +462,63 @@
       max-width: 480px;
     }
 
+    .discount-control {
+      margin: 10px 0 4px;
+      padding: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      display: grid;
+      gap: 10px;
+    }
+
+    .discount-header {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .discount-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .discount-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .discount-field label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .discount-field input,
+    .discount-field select {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .discount-summary .totals-row.small {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    .original-amount {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .discount-amount {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
     .totals-callout {
       display: grid;
       gap: 10px;
@@ -585,6 +642,36 @@
             <span data-translation-key="pricing.addonsSetup">Add-ons (setup):</span>
             <span id="addons-setup" class="totals-highlight">$0</span>
           </div>
+          <div class="discount-control">
+            <div class="discount-header" data-translation-key="pricing.discountLabel">Descuento (opcional)</div>
+            <div class="discount-fields">
+              <div class="discount-field">
+                <label for="discount-value" class="summary-label" data-translation-key="pricing.discountValueLabel"
+                  >Valor del descuento</label
+                >
+                <input id="discount-value" type="number" min="0" step="1" value="0" />
+              </div>
+              <div class="discount-field">
+                <label for="discount-type" class="summary-label" data-translation-key="pricing.discountTypeLabel"
+                  >Tipo</label
+                >
+                <select id="discount-type">
+                  <option value="flat" data-translation-key="pricing.discountType.flat">Monto fijo</option>
+                  <option value="percentage" data-translation-key="pricing.discountType.percentage">Porcentaje</option>
+                </select>
+              </div>
+            </div>
+            <div class="discount-summary">
+              <div class="totals-row small" id="original-today-row">
+                <span data-translation-key="pricing.originalTodayLabel">Original hoy:</span>
+                <span id="original-today" class="original-amount">$0</span>
+              </div>
+              <div class="totals-row small" id="discount-amount-row">
+                <span data-translation-key="pricing.discountAppliedLabel">Descuento aplicado:</span>
+                <span id="discount-amount" class="discount-amount">-$0</span>
+              </div>
+            </div>
+          </div>
           <div class="totals-row">
             <span data-translation-key="pricing.financingFee">Financiamiento (3% hoy):</span>
             <span id="financing-fee">$0</span>
@@ -610,14 +697,23 @@
             <span data-translation-key="pricing.addonsMonthly">Add-ons (mensual):</span>
             <span id="addons-monthly" class="totals-highlight">$0</span>
           </div>
-          <div class="totals-row">
-            <span class="totals-highlight" data-translation-key="pricing.month2Label">Pago mensual estimado a partir del mes 2:</span>
-            <span class="totals-highlight" id="monthly-from-month2">$0</span>
+          <div class="meta-budget" style="margin-top: 14px;">
+            <label for="custom-monthly-input" data-translation-key="pricing.customMonthlyLabel">Personalizar mensualidad</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="custom-monthly-toggle" />
+              <input id="custom-monthly-input" type="number" min="0" step="10" placeholder="300" disabled />
+            </div>
+            <small id="custom-monthly-note" style="display: none;" data-translation-key="pricing.customMonthlyNote">Primeros 2 meses gratis. Cobro inicia en mes 3.</small>
           </div>
-          <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
-          <p class="yearly-line" id="yearly-line" data-translation-key="yearly.line">Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.</p>
+        <div class="totals-row">
+          <span class="totals-highlight" data-translation-key="pricing.month2Label">Pago mensual estimado a partir del mes 2:</span>
+          <span class="totals-highlight" id="monthly-from-month2">$0</span>
         </div>
+        <p class="note" id="custom-monthly-summary-note" style="display: none;" data-translation-key="pricing.customMonthlyNote"></p>
+        <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
+        <p class="yearly-line" id="yearly-line" data-translation-key="yearly.line">Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.</p>
       </div>
+    </div>
       <div class="totals-grid">
         <div class="totals-card">
           <label class="financing-line">
@@ -634,17 +730,17 @@
           </label>
         </div>
         <div class="totals-card">
-          <div class="meta-budget">
-            <label for="meta-budget-input" data-translation-key="budget.label">Ingresa tu presupuesto mensual de Meta (ej. 300)</label>
-            <input id="meta-budget-input" type="number" min="0" step="50" placeholder="300" />
-            <small data-translation-key="budget.note">Se suma al pago de hoy como primer mes y al estimado mensual desde el mes 2.</small>
-          </div>
-          <div class="meta-budget" style="margin-top: 14px;">
-            <label for="google-budget-input" data-translation-key="budget.googleLabel">Presupuesto mensual de Google Ads (se paga directo a Google)</label>
-            <input id="google-budget-input" type="number" min="0" step="50" placeholder="300" />
-            <small data-translation-key="budget.googleNote">Solo se documenta en la propuesta; Google lo cobra directo a tu tarjeta.</small>
-          </div>
-        </div>
+      <div class="meta-budget">
+        <label for="meta-budget-input" data-translation-key="budget.label">Ingresa tu presupuesto mensual de Meta (ej. 300)</label>
+        <input id="meta-budget-input" type="number" min="0" step="50" placeholder="300" />
+        <small data-translation-key="budget.note">Se suma al pago de hoy como primer mes y al estimado mensual desde el mes 2.</small>
+      </div>
+      <div class="meta-budget" style="margin-top: 14px;">
+        <label for="google-budget-input" data-translation-key="budget.googleLabel">Presupuesto mensual de Google Ads (se paga directo a Google)</label>
+        <input id="google-budget-input" type="number" min="0" step="50" placeholder="300" />
+        <small data-translation-key="budget.googleNote">Solo se documenta en la propuesta; Google lo cobra directo a tu tarjeta.</small>
+      </div>
+    </div>
       </div>
     </section>
 
@@ -860,10 +956,19 @@
         'pricing.subtitle': 'Suma los servicios que necesites. El setup incluye el primer mes; la mensualidad inicia en el mes 2.',
         'pricing.setupLabel': 'Setup hoy:',
         'pricing.monthlyLabel': 'Mensualidad base (se cobra desde el mes 2):',
+        'pricing.customMonthlyLabel': 'Personalizar mensualidad final',
+        'pricing.customMonthlyNote': 'Primeros 2 meses gratis. El cobro mensual inicia en el mes 3.',
         'pricing.metaLabel': 'Meta Ads (primer mes):',
         'pricing.addonsSetup': 'Add-ons (setup):',
         'pricing.addonsMonthly': 'Add-ons (mensual):',
         'pricing.financingFee': 'Financiamiento (3% hoy):',
+        'pricing.discountLabel': 'Descuento (opcional)',
+        'pricing.discountValueLabel': 'Valor del descuento',
+        'pricing.discountTypeLabel': 'Tipo',
+        'pricing.discountType.flat': 'Monto fijo',
+        'pricing.discountType.percentage': 'Porcentaje',
+        'pricing.originalTodayLabel': 'Original hoy:',
+        'pricing.discountAppliedLabel': 'Descuento aplicado:',
         'pricing.todayLabel': 'Total a pagar hoy:',
         'pricing.month2Label': 'Pago mensual estimado a partir del mes 2:',
         'yearly.title': 'Infraestructura anual (dominio + hosting)',
@@ -961,10 +1066,19 @@
         'pricing.subtitle': 'Add only what you need. Setup includes the first month; monthly billing begins in month 2.',
         'pricing.setupLabel': 'Setup today:',
         'pricing.monthlyLabel': 'Base monthly (charged from month 2):',
+        'pricing.customMonthlyLabel': 'Customize final monthly fee',
+        'pricing.customMonthlyNote': 'First 2 months are free. Monthly billing starts on month 3.',
         'pricing.metaLabel': 'Meta Ads (month 1):',
         'pricing.addonsSetup': 'Add-ons (setup):',
         'pricing.addonsMonthly': 'Add-ons (monthly):',
         'pricing.financingFee': 'Financing (3% today):',
+        'pricing.discountLabel': 'Discount (optional)',
+        'pricing.discountValueLabel': 'Discount amount',
+        'pricing.discountTypeLabel': 'Type',
+        'pricing.discountType.flat': 'Flat amount',
+        'pricing.discountType.percentage': 'Percentage',
+        'pricing.originalTodayLabel': 'Original today:',
+        'pricing.discountAppliedLabel': 'Discount applied:',
         'pricing.todayLabel': 'Total to pay today:',
         'pricing.month2Label': 'Estimated monthly from month 2:',
         'yearly.title': 'Yearly infrastructure (domain + hosting)',
@@ -1059,7 +1173,13 @@
     const keepSystemOnCheckbox = document.getElementById('keep-system-on');
     const financingCheckbox = document.getElementById('financing');
     const metaBudgetInput = document.getElementById('meta-budget-input');
+    const customMonthlyToggle = document.getElementById('custom-monthly-toggle');
+    const customMonthlyInput = document.getElementById('custom-monthly-input');
+    const customMonthlyNote = document.getElementById('custom-monthly-note');
+    const customMonthlySummaryNote = document.getElementById('custom-monthly-summary-note');
     const googleBudgetInput = document.getElementById('google-budget-input');
+    const discountValueInput = document.getElementById('discount-value');
+    const discountTypeSelect = document.getElementById('discount-type');
     const termsCheckbox = document.getElementById('terms-accepted');
     const termsLink = document.getElementById('terms-link');
     const checkoutButton = document.getElementById('checkout-button');
@@ -1137,6 +1257,12 @@
       const addonsMonthlyWithoutProtection = addons.reduce((acc, item) => acc + item.monthly, 0);
 
       const metaBudget = Number(metaBudgetInput.value || 0);
+      const discountValue = Number(discountValueInput.value || 0);
+      const discountType = discountTypeSelect?.value === 'percentage' ? 'percentage' : 'flat';
+
+      const customMonthlyEnabled = Boolean(customMonthlyToggle?.checked);
+      const customMonthlyValue = Number(customMonthlyInput?.value || 0);
+      const customMonthlyValid = customMonthlyEnabled && Number.isFinite(customMonthlyValue) && customMonthlyValue >= 0;
 
       const monthlyRegular = keepSystemOnSelected ? 0 : BASE_MONTHLY + addonsMonthlyWithoutProtection;
       const monthlyBaseDisplay = keepSystemOnSelected ? 0 : monthlyRegular + planProtectionFee;
@@ -1144,13 +1270,29 @@
 
       const setupToday = BASE_SETUP + addonsSetupTotal;
       const monthlyBaseFromMonth2 = (keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : monthlyBaseDisplay) + metaBudget;
-      const firstMonthBase = setupToday + metaBudget;
+      const finalMonthlyFromMonth2 = customMonthlyValid ? customMonthlyValue : monthlyBaseFromMonth2;
+      const firstMonthBaseOriginal = setupToday + metaBudget;
+
+      let discountAmount = 0;
+      if (discountValue > 0) {
+        if (discountType === 'percentage') {
+          discountAmount = (firstMonthBaseOriginal * discountValue) / 100;
+        } else {
+          discountAmount = discountValue;
+        }
+      }
+
+      if (discountAmount > firstMonthBaseOriginal) {
+        discountAmount = firstMonthBaseOriginal;
+      }
+
+      const firstMonthBaseDiscounted = Math.max(firstMonthBaseOriginal - discountAmount, 0);
 
       let financingFee = 0;
-      let firstMonthWithFinancing = firstMonthBase;
+      let firstMonthWithFinancing = firstMonthBaseDiscounted;
       if (financingSelected) {
-        financingFee = Math.round(firstMonthBase * 0.03 * 100) / 100;
-        firstMonthWithFinancing = firstMonthBase + financingFee;
+        financingFee = Math.round(firstMonthBaseDiscounted * 0.03 * 100) / 100;
+        firstMonthWithFinancing = firstMonthBaseDiscounted + financingFee;
       }
 
       return {
@@ -1169,9 +1311,16 @@
         planProtectionFee,
         metaBudget,
         googleBudget: Number(googleBudgetInput.value || 0),
-        firstMonthBase,
+        firstMonthBaseOriginal,
+        firstMonthBaseDiscounted,
+        discountAmount,
+        discountValue,
+        discountType,
         firstMonthWithFinancing,
-        monthlyFromMonth2: monthlyBaseFromMonth2,
+        monthlyFromMonth2: finalMonthlyFromMonth2,
+        monthlyFromMonth2Original: monthlyBaseFromMonth2,
+        customMonthlyEnabled: customMonthlyValid,
+        customMonthlyValue: customMonthlyValid ? customMonthlyValue : null,
         yearlyInfraFee: YEARLY_INFRA_FEE
       };
     }
@@ -1186,6 +1335,19 @@
       document.getElementById('addons-monthly').textContent = formatCurrency(totals.addonsMonthlyTotal);
       document.getElementById('financing-fee').textContent = formatCurrency(totals.financingFee);
       document.getElementById('today-total').textContent = formatCurrency(totals.firstMonthWithFinancing);
+
+      const originalTodayRow = document.getElementById('original-today-row');
+      const discountAmountRow = document.getElementById('discount-amount-row');
+      const originalToday = document.getElementById('original-today');
+      const discountAmountEl = document.getElementById('discount-amount');
+
+      const hasDiscount = totals.discountAmount > 0;
+      if (originalTodayRow && discountAmountRow && originalToday && discountAmountEl) {
+        originalTodayRow.style.display = hasDiscount ? 'flex' : 'none';
+        discountAmountRow.style.display = hasDiscount ? 'flex' : 'none';
+        originalToday.textContent = formatCurrency(totals.firstMonthBaseOriginal);
+        discountAmountEl.textContent = `-${formatCurrency(totals.discountAmount)}`;
+      }
 
       const monthlyLabelEl = document.querySelector('[data-translation-key="pricing.monthlyLabel"]');
       const monthlyValueEl = document.getElementById('monthly-base');
@@ -1211,7 +1373,8 @@
           monthlyLabelEl.textContent = translation['pricing.monthlyLabel'] || 'Base monthly (charged from month 2):';
         }
         if (monthlyValueEl) {
-          monthlyValueEl.textContent = formatCurrency(totals.monthlyBase);
+          const monthlyDisplay = totals.customMonthlyEnabled ? totals.monthlyFromMonth2 : totals.monthlyBase;
+          monthlyValueEl.textContent = formatCurrency(monthlyDisplay);
         }
         if (keepOnRow) keepOnRow.style.display = 'none';
       }
@@ -1221,6 +1384,13 @@
       if (yearlyTextEl) {
         const template = translation['yearly.line'] || 'Yearly infra: year 1 included, then {amount}/year starting from year 2.';
         yearlyTextEl.textContent = template.replace('{amount}', formatCurrency(YEARLY_INFRA_FEE));
+      }
+
+      if (customMonthlyNote) {
+        customMonthlyNote.style.display = totals.customMonthlyEnabled ? 'block' : 'none';
+      }
+      if (customMonthlySummaryNote) {
+        customMonthlySummaryNote.style.display = totals.customMonthlyEnabled ? 'block' : 'none';
       }
     }
 
@@ -1241,6 +1411,8 @@
       checkoutButton.setAttribute('disabled', 'disabled');
 
       const totals = calculateTotals();
+
+      const returnUrl = window.location.href;
 
       const payload = {
         packageId: PACKAGE_ID,
@@ -1270,7 +1442,8 @@
         },
         totals: {
           setupToday: totals.setupToday,
-          firstMonthBase: totals.firstMonthBase,
+          firstMonthBase: totals.firstMonthBaseDiscounted,
+          originalFirstMonthBase: totals.firstMonthBaseOriginal,
           firstMonthWithFinancing: totals.firstMonthWithFinancing,
           monthlyFromMonth2: totals.monthlyFromMonth2
         },
@@ -1278,6 +1451,19 @@
           selected: totals.financingSelected,
           financingFee: totals.financingFee
         },
+        discount: {
+          type: totals.discountType,
+          value: totals.discountValue,
+          discountAmount: totals.discountAmount,
+          originalUpfrontTotal: totals.firstMonthBaseOriginal,
+          discountedUpfrontTotal: totals.firstMonthBaseDiscounted
+        },
+        customMonthly: {
+          enabled: totals.customMonthlyEnabled,
+          value: totals.customMonthlyValue,
+          originalMonthlyFromMonth2: totals.monthlyFromMonth2Original
+        },
+        returnUrl,
         currency: 'usd',
         locale: currentLanguage
       };
@@ -1319,9 +1505,23 @@
       updateTotals();
     });
 
+    discountValueInput?.addEventListener('input', updateTotals);
+    discountTypeSelect?.addEventListener('change', updateTotals);
     metaBudgetInput.addEventListener('input', updateTotals);
     googleBudgetInput.addEventListener('input', updateTotals);
     financingCheckbox?.addEventListener('change', updateTotals);
+
+    customMonthlyToggle?.addEventListener('change', () => {
+      if (customMonthlyInput) {
+        customMonthlyInput.disabled = !customMonthlyToggle.checked;
+        if (!customMonthlyToggle.checked) {
+          customMonthlyInput.value = '';
+        }
+      }
+      updateTotals();
+    });
+
+    customMonthlyInput?.addEventListener('input', updateTotals);
 
     termsCheckbox.addEventListener('change', validateTerms);
 
