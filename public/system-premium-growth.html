@@ -637,6 +637,14 @@
             <span data-translation-key="pricing.addonsMonthly">Add-ons (mensual):</span>
             <strong id="addons-monthly">$0.00</strong>
           </div>
+          <div class="meta-budget" style="margin-top: 14px;">
+            <label for="custom-monthly-input" data-translation-key="pricing.customMonthlyLabel">Personalizar mensualidad</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="custom-monthly-toggle" />
+              <input id="custom-monthly-input" type="number" min="0" step="10" placeholder="450" disabled />
+            </div>
+            <small id="custom-monthly-note" style="display: none;" data-translation-key="pricing.customMonthlyNote">Primeros 2 meses gratis. Cobro inicia en mes 3.</small>
+          </div>
           <div class="totals-row">
             <span data-translation-key="pricing.financingFee">Financiamiento (3% hoy):</span>
             <strong id="financing-fee">$0.00</strong>
@@ -649,6 +657,7 @@
             <span data-translation-key="pricing.month2Label">Pago mensual estimado a partir del mes 2:</span>
             <strong id="total-month2">$450.00</strong>
           </div>
+          <p class="note" id="custom-monthly-summary-note" style="display: none;" data-translation-key="pricing.customMonthlyNote"></p>
           <p class="note" data-translation-key="pricing.todayFinancingNote">El setup incluye el primer mes. Si eliges financiamiento, se suma 3% solo al pago de hoy.</p>
           <p class="note" data-translation-key="yearly.description">El primer año ya está incluido en el setup. A partir del segundo año, se renueva de forma automática para que tu sistema se mantenga en línea.</p>
           <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
@@ -928,6 +937,8 @@
         'pricing.subtitle': 'Setup + primer mes con campañas activas para probar y ajustar rápido.',
         'pricing.setupLabel': 'Setup hoy:',
         'pricing.monthlyLabel': 'Mensualidad base (se cobra desde el mes 2):',
+        'pricing.customMonthlyLabel': 'Personalizar mensualidad final',
+        'pricing.customMonthlyNote': 'Primeros 2 meses gratis. El cobro mensual inicia en el mes 3.',
         'pricing.metaLabel': 'Meta Ads (primer mes):',
         'pricing.addonsSetup': 'Add-ons (setup):',
         'pricing.addonsMonthly': 'Add-ons (mensual):',
@@ -1045,6 +1056,8 @@
         'pricing.subtitle': 'Setup plus first month with active campaigns to test and tune fast.',
         'pricing.setupLabel': 'Setup today:',
         'pricing.monthlyLabel': 'Base monthly fee (starts on month 2):',
+        'pricing.customMonthlyLabel': 'Customize final monthly fee',
+        'pricing.customMonthlyNote': 'First 2 months are free. Monthly billing starts on month 3.',
         'pricing.metaLabel': 'Meta Ads (first month):',
         'pricing.addonsSetup': 'Add-ons (setup):',
         'pricing.addonsMonthly': 'Add-ons (monthly):',
@@ -1292,6 +1305,10 @@
     const planProtectionCheckbox = document.querySelector('input[data-addon-id="plan-protection"]');
     const keepSystemOnCheckbox = document.querySelector('input[data-addon-id="keep-on"]');
     const metaInput = document.getElementById('meta-budget-input');
+    const customMonthlyToggle = document.getElementById('custom-monthly-toggle');
+    const customMonthlyInput = document.getElementById('custom-monthly-input');
+    const customMonthlyNote = document.getElementById('custom-monthly-note');
+    const customMonthlySummaryNote = document.getElementById('custom-monthly-summary-note');
     const termsCheckbox = document.getElementById('terms-accepted');
     const termsLink = document.querySelector('.terms a');
     const checkoutButton = document.getElementById('checkout-button');
@@ -1305,6 +1322,10 @@
       const planProtectionSelected = keepSystemOnSelected ? false : Boolean(planProtectionCheckbox?.checked);
       const planProtectionFee = planProtectionSelected ? PLAN_PROTECTION_FEE : 0;
 
+      const customMonthlyEnabled = Boolean(customMonthlyToggle?.checked);
+      const customMonthlyValue = Number(customMonthlyInput?.value || 0);
+      const customMonthlyValid = customMonthlyEnabled && Number.isFinite(customMonthlyValue) && customMonthlyValue >= 0;
+
       const addonsMonthlyWithoutProtection = addons.reduce((acc, item) => {
         if (item.id === 'plan-protection') return acc;
         return acc + item.monthly;
@@ -1315,6 +1336,7 @@
 
       const setupToday = BASE_SETUP + addonsSetupTotal;
       const monthlyBaseFromMonth2 = (keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : monthlyBaseDisplay) + metaBudget;
+      const finalMonthlyFromMonth2 = customMonthlyValid ? customMonthlyValue : monthlyBaseFromMonth2;
       const firstMonthBase = setupToday + metaBudget;
 
       let financingFee = 0;
@@ -1341,7 +1363,10 @@
         metaBudget,
         firstMonthBase,
         firstMonthWithFinancing,
-        monthlyFromMonth2: monthlyBaseFromMonth2,
+        monthlyFromMonth2: finalMonthlyFromMonth2,
+        monthlyFromMonth2Original: monthlyBaseFromMonth2,
+        customMonthlyEnabled: customMonthlyValid,
+        customMonthlyValue: customMonthlyValid ? customMonthlyValue : null,
         yearlyInfraFee: YEARLY_INFRA_FEE
       };
     }
@@ -1376,7 +1401,8 @@
           monthlyLabelEl.textContent = translation['pricing.monthlyLabel'] || 'Mensualidad base:';
         }
         if (monthlyValueEl) {
-          monthlyValueEl.textContent = formatCurrency(totals.monthlyBase);
+          const monthlyDisplay = totals.customMonthlyEnabled ? totals.monthlyFromMonth2 : totals.monthlyBase;
+          monthlyValueEl.textContent = formatCurrency(monthlyDisplay);
         }
         if (keepOnRow) keepOnRow.style.display = 'none';
       }
@@ -1389,6 +1415,13 @@
         totals.financingSelected ? totals.firstMonthWithFinancing : totals.firstMonthBase
       );
       document.getElementById('total-month2').textContent = formatCurrency(totals.monthlyFromMonth2);
+
+      if (customMonthlyNote) {
+        customMonthlyNote.style.display = totals.customMonthlyEnabled ? 'block' : 'none';
+      }
+      if (customMonthlySummaryNote) {
+        customMonthlySummaryNote.style.display = totals.customMonthlyEnabled ? 'block' : 'none';
+      }
 
       const yearlyLineTemplate = translation['yearly.line'] ||
         'Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.';
@@ -1428,6 +1461,18 @@
 
     financingCheckbox?.addEventListener('change', updateTotals);
 
+    customMonthlyToggle?.addEventListener('change', () => {
+      if (customMonthlyInput) {
+        customMonthlyInput.disabled = !customMonthlyToggle.checked;
+        if (!customMonthlyToggle.checked) {
+          customMonthlyInput.value = '';
+        }
+      }
+      updateTotals();
+    });
+
+    customMonthlyInput?.addEventListener('input', updateTotals);
+
     function validateTerms() {
       if (!termsCheckbox.checked) {
         checkoutButton.setAttribute('disabled', 'disabled');
@@ -1447,6 +1492,8 @@
       checkoutButton.setAttribute('disabled', 'disabled');
 
       const totals = calculateTotals();
+
+      const returnUrl = window.location.href;
 
       const payload = {
         packageId: PACKAGE_ID,
@@ -1483,6 +1530,12 @@
           selected: totals.financingSelected,
           financingFee: totals.financingFee
         },
+        customMonthly: {
+          enabled: totals.customMonthlyEnabled,
+          value: totals.customMonthlyValue,
+          originalMonthlyFromMonth2: totals.monthlyFromMonth2Original
+        },
+        returnUrl,
         currency: 'usd',
         locale: currentLanguage
       };

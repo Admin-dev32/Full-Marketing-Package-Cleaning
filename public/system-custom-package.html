@@ -697,14 +697,23 @@
             <span data-translation-key="pricing.addonsMonthly">Add-ons (mensual):</span>
             <span id="addons-monthly" class="totals-highlight">$0</span>
           </div>
-          <div class="totals-row">
-            <span class="totals-highlight" data-translation-key="pricing.month2Label">Pago mensual estimado a partir del mes 2:</span>
-            <span class="totals-highlight" id="monthly-from-month2">$0</span>
+          <div class="meta-budget" style="margin-top: 14px;">
+            <label for="custom-monthly-input" data-translation-key="pricing.customMonthlyLabel">Personalizar mensualidad</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="custom-monthly-toggle" />
+              <input id="custom-monthly-input" type="number" min="0" step="10" placeholder="300" disabled />
+            </div>
+            <small id="custom-monthly-note" style="display: none;" data-translation-key="pricing.customMonthlyNote">Primeros 2 meses gratis. Cobro inicia en mes 3.</small>
           </div>
-          <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
-          <p class="yearly-line" id="yearly-line" data-translation-key="yearly.line">Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.</p>
+        <div class="totals-row">
+          <span class="totals-highlight" data-translation-key="pricing.month2Label">Pago mensual estimado a partir del mes 2:</span>
+          <span class="totals-highlight" id="monthly-from-month2">$0</span>
         </div>
+        <p class="note" id="custom-monthly-summary-note" style="display: none;" data-translation-key="pricing.customMonthlyNote"></p>
+        <p class="note" data-translation-key="pricing.note">Estos montos son estimados y se confirmarán en tu checkout seguro.</p>
+        <p class="yearly-line" id="yearly-line" data-translation-key="yearly.line">Infraestructura anual: incluido año 1, luego {amount}/año a partir del año 2.</p>
       </div>
+    </div>
       <div class="totals-grid">
         <div class="totals-card">
           <label class="financing-line">
@@ -721,17 +730,17 @@
           </label>
         </div>
         <div class="totals-card">
-          <div class="meta-budget">
-            <label for="meta-budget-input" data-translation-key="budget.label">Ingresa tu presupuesto mensual de Meta (ej. 300)</label>
-            <input id="meta-budget-input" type="number" min="0" step="50" placeholder="300" />
-            <small data-translation-key="budget.note">Se suma al pago de hoy como primer mes y al estimado mensual desde el mes 2.</small>
-          </div>
-          <div class="meta-budget" style="margin-top: 14px;">
-            <label for="google-budget-input" data-translation-key="budget.googleLabel">Presupuesto mensual de Google Ads (se paga directo a Google)</label>
-            <input id="google-budget-input" type="number" min="0" step="50" placeholder="300" />
-            <small data-translation-key="budget.googleNote">Solo se documenta en la propuesta; Google lo cobra directo a tu tarjeta.</small>
-          </div>
-        </div>
+      <div class="meta-budget">
+        <label for="meta-budget-input" data-translation-key="budget.label">Ingresa tu presupuesto mensual de Meta (ej. 300)</label>
+        <input id="meta-budget-input" type="number" min="0" step="50" placeholder="300" />
+        <small data-translation-key="budget.note">Se suma al pago de hoy como primer mes y al estimado mensual desde el mes 2.</small>
+      </div>
+      <div class="meta-budget" style="margin-top: 14px;">
+        <label for="google-budget-input" data-translation-key="budget.googleLabel">Presupuesto mensual de Google Ads (se paga directo a Google)</label>
+        <input id="google-budget-input" type="number" min="0" step="50" placeholder="300" />
+        <small data-translation-key="budget.googleNote">Solo se documenta en la propuesta; Google lo cobra directo a tu tarjeta.</small>
+      </div>
+    </div>
       </div>
     </section>
 
@@ -947,6 +956,8 @@
         'pricing.subtitle': 'Suma los servicios que necesites. El setup incluye el primer mes; la mensualidad inicia en el mes 2.',
         'pricing.setupLabel': 'Setup hoy:',
         'pricing.monthlyLabel': 'Mensualidad base (se cobra desde el mes 2):',
+        'pricing.customMonthlyLabel': 'Personalizar mensualidad final',
+        'pricing.customMonthlyNote': 'Primeros 2 meses gratis. El cobro mensual inicia en el mes 3.',
         'pricing.metaLabel': 'Meta Ads (primer mes):',
         'pricing.addonsSetup': 'Add-ons (setup):',
         'pricing.addonsMonthly': 'Add-ons (mensual):',
@@ -1055,6 +1066,8 @@
         'pricing.subtitle': 'Add only what you need. Setup includes the first month; monthly billing begins in month 2.',
         'pricing.setupLabel': 'Setup today:',
         'pricing.monthlyLabel': 'Base monthly (charged from month 2):',
+        'pricing.customMonthlyLabel': 'Customize final monthly fee',
+        'pricing.customMonthlyNote': 'First 2 months are free. Monthly billing starts on month 3.',
         'pricing.metaLabel': 'Meta Ads (month 1):',
         'pricing.addonsSetup': 'Add-ons (setup):',
         'pricing.addonsMonthly': 'Add-ons (monthly):',
@@ -1160,6 +1173,10 @@
     const keepSystemOnCheckbox = document.getElementById('keep-system-on');
     const financingCheckbox = document.getElementById('financing');
     const metaBudgetInput = document.getElementById('meta-budget-input');
+    const customMonthlyToggle = document.getElementById('custom-monthly-toggle');
+    const customMonthlyInput = document.getElementById('custom-monthly-input');
+    const customMonthlyNote = document.getElementById('custom-monthly-note');
+    const customMonthlySummaryNote = document.getElementById('custom-monthly-summary-note');
     const googleBudgetInput = document.getElementById('google-budget-input');
     const discountValueInput = document.getElementById('discount-value');
     const discountTypeSelect = document.getElementById('discount-type');
@@ -1243,12 +1260,17 @@
       const discountValue = Number(discountValueInput.value || 0);
       const discountType = discountTypeSelect?.value === 'percentage' ? 'percentage' : 'flat';
 
+      const customMonthlyEnabled = Boolean(customMonthlyToggle?.checked);
+      const customMonthlyValue = Number(customMonthlyInput?.value || 0);
+      const customMonthlyValid = customMonthlyEnabled && Number.isFinite(customMonthlyValue) && customMonthlyValue >= 0;
+
       const monthlyRegular = keepSystemOnSelected ? 0 : BASE_MONTHLY + addonsMonthlyWithoutProtection;
       const monthlyBaseDisplay = keepSystemOnSelected ? 0 : monthlyRegular + planProtectionFee;
       const monthlyMinimum = monthlyRegular;
 
       const setupToday = BASE_SETUP + addonsSetupTotal;
       const monthlyBaseFromMonth2 = (keepSystemOnSelected ? KEEP_SYSTEM_ON_FEE : monthlyBaseDisplay) + metaBudget;
+      const finalMonthlyFromMonth2 = customMonthlyValid ? customMonthlyValue : monthlyBaseFromMonth2;
       const firstMonthBaseOriginal = setupToday + metaBudget;
 
       let discountAmount = 0;
@@ -1295,7 +1317,10 @@
         discountValue,
         discountType,
         firstMonthWithFinancing,
-        monthlyFromMonth2: monthlyBaseFromMonth2,
+        monthlyFromMonth2: finalMonthlyFromMonth2,
+        monthlyFromMonth2Original: monthlyBaseFromMonth2,
+        customMonthlyEnabled: customMonthlyValid,
+        customMonthlyValue: customMonthlyValid ? customMonthlyValue : null,
         yearlyInfraFee: YEARLY_INFRA_FEE
       };
     }
@@ -1348,7 +1373,8 @@
           monthlyLabelEl.textContent = translation['pricing.monthlyLabel'] || 'Base monthly (charged from month 2):';
         }
         if (monthlyValueEl) {
-          monthlyValueEl.textContent = formatCurrency(totals.monthlyBase);
+          const monthlyDisplay = totals.customMonthlyEnabled ? totals.monthlyFromMonth2 : totals.monthlyBase;
+          monthlyValueEl.textContent = formatCurrency(monthlyDisplay);
         }
         if (keepOnRow) keepOnRow.style.display = 'none';
       }
@@ -1358,6 +1384,13 @@
       if (yearlyTextEl) {
         const template = translation['yearly.line'] || 'Yearly infra: year 1 included, then {amount}/year starting from year 2.';
         yearlyTextEl.textContent = template.replace('{amount}', formatCurrency(YEARLY_INFRA_FEE));
+      }
+
+      if (customMonthlyNote) {
+        customMonthlyNote.style.display = totals.customMonthlyEnabled ? 'block' : 'none';
+      }
+      if (customMonthlySummaryNote) {
+        customMonthlySummaryNote.style.display = totals.customMonthlyEnabled ? 'block' : 'none';
       }
     }
 
@@ -1378,6 +1411,8 @@
       checkoutButton.setAttribute('disabled', 'disabled');
 
       const totals = calculateTotals();
+
+      const returnUrl = window.location.href;
 
       const payload = {
         packageId: PACKAGE_ID,
@@ -1423,6 +1458,12 @@
           originalUpfrontTotal: totals.firstMonthBaseOriginal,
           discountedUpfrontTotal: totals.firstMonthBaseDiscounted
         },
+        customMonthly: {
+          enabled: totals.customMonthlyEnabled,
+          value: totals.customMonthlyValue,
+          originalMonthlyFromMonth2: totals.monthlyFromMonth2Original
+        },
+        returnUrl,
         currency: 'usd',
         locale: currentLanguage
       };
@@ -1469,6 +1510,18 @@
     metaBudgetInput.addEventListener('input', updateTotals);
     googleBudgetInput.addEventListener('input', updateTotals);
     financingCheckbox?.addEventListener('change', updateTotals);
+
+    customMonthlyToggle?.addEventListener('change', () => {
+      if (customMonthlyInput) {
+        customMonthlyInput.disabled = !customMonthlyToggle.checked;
+        if (!customMonthlyToggle.checked) {
+          customMonthlyInput.value = '';
+        }
+      }
+      updateTotals();
+    });
+
+    customMonthlyInput?.addEventListener('input', updateTotals);
 
     termsCheckbox.addEventListener('change', validateTerms);
 

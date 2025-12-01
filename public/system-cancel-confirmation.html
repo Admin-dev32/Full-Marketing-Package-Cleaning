@@ -11,34 +11,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <style>
-      body {
-        background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.06), transparent 28%),
-          radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.05), transparent 26%),
-          var(--bg);
-      }
-
-      .card {
-        background: linear-gradient(135deg, rgba(20, 20, 27, 0.9), rgba(14, 14, 20, 0.9));
-        border: 1px solid rgba(212, 175, 55, 0.18);
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
-        max-width: 700px;
-        margin: 0 auto;
-      }
-
-      .muted {
-        color: var(--muted);
-      }
-
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 18px;
-      }
-    </style>
   </head>
   <body>
     <header class="top-bar">
@@ -62,12 +34,30 @@
       </section>
 
       <section class="section">
-        <div class="card">
-          <p class="muted" data-translation-key="cancelConfirmation.effectiveLabel">Fecha efectiva de fin</p>
-          <h3 id="effective-date">—</h3>
+        <div class="glass-card">
+          <div class="state-card compact">
+            <div class="icon-circle success">✓</div>
+            <div>
+              <p class="muted" data-translation-key="cancelConfirmation.badge">Acción registrada</p>
+              <h3 data-translation-key="cancelConfirmation.effectiveLabel">Fecha efectiva de fin</h3>
+              <p id="effective-date" class="large-text">—</p>
+            </div>
+          </div>
+
+          <ul class="bullet-list spaced">
+            <li data-translation-key="cancelConfirmation.note1">
+              El servicio se mantiene activo hasta la fecha efectiva.
+            </li>
+            <li data-translation-key="cancelConfirmation.note2">
+              No se generarán cargos adicionales después de esa fecha.
+            </li>
+          </ul>
 
           <div class="actions">
             <a class="cta" href="/" data-translation-key="cancelConfirmation.backButton">Regresar al sitio principal</a>
+            <a class="cta secondary" href="mailto:send@thebakoagency.com" data-translation-key="cancelConfirmation.contactSupport"
+              >Contactar soporte</a
+            >
             <a class="cta secondary" href="/system-cancel-thank-you.html" data-translation-key="cancelConfirmation.thankYouLink"
               >Ver nota de agradecimiento</a
             >

@@ -1,7 +1,25 @@
 const Stripe = require('stripe');
 
-const SUCCESS_URL = process.env.SUCCESS_URL || 'https://thebakoagency.com/checkout-success';
-const CANCEL_URL = process.env.CANCEL_URL || 'https://thebakoagency.com/checkout-cancel';
+const allowedOrigins = ['https://thebakoagency.com', 'https://www.thebakoagency.com'];
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return true;
+  }
+
+  return false;
+}
 
 const allowedOrigins = ['https://thebakoagency.com', 'https://www.thebakoagency.com'];
 
@@ -52,6 +70,7 @@ module.exports = async function handler(req, res) {
     }
 
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+    const baseUrl = process.env.APP_BASE_URL || 'https://thebakoagency.com';
 
     const body = req.body || {};
     const {
@@ -65,7 +84,8 @@ module.exports = async function handler(req, res) {
       planProtection = {},
       keepSystemOn = {},
       yearlyInfra = {},
-      discount = {}
+      discount = {},
+      returnUrl
     } = body;
 
     const payloadErrors = [];
@@ -161,6 +181,14 @@ module.exports = async function handler(req, res) {
       }
     }
 
+    const successUrl = process.env.SUCCESS_URL || `${baseUrl}/system-checkout-success.html`;
+    const successUrlWithSession = successUrl.includes('{CHECKOUT_SESSION_ID}')
+      ? successUrl
+      : `${successUrl}${successUrl.includes('?') ? '&' : '?'}session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl =
+      process.env.CANCEL_URL ||
+      (typeof returnUrl === 'string' && returnUrl.length > 0 ? returnUrl : `${baseUrl}/index.html`);
+
     // First payment = setup (which already includes month 1) + Meta budget for month 1
     // Financing applies only to this upfront charge.
     const firstPaymentAmount = financingSelected ? firstMonthWithFinancing : firstMonthBase;
@@ -238,8 +266,8 @@ module.exports = async function handler(req, res) {
         ...keepSystemMetadata,
         ...discountMetadata
       },
-      success_url: `${SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${CANCEL_URL}?canceled=true`
+      success_url: successUrlWithSession,
+      cancel_url: cancelUrl
     });
 
     return res.status(200).json({ url: session.url });
